@@ -1,0 +1,117 @@
+var FindAndReplace = function(context) {
+    
+    
+    var document = context.document;
+    var selection = context.selection;
+    var textToFind = "";
+    var textToReplace = "";
+    var doReplace = -1;
+    
+    // Use selection, if any
+    
+    if(selection && [selection count]){
+        
+        while (doReplace == -1) {
+            
+            // Create modal window
+            var modal = COSAlertWindow.new();
+            
+            // Text for modal
+            modal.setMessageText("Simple Find And Replace");
+            modal.setInformativeText("Finds and replaces text items in the selected layer(s).  Find is case-sensitive and matches complete text only, no partial matches.");
+            
+            // Find text input
+            modal.addTextLabelWithValue("Find");
+            modal.addTextFieldWithValue(textToFind);
+            
+            // Replace with text input
+            modal.addTextLabelWithValue("Replace with");
+            modal.addTextFieldWithValue(textToReplace);
+            
+            // Replace and cancel buttons
+            modal.addButtonWithTitle('Replace All');
+            modal.addButtonWithTitle('Cancel');
+            
+            buttonClick = modal.runModal();
+            
+            if (buttonClick == 1000) {
+                var textToFind = modal.viewAtIndex(1).stringValue();
+                var textToReplace = modal.viewAtIndex(3).stringValue();
+                
+                if (textToFind != "" && textToReplace !="") {
+                    
+                    doReplace = 1;
+                    
+                    var itemsMatched = 0;
+                    
+                    for (var i = 0; i < [selection count]; i++) {
+                        
+                        check_layer(selection[i]);
+                        
+                    }
+                    
+                    log ("Matched " + itemsMatched);
+                    alert(itemsMatched + " instances replaced");
+                }
+                
+                else {
+                    log ("Blank");
+                    alert("Find or replace cannot be blank");
+                }
+                
+            } else {
+                doReplace = 0;
+            }
+        }
+    } else {
+        alert("Please select a layer");
+    }
+}
+
+
+function alert (message) {
+    var alertDialog = COSAlertWindow.new();
+    [alertDialog setMessageText:"Simple Find And Replace"]
+    [alertDialog setInformativeText:message]
+    [alertDialog addButtonWithTitle: 'OK']
+    
+    var responseCode = [alertDialog runModal]
+    
+    return [responseCode]
+}
+
+
+function check_layer(layer){
+    
+    switch ([layer class]) {
+        
+        case MSTextLayer:
+        if ([layer stringValue] == textToFind) {
+            itemsMatched++;
+            log("******  Found text layer! ******")
+            layer.setStringValue(textToReplace)
+            layer.setName([layer stringValue])
+        }
+        break;
+        
+        case MSPage:
+        case MSLayerGroup:
+        case MSArtboardGroup:
+        
+        var sublayers = [layer layers];
+        
+        for(var i=0; i < [sublayers count]; i++) {
+            
+            var sublayer = sublayers.objectAtIndex(i);
+            check_layer(sublayer);
+            
+        }
+        
+        break;
+        
+    }
+    
+    
+}
+
+
