@@ -1,12 +1,14 @@
+
+
 var FindAndReplace = function(context) {
-    
-    
-    var document = context.document;
-    var selection = context.selection;
-    var textToFind = "";
-    var textToReplace = "";
-    var doReplace = -1;
-    
+
+var document = context.document;
+var selection = context.selection;
+var textToFind = "";
+var textToReplace = "";
+var doReplace = -1;
+
+
     // Use selection, if any
     
     if(selection && [selection count]){
@@ -66,52 +68,57 @@ var FindAndReplace = function(context) {
     } else {
         alert("Please select a layer");
     }
-}
 
 
 function alert (message) {
-    var alertDialog = COSAlertWindow.new();
-    [alertDialog setMessageText:"Simple Find And Replace"]
-    [alertDialog setInformativeText:message]
-    [alertDialog addButtonWithTitle: 'OK']
-    
-    var responseCode = [alertDialog runModal]
-    
-    return [responseCode]
+var alertDialog = COSAlertWindow.new();
+[alertDialog setMessageText:"Simple Find And Replace"]
+[alertDialog setInformativeText:message]
+[alertDialog addButtonWithTitle: 'OK']
+
+var responseCode = [alertDialog runModal]
+
+return [responseCode]
 }
 
 
 function check_layer(layer){
-    
-    switch ([layer class]) {
-        
-        case MSTextLayer:
-        if ([layer stringValue] == textToFind) {
-            itemsMatched++;
-            log("******  Found text layer! ******")
-            layer.setStringValue(textToReplace)
-            layer.setName([layer stringValue])
-        }
-        break;
-        
-        case MSPage:
-        case MSLayerGroup:
-        case MSArtboardGroup:
-        
-        var sublayers = [layer layers];
-        
-        for(var i=0; i < [sublayers count]; i++) {
-            
-            var sublayer = sublayers.objectAtIndex(i);
-            check_layer(sublayer);
-            
-        }
-        
-        break;
-        
-    }
-    
-    
+
+switch ([layer class]) {
+
+case MSTextLayer:
+if ([layer stringValue] == textToFind) {
+itemsMatched++;
+log("******  Found text layer! ******")
+layer.setStringValue(textToReplace)
+layer.setName([layer stringValue])
 }
+break;
+
+case MSPage:
+case MSLayerGroup:
+case MSArtboardGroup:
+
+var sublayers = [layer layers];
+
+for(var i=0; i < [sublayers count]; i++) {
+
+var sublayer = sublayers.objectAtIndex(i);
+check_layer(sublayer);
+
+}
+
+break;
+
+}
+
+
+}
+
+
+
+}
+
+
 
 
