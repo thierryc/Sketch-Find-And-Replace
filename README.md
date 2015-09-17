@@ -10,11 +10,18 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 **Keyboard** - Alternatively, use the keyboard shortcut **cmd + shift + f**
 
 ##Options
-**Scope** - *Document* or *selected layer(s)*.  If you have select layers to search in, then *Selected layers* will be chosen automatically.  If you haven't, then *Document* is your only choice and it will search every layer in every artboard in every page of your document.
+**Scope** - How much of your document it will actually search  
+* If you have selected layers to search in, then *Selected layers* will be chosen automatically.  
+* If you haven't, then *Document* is your only choice and it will search every layer in every artboard in every page of your document.
 
-**Case sensitive** - *No* by default ("john" will match "John", but if you choose *Yes* it will match exactly as you typed it ("john" won't match "John").
+**Case sensitive** - Whether it matches exactly as you typed or not
+* *No* by default ("john" will match "John") 
+* *Yes* it will match exactly as you typed it ("john" won't match "John").
 
-**Match** - Whole text will match your Find text against a text item if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text items that say "John Smith").  Anywhere will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).  
+**Match** - Where in your text item it should match the search term
+* *Whole text* will match your Find text against a text item if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text items that say "John Smith").
+* *Anywhere* will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
+* *Start* will only match at the start of the text item ("John" will match against "John Smith", but "Smith" won't)
 
 ##Future
 If you have any problems, or ideas, please open an issue.
