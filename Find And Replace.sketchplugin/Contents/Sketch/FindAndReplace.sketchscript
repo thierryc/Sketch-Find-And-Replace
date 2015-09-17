@@ -41,7 +41,7 @@ log(matchRegex.toString());
                          searchInLayer(selection[i]);
                     }
                 } else {
-                    //searchInLayer(document);
+                    searchInLayer(document);
                 }
 
                 log("Matched " + itemsMatched);
