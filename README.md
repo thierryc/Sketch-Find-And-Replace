@@ -19,4 +19,4 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 ##Future
 If you have any problems, or ideas, please open an issue.
 ***
-*Disclaimer.  I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring.  I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk.*
+*Disclaimer.  I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring.  I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk. Remember, cmd-z is your saviour.*
