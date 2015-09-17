@@ -10,8 +10,8 @@ var FindAndReplace = function (context) {
     var searchOptions = (selection && selection.count());
     var searchScope = (selection && selection.count());
     var matchRegex = null;
-    var matchRegexStart = ['^(','(?:^|\\b)('];
-    var matchRegexEnd = [')$',')(?=\\b|\\$)'];
+    var matchRegexStart = ['^(','(?:^|\\b)(', '^('];
+    var matchRegexEnd = [')$',')(?=\\b|\\$)',')(?=\\b)'];
     var matchRegexCase = ['gi','g'];
     var BUTTON_OK = 1000;
 
@@ -24,17 +24,17 @@ var FindAndReplace = function (context) {
 
             textToFind = [[modal viewAtIndex: 1] stringValue];
             textToReplace = modal.viewAtIndex(3).stringValue();
-            searchScope = ![[[modal viewAtIndex: 5] cellAtRow: 0 column: 0] state] ? 1 : 0;
-            caseSensitivity = ![[[modal viewAtIndex: 7] cellAtRow: 0 column: 0] state] ? 1 : 0;
-            matchWhere = ![[[modal viewAtIndex: 9] cellAtRow: 0 column: 0] state] ? 1 : 0;
+
+            searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
+            caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];            			
+            matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
+            
             if (textToFind != "" && textToReplace != "") {
 
                 var itemsMatched = 0;
                 readyToReplace = true;
-                                log(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere]);
-                matchRegex = new RegExp(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere],matchRegexCase[caseSensitivity]);
 
-log(matchRegex.toString());
+                matchRegex = new RegExp(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere],matchRegexCase[caseSensitivity]);
 
                 if (searchScope == 1) {
                     for (var i = 0; i < [selection count]; i++) {
@@ -67,7 +67,7 @@ log(matchRegex.toString());
 
         // Text for modal
         userInterface.setMessageText("Find And Replace");
-        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document.");
+        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s).  Find is case-sensitive and matches complete text only, no partial matches.");
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
@@ -87,8 +87,8 @@ log(matchRegex.toString());
         userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], caseSensitivity))
 
         // Where to match
-        userInterface.addTextLabelWithValue("Match")
-        userInterface.addAccessoryView(createRadioButtons(["Whole text", "Anywhere"], matchWhere))
+        userInterface.addTextLabelWithValue("Match text item")
+        userInterface.addAccessoryView(createRadioButtons(["Whole text", "Anywhere", "Start"], matchWhere))
         
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
@@ -123,9 +123,9 @@ log(matchRegex.toString());
 
     function alert(message) {
         var alertDialog = COSAlertWindow.new();
-            alertDialog.setMessageText("Find And Replace");
-            alertDialog.setInformativeText(message);
-            alertDialog.addButtonWithTitle("OK");
+        alertDialog.setMessageText("Find And Replace");
+        alertDialog.setInformativeText(message);
+        alertDialog.addButtonWithTitle("OK");
         var responseCode = alertDialog.runModal();
         return responseCode;
     }
@@ -135,15 +135,17 @@ log(matchRegex.toString());
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     };
     
-    
+
     function searchInLayer(layer) {
-        
+    
         switch ([layer class]) {
 
         case MSTextLayer:
+			log("Searching for " + textToFind + " in " + layer.stringValue().trim())
 			if (layer.stringValue().trim().match(matchRegex)) {
+
                 itemsMatched++;
-                layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace)) 
+layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace)) 
                 layer.setName(layer.stringValue())
             }
             break;
