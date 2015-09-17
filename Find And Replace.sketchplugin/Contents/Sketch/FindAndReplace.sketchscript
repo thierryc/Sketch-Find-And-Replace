@@ -7,11 +7,21 @@ var FindAndReplace = function (context) {
     var readyToReplace = null;
     var caseSensitivity = 0; // Off by default
     var matchWhere = 0; // Whole text by default
+    var matchWhole = 0; // Whole words by default
     var searchOptions = (selection && selection.count());
     var searchScope = (selection && selection.count());
     var matchRegex = null;
-    var matchRegexStart = ['^(','(?:^|\\b)(', '^('];
-    var matchRegexEnd = [')$',')(?=\\b|\\$)',')(?=\\b)'];
+    
+    var matchRegexStart = [
+        ['^(','(?:^|\\b)(', '^(','('],
+        ['^(','(', '^(','(']
+    ];
+    var matchRegexEnd = [
+        [')$',')(?=\\b|\\$)',')(?=\\b)',')$'],
+        [')$',')',')',')$']
+    ];
+    
+    
     var matchRegexCase = ['gi','g'];
     var BUTTON_OK = 1000;
 
@@ -28,13 +38,14 @@ var FindAndReplace = function (context) {
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
             caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];            			
             matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
+            matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
             
             if (textToFind != "" && textToReplace != "") {
 
                 var itemsMatched = 0;
                 readyToReplace = true;
 
-                matchRegex = new RegExp(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere],matchRegexCase[caseSensitivity]);
+                matchRegex = new RegExp(matchRegexStart[matchWhole][matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhole][matchWhere],matchRegexCase[caseSensitivity]);
 
                 if (searchScope == 1) {
                     for (var i = 0; i < [selection count]; i++) {
@@ -44,10 +55,9 @@ var FindAndReplace = function (context) {
                     searchInLayer(document);
                 }
 
-                log("Matched " + itemsMatched);
-                    [document showMessage: itemsMatched + " instances replaced"];
+                [document showMessage: itemsMatched + " instances replaced"];
+                
             } else {
-                log("Blank");
                 alert("Find or replace cannot be blank");
             }
 
@@ -88,7 +98,11 @@ var FindAndReplace = function (context) {
 
         // Where to match
         userInterface.addTextLabelWithValue("Match text item")
-        userInterface.addAccessoryView(createRadioButtons(["Whole text", "Anywhere", "Start"], matchWhere))
+        userInterface.addAccessoryView(createRadioButtons(["Complete", "Anywhere", "At start","At end"], matchWhere))
+        
+        // How to match
+        userInterface.addTextLabelWithValue("Match whole words only")
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], matchWhole))
         
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
@@ -170,7 +184,6 @@ layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace
         }
 
     }
-
 
 
 }
