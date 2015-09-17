@@ -16,6 +16,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 
 **Match** - Whole text will match your Find text against a text item if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text items that say "John Smith").  Anywhere will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).  
 
-  
+##Future
+If you have any problems, or ideas, please open an issue.
 ***
 *Disclaimer.  I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring.  I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk.*
