@@ -1,9 +1,9 @@
 {
   "name": "Find And Replace",
-  "description": "Sketch plugin to do a simple find and replace on complete text items",
+  "description": "Sketch plugin to do a find and replace on text items",
   "author": "Martin Steven",
   "homepage": "https://github.com/mscodemonkey/Sketch-Find-And-Replace",
-  "version": 1.01,
+  "version": 1.02,
   "identifier": "com.martinsteven.sketch-find-and-replace",
   "compatibleVersion": 3,
   "bundleVersion": 1,

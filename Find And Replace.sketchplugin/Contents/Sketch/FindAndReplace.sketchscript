@@ -1,124 +1,174 @@
+var FindAndReplace = function (context) {
 
+    var document = context.document;
+    var selection = context.selection;
+    var textToFind = "";
+    var textToReplace = "";
+    var readyToReplace = null;
+    var caseSensitivity = 0; // Off by default
+    var matchWhere = 0; // Whole text by default
+    var searchOptions = (selection && selection.count());
+    var searchScope = (selection && selection.count());
+    var matchRegex = null;
+    var matchRegexStart = ['^(','(?:^|\\b)('];
+    var matchRegexEnd = [')$',')(?=\\b|\\$)'];
+    var matchRegexCase = ['gi','g'];
+    var BUTTON_OK = 1000;
 
-var FindAndReplace = function(context) {
+    while (readyToReplace === null) {
 
-var document = context.document;
-var selection = context.selection;
-var textToFind = "";
-var textToReplace = "";
-var doReplace = -1;
+        var modal = createUserInterface();
+        var buttonClick = modal.runModal();
 
+        if (buttonClick === BUTTON_OK) {
 
-    // Use selection, if any
-    
-    if(selection && [selection count]){
-        
-        while (doReplace == -1) {
-            
-            // Create modal window
-            var modal = COSAlertWindow.new();
-            
-            // Text for modal
-            modal.setMessageText("Simple Find And Replace");
-            modal.setInformativeText("Finds and replaces text items in the selected layer(s).  Find is case-sensitive and matches complete text only, no partial matches.");
-            
-            // Find text input
-            modal.addTextLabelWithValue("Find");
-            modal.addTextFieldWithValue(textToFind);
-            
-            // Replace with text input
-            modal.addTextLabelWithValue("Replace with");
-            modal.addTextFieldWithValue(textToReplace);
-            
-            // Replace and cancel buttons
-            modal.addButtonWithTitle('Replace All');
-            modal.addButtonWithTitle('Cancel');
-            
-            buttonClick = modal.runModal();
-            
-            if (buttonClick == 1000) {
-                var textToFind = modal.viewAtIndex(1).stringValue();
-                var textToReplace = modal.viewAtIndex(3).stringValue();
-                
-                if (textToFind != "" && textToReplace !="") {
-                    
-                    doReplace = 1;
-                    
-                    var itemsMatched = 0;
-                    
+            textToFind = [[modal viewAtIndex: 1] stringValue];
+            textToReplace = modal.viewAtIndex(3).stringValue();
+            searchScope = ![[[modal viewAtIndex: 5] cellAtRow: 0 column: 0] state] ? 1 : 0;
+            caseSensitivity = ![[[modal viewAtIndex: 7] cellAtRow: 0 column: 0] state] ? 1 : 0;
+            matchWhere = ![[[modal viewAtIndex: 9] cellAtRow: 0 column: 0] state] ? 1 : 0;
+            if (textToFind != "" && textToReplace != "") {
+
+                var itemsMatched = 0;
+                readyToReplace = true;
+                                log(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere]);
+                matchRegex = new RegExp(matchRegexStart[matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhere],matchRegexCase[caseSensitivity]);
+
+log(matchRegex.toString());
+
+                if (searchScope == 1) {
                     for (var i = 0; i < [selection count]; i++) {
-                        
-                        check_layer(selection[i]);
-                        
+                         searchInLayer(selection[i]);
                     }
-                    
-                    log ("Matched " + itemsMatched);
-                    alert(itemsMatched + " instances replaced");
+                } else {
+                    //searchInLayer(document);
                 }
-                
-                else {
-                    log ("Blank");
-                    alert("Find or replace cannot be blank");
-                }
-                
+
+                log("Matched " + itemsMatched);
+                    [document showMessage: itemsMatched + " instances replaced"];
             } else {
-                doReplace = 0;
+                log("Blank");
+                alert("Find or replace cannot be blank");
             }
+
+        } else {
+            readyToReplace = false;
         }
-    } else {
-        alert("Please select a layer");
     }
 
 
-function alert (message) {
-var alertDialog = COSAlertWindow.new();
-[alertDialog setMessageText:"Simple Find And Replace"]
-[alertDialog setInformativeText:message]
-[alertDialog addButtonWithTitle: 'OK']
 
-var responseCode = [alertDialog runModal]
 
-return [responseCode]
+
+    function createUserInterface() {
+
+        // Create modal window
+        var userInterface = COSAlertWindow.new();
+
+        // Text for modal
+        userInterface.setMessageText("Find And Replace");
+        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s).  Find is case-sensitive and matches complete text only, no partial matches.");
+
+        // Find text input
+        userInterface.addTextLabelWithValue("Find");
+        userInterface.addTextFieldWithValue(textToFind);
+
+        // Replace with text input
+        userInterface.addTextLabelWithValue("Replace with");
+        userInterface.addTextFieldWithValue(textToReplace);
+
+        // Scope
+        userInterface.addTextLabelWithValue("Scope");
+        var options = searchOptions ? ['Document', 'Selected layer' + ([selection count] > 1 ? "s" : "")] : ['Document'];
+        userInterface.addAccessoryView(createRadioButtons(options, searchScope));
+
+        // Case-sensitivity
+        userInterface.addTextLabelWithValue("Case sensitive")
+        userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], caseSensitivity))
+
+        // Where to match
+        userInterface.addTextLabelWithValue("Match")
+        userInterface.addAccessoryView(createRadioButtons(["Whole text", "Anywhere"], matchWhere))
+        
+        // Replace and cancel buttons
+        userInterface.addButtonWithTitle('Replace All');
+        userInterface.addButtonWithTitle('Cancel');
+
+        // Return the Modal structure
+        return userInterface;
+    }
+
+    
+    function createRadioButtons(options, index) {
+        var prototype = [[NSButtonCell alloc] init];
+        prototype.setButtonType(NSRadioButton)
+        var myMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(0, 0, 300, 25) mode: NSRadioModeMatrix prototype: prototype numberOfRows: 1 numberOfColumns: options.length];
+        myMatrix.autorecalculatesCellSize = true;
+        for (i = 0; i < options.length; i++) {
+            [[[myMatrix cells] objectAtIndex: i] setTitle: options[i]];
+            [[[myMatrix cells] objectAtIndex: i] setTag: i];
+        }
+        [myMatrix selectCellAtRow: 0 column: index]
+        return myMatrix;
+    }
+
+    
+    function createSelect(options, index) {
+        var selectBox = [[NSPopUpButton alloc] initWithFrame: NSMakeRect(0, 0, 200, 25)]
+        selectBox.addItemsWithTitles(options)
+        selectBox.selectItemAtIndex(index);
+        return selectBox;
+    }
+
+
+    function alert(message) {
+        var alertDialog = COSAlertWindow.new();
+            alertDialog.setMessageText("Find And Replace");
+            alertDialog.setInformativeText(message);
+            alertDialog.addButtonWithTitle("OK");
+        var responseCode = alertDialog.runModal();
+        return responseCode;
+    }
+
+
+    function cleanSearch(s) {
+        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    };
+    
+    
+    function searchInLayer(layer) {
+        
+        switch ([layer class]) {
+
+        case MSTextLayer:
+			if (layer.stringValue().trim().match(matchRegex)) {
+                itemsMatched++;
+                layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace)) 
+                layer.setName(layer.stringValue())
+            }
+            break;
+
+        case MSDocument:
+            var documentPages = [layer pages];
+            for (var i = 0; i < [documentPages count]; i++) {
+                var documentPage = documentPages.objectAtIndex(i);
+                searchInLayer(documentPage);
+            }
+            break;
+
+        case MSPage:
+        case MSLayerGroup:
+        case MSArtboardGroup:
+            var sublayers = [layer layers];
+            for (var i = 0; i < [sublayers count]; i++) {
+                var sublayer = sublayers.objectAtIndex(i);
+                searchInLayer(sublayer);
+            }
+            break;
+        }
+
+    }
+
+
+
 }
-
-
-function check_layer(layer){
-
-switch ([layer class]) {
-
-case MSTextLayer:
-if ([layer stringValue] == textToFind) {
-itemsMatched++;
-log("******  Found text layer! ******")
-layer.setStringValue(textToReplace)
-layer.setName([layer stringValue])
-}
-break;
-
-case MSPage:
-case MSLayerGroup:
-case MSArtboardGroup:
-
-var sublayers = [layer layers];
-
-for(var i=0; i < [sublayers count]; i++) {
-
-var sublayer = sublayers.objectAtIndex(i);
-check_layer(sublayer);
-
-}
-
-break;
-
-}
-
-
-}
-
-
-
-}
-
-
-
-
