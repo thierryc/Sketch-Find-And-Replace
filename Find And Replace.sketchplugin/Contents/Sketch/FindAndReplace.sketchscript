@@ -67,7 +67,7 @@ log(matchRegex.toString());
 
         // Text for modal
         userInterface.setMessageText("Find And Replace");
-        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s).  Find is case-sensitive and matches complete text only, no partial matches.");
+        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document.");
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
