@@ -149,7 +149,7 @@ var FindAndReplace = function (context) {
         var prototype = [[NSButtonCell alloc] init];
             [prototype setButtonType:NSRadioButton]
         
-        var buttonMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(20.0, 20.0, 300.0, rows * 25) mode: NSRadioModeMatrix prototype: prototype numberOfRows: rows numberOfColumns: 2];
+        var buttonMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(20.0, 20.0, 300.0, rows * 25) mode: NSRadioModeMatrix prototype: prototype numberOfRows: rows numberOfColumns: ((options.length < 2) ? 1 : 2)];
             [buttonMatrix setCellSize: NSMakeSize(110, 20)]
 
         for (i = 0; i < options.length; i++) {
