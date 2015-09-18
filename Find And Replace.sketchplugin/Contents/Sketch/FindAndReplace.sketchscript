@@ -97,7 +97,7 @@ var FindAndReplace = function (context) {
         userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], caseSensitivity))
 
         // Where to match
-        userInterface.addTextLabelWithValue("Match text item")
+        userInterface.addTextLabelWithValue("Match text layer")
         userInterface.addAccessoryView(createRadioButtons(["Complete", "Anywhere", "At start","At end"], matchWhere))
         
         // How to match

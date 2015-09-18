@@ -18,11 +18,11 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * *No* by default ("john" will match "John") 
 * *Yes* it will match exactly as you typed it ("john" won't match "John").
 
-**Match text item** - Where in your text item it should match the search term
-* *Whole text* will match your Find text against a text item if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text items that say "John Smith").
+**Match text layer** - Where in your text layer it should match the search term
+* *Whole text* will match your Find text against a text layer if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text layers that contain "John Smith").
 * *Anywhere* will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
-* *At start* will only match at the start of the text item ("John" will match against "John Smith", but "Smith" won't)
-* *At end* will only match at the end of the text item ("Smith" will match against "John Smith", but "John" won't)
+* *At start* will only match at the start of the text layer ("John" will match against "John Smith", but "Smith" won't)
+* *At end* will only match at the end of the text layer ("Smith" will match against "John Smith", but "John" won't)
 
 **Match whole words only** - Whether it matches whole or partial words
 * *Yes* (default) will match whole words ("oh" will not match "John")
