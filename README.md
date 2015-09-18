@@ -33,6 +33,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * **Search in current page** - Will add a new scope of current page only
 * **Search in current artboard** - Will add a new scope of current artboard only
 * **Persist settings** - Remember your settings for next time you do a find/replace
+* **Better user interface** - At the moment, for speed i'm using the Sketch tutorial way of doing things...
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue.
