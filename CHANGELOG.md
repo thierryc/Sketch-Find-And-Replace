@@ -2,14 +2,20 @@
 
 ##CHANGELOG
 
-**1.06** 18/09/2015
+**1.08** 18/09/2015
+* NEW : If you've got a text layer selected it pulls in the text from that layer as "Find" 
+
+**1.07** 17/09/2015
+* FIX : Issue where it didn't match if there was whitespace at the end of the layer
+
+**1.06** 17/09/2015
 * NEW : Added *Match whole words only* option
 
-**1.05** 18/09/2015
+**1.05** 17/09/2015
 * NEW : Added *At start* option
 * NEW : Added *At end* option
 
-**1.04** 18/09/2015
+**1.04** 17/09/2015
 * FIX : Was not searching in entire document
 
 **1.03** 17/09/2015
