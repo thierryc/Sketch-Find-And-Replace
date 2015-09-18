@@ -2,6 +2,9 @@
 
 ##CHANGELOG
 
+**1.09** 19/09/2015
+* FIX : Cosmetic change for consistency in order of radio buttons
+
 **1.08** 18/09/2015
 * NEW : If you've got a text layer selected it pulls in the text from that layer as "Find" 
 

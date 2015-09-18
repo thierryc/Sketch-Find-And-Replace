@@ -19,7 +19,7 @@ var FindAndReplace = function (context) {
         readyToReplace = null;
         caseSensitivity = 0; // Off by default
         matchWhere = 1; // Anywhere by default
-        matchWhole = 0; // Whole words by default
+        matchWhole = 1; // Whole words by default
         searchOptions = (selection && selection.count());
         searchScope = (selection && selection.count());
         matchRegex = null;
@@ -104,15 +104,15 @@ var FindAndReplace = function (context) {
 
         // Case-sensitivity
         userInterface.addTextLabelWithValue("Case sensitive")
-        userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], caseSensitivity))
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], !caseSensitivity))
 
         // Where to match
-        userInterface.addTextLabelWithValue("Match text layer")
+        userInterface.addTextLabelWithValue("Match in text layer")
         userInterface.addAccessoryView(createRadioButtons(["Complete", "Anywhere", "At start","At end"], matchWhere))
         
         // How to match
-        userInterface.addTextLabelWithValue("Match whole words only")
-        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], matchWhole))
+        userInterface.addTextLabelWithValue("Match whole words or phrases")
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], !matchWhole))
         
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
@@ -172,9 +172,9 @@ var FindAndReplace = function (context) {
             textToFind = [[modal viewAtIndex: 1] stringValue];
             textToReplace = modal.viewAtIndex(3).stringValue();
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
-            caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];
+            caseSensitivity = ![[[modal viewAtIndex: 7] selectedCell] tag];
             matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
-            matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
+            matchWhole = ![[[modal viewAtIndex: 11] selectedCell] tag];
 
             // Make sure we have both text to find and replace
             if (textToFind != "" && textToReplace != "") {
