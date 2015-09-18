@@ -29,10 +29,10 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * *No* will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
 
 ##Future
-**Default find text** - If you have a text field selected, use that text as the default find text
-**Search in current page** - Will add a new scope of current page only
-**Search in current artboard** - Will add a new scope of current artboard only
-**Persist settings** - Remember your settings for next time you do a find/replace
+* **Default find text** - If you have a text field selected, use that text as the default find text
+* **Search in current page** - Will add a new scope of current page only
+* **Search in current artboard** - Will add a new scope of current artboard only
+* **Persist settings** - Remember your settings for next time you do a find/replace
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue.
