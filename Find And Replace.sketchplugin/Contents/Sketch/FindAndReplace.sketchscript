@@ -20,8 +20,8 @@ var FindAndReplace = function (context) {
         caseSensitivity = 0; // Off by default
         matchWhere = 1; // Anywhere by default
         matchWhole = 1; // Whole words by default
-        searchOptions = (selection && selection.count());
-        searchScope = (selection && selection.count());
+        searchOptions = (selection && selection.count() > 0);
+        searchScope = (selection && selection.count() > 0);
         matchRegex = null;
         matchRegexStart = [
             ['^(','(?:^|\\b)(', '^(','('],
