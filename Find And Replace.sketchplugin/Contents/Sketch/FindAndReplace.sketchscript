@@ -174,7 +174,7 @@ var FindAndReplace = function (context) {
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
             caseSensitivity = 1 - [[[modal viewAtIndex: 7] selectedCell] tag];
             matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
-            matchWhole = 1 - [[[modal viewAtIndex: 11] selectedCell] tag];
+            matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
 
             // Make sure we have both text to find and replace
             if (textToFind != "" && textToReplace != "") {
