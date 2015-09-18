@@ -9,7 +9,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 **Menu** - You can access it from the menu **Plugins -> Find And Replace -> Find and Replace**  
 **Keyboard** - Alternatively, use the keyboard shortcut **cmd + shift + f**
 
-**Complex documents** - If you have an extremely complex document, and set the scope to the entire document, it may take some time to process.  Don't panic if you get a beach ball, it literally has to go through every layer in every artboard in every page and do a comparison.
+**Complex documents** - If you have an extremely complex document, and set the scope to the entire document, it might take a few seconds longer to process it all.  Don't panic if you get a beach ball, it hasn't crashed Sketch, it just has to go through every layer in every artboard in every page and do a comparison.
 
 ##Options
 **Scope** - How much of your document it will actually search  
