@@ -19,7 +19,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * *Yes* it will match exactly as you typed it ("john" won't match "John").
 
 **Match text layer** - Where in your text layer it should match the search term
-* *Whole text* will match your Find text against a text layer if it is exactly the same (excluding whitespace at the start or end, which it ignores (example "John Smith" will only match text layers that contain "John Smith").
+* *Complete* will match your Find text against a text layer if it is *exactly* the same - excluding whitespace at the start or end (example "John Smith" will only match text layers that contain "John Smith").
 * *Anywhere* will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
 * *At start* will only match at the start of the text layer ("John" will match against "John Smith", but "Smith" won't)
 * *At end* will only match at the end of the text layer ("Smith" will match against "John Smith", but "John" won't)
