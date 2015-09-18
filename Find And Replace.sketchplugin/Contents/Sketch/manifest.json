@@ -5,8 +5,8 @@
   "homepage": "https://github.com/mscodemonkey/Sketch-Find-And-Replace",
   "version": 1.07,
   "identifier": "com.martinsteven.sketch-find-and-replace",
-  "homepage": "https://github.com/mscodemonkey/Sketch-Find-And-Replace/FindAndReplace.json",  
-  "compatibleVersion": 3,
+  "updateURL": "https://raw.githubusercontent.com/mscodemonkey/Sketch-Find-And-Replace/master/FindAndReplace.json",  
+  "compatibleVersion": 3.03,
   "bundleVersion": 1,
   "commands" : [
     {
