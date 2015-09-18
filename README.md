@@ -29,7 +29,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * *No* will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
 
 ##Future
-**Persist settings** The next version of the plugin will remember your settings for next time you launch it.
+**Persist settings** - The next version of the plugin will remember your settings for next time you launch it.
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue.
