@@ -1,71 +1,98 @@
 var FindAndReplace = function (context) {
 
-    var document = context.document;
-    var selection = context.selection;
-    var textToFind = "";
-    var textToReplace = "";
-    var readyToReplace = null;
-    var caseSensitivity = 0; // Off by default
-    var matchWhere = 1; // Anywhere by default
-    var matchWhole = 0; // Whole words by default
-    var searchOptions = (selection && selection.count());
-    var searchScope = (selection && selection.count());
-    var matchRegex = null;
+    var document, selection, textToFind, textToReplace, readyToReplace, caseSensitivity, matchWhere, matchWhole, searchOptions, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, BUTTON_OK, itemsMatched;
+
+    // Initialise
+    initialise(context);
     
-    var matchRegexStart = [
-        ['^(','(?:^|\\b)(', '^(','('],
-        ['^(','(', '^(','(']
-    ];
-    var matchRegexEnd = [
-        [')$',')(?=\\b|\\$)',')(?=\\b)',')$'],
-        [')$',')',')',')$']
-    ];
+    // If the selected layer is a text layer, bring the text in automatically
+    checkInitialSelection();
     
+    // Display the user interface
+    displayUserInterface()
+
     
-    var matchRegexCase = ['gi','g'];
-    var BUTTON_OK = 1000;
+    function displayUserInterface() {
+        
+        while (readyToReplace === null) {
 
-    while (readyToReplace === null) {
+            var modal = createUserInterface();
+            var buttonClick = modal.runModal();
 
-        var modal = createUserInterface();
-        var buttonClick = modal.runModal();
+            if (buttonClick === BUTTON_OK) {
 
-        if (buttonClick === BUTTON_OK) {
+                textToFind = [[modal viewAtIndex: 1] stringValue];
+                textToReplace = modal.viewAtIndex(3).stringValue();
 
-            textToFind = [[modal viewAtIndex: 1] stringValue];
-            textToReplace = modal.viewAtIndex(3).stringValue();
+                searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
+                caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];            			
+                matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
+                matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
 
-            searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
-            caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];            			
-            matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
-            matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
-            
-            if (textToFind != "" && textToReplace != "") {
+                if (textToFind != "" && textToReplace != "") {
 
-                var itemsMatched = 0;
-                readyToReplace = true;
+                    itemsMatched = 0;
+                    readyToReplace = true;
 
-                matchRegex = new RegExp(matchRegexStart[matchWhole][matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhole][matchWhere],matchRegexCase[caseSensitivity]);
+                    matchRegex = new RegExp(matchRegexStart[matchWhole][matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhole][matchWhere],matchRegexCase[caseSensitivity]);
 
-                if (searchScope == 1) {
-                    for (var i = 0; i < [selection count]; i++) {
-                         searchInLayer(selection[i]);
+                    if (searchScope == 1) {
+                        for (var i = 0; i < [selection count]; i++) {
+                             searchInLayer(selection[i]);
+                        }
+                    } else {
+                        searchInLayer(document);
                     }
+
+                    [document showMessage: itemsMatched + " instances replaced"];
+
                 } else {
-                    searchInLayer(document);
+                    alert("Find or replace cannot be blank");
                 }
 
-                [document showMessage: itemsMatched + " instances replaced"];
-                
             } else {
-                alert("Find or replace cannot be blank");
+                readyToReplace = false;
             }
-
-        } else {
-            readyToReplace = false;
         }
+
     }
 
+    
+    
+    function initialise(context) {
+        document = context.document;
+        selection = context.selection;
+        textToFind = "";
+        textToReplace = "";
+        readyToReplace = null;
+        caseSensitivity = 0; // Off by default
+        matchWhere = 1; // Anywhere by default
+        matchWhole = 0; // Whole words by default
+        searchOptions = (selection && selection.count());
+        searchScope = (selection && selection.count());
+        matchRegex = null;
+        matchRegexStart = [
+            ['^(','(?:^|\\b)(', '^(','('],
+            ['^(','(', '^(','(']
+        ];
+        matchRegexEnd = [
+            [')$',')(?=\\b|\\$)',')(?=\\b)',')$'],
+            [')$',')',')',')$']
+        ];
+        matchRegexCase = ['gi','g'];
+        BUTTON_OK = 1000;
+	}    
+
+
+
+    
+    function checkInitialSelection() {
+        if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
+            textToFind = selection[0].stringValue();
+            matchWhere = 0;
+            searchScope = 0;
+        }
+    }
 
 
 
@@ -114,33 +141,44 @@ var FindAndReplace = function (context) {
 
     
     function createRadioButtons(options, index) {
+
+        var rows = Math.ceil(options.length / 2);
+        var selectedRow = Math.floor(index / 2);
+        var selectedColumn = index - (selectedRow * 2);
+        
         var prototype = [[NSButtonCell alloc] init];
-        prototype.setButtonType(NSRadioButton)
-        var myMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(0, 0, 300, 25) mode: NSRadioModeMatrix prototype: prototype numberOfRows: 1 numberOfColumns: options.length];
-        myMatrix.autorecalculatesCellSize = true;
+            [prototype setButtonType:NSRadioButton]
+        
+        var buttonMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(20.0, 20.0, 300.0, rows * 25) mode: NSRadioModeMatrix prototype: prototype numberOfRows: rows numberOfColumns: 2];
+            [buttonMatrix setCellSize: NSMakeSize(110, 20)]
+
         for (i = 0; i < options.length; i++) {
-            [[[myMatrix cells] objectAtIndex: i] setTitle: options[i]];
-            [[[myMatrix cells] objectAtIndex: i] setTag: i];
+            [[[buttonMatrix cells] objectAtIndex: i] setTitle: options[i]];
+            [[[buttonMatrix cells] objectAtIndex: i] setTag: i];
         }
-        [myMatrix selectCellAtRow: 0 column: index]
-        return myMatrix;
+        
+        [buttonMatrix selectCellAtRow: selectedRow column: selectedColumn]
+        
+        return buttonMatrix;
     }
+
 
     
     function createSelect(options, index) {
         var selectBox = [[NSPopUpButton alloc] initWithFrame: NSMakeRect(0, 0, 200, 25)]
-        selectBox.addItemsWithTitles(options)
-        selectBox.selectItemAtIndex(index);
+        [selectBox addItemsWithTitles: options];
+        [selectBox selectItemAtIndex: index];
         return selectBox;
     }
 
 
     function alert(message) {
         var alertDialog = COSAlertWindow.new();
-        alertDialog.setMessageText("Find And Replace");
-        alertDialog.setInformativeText(message);
-        alertDialog.addButtonWithTitle("OK");
-        var responseCode = alertDialog.runModal();
+        [alertDialog setMessageText: "Find And Replace"];
+        [alertDialog setInformativeText: message];
+        [alertDialog addButtonWithTitle: "OK"];
+        
+        var responseCode = [alertDialog runModal];
         return responseCode;
     }
 
@@ -155,8 +193,7 @@ var FindAndReplace = function (context) {
         switch ([layer class]) {
 
         case MSTextLayer:
-			log("Searching for " + textToFind + " in " + layer.stringValue().trim())
-			if (layer.stringValue().trim().match(matchRegex)) {
+			if ([[layer stringValue] trim].match(matchRegex)) {
 
                 itemsMatched++;
 layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace)) 
