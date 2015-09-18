@@ -6,8 +6,10 @@ Finds text in selected layer(s) and all layers contained within - and replaces i
 Download and unzip, then double-click on the .sketchplugin file to copy it to the plugins folder and install automatically into Sketch 3. 
 
 ##Usage
-**Menu** - You can access it from the menu **Plugins -> Find And Replace -> Find and Replace** 
+**Menu** - You can access it from the menu **Plugins -> Find And Replace -> Find and Replace**  
 **Keyboard** - Alternatively, use the keyboard shortcut **cmd + shift + f**
+
+**Complex documents** - If you have an extremely complex document, and set the scope to the entire document, it may take some time to process.  Don't panic if you get a beach ball, it literally has to go through every layer in every artboard in every page and do a comparison.
 
 ##Options
 **Scope** - How much of your document it will actually search  
