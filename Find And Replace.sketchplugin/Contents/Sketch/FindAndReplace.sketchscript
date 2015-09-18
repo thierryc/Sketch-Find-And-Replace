@@ -89,8 +89,6 @@ var FindAndReplace = function (context) {
     function checkInitialSelection() {
         if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
             textToFind = selection[0].stringValue();
-            matchWhere = 0;
-            searchScope = 0;
         }
     }
 
