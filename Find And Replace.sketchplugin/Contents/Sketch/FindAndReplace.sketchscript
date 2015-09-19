@@ -13,23 +13,25 @@ var FindAndReplace = function (context) {
     
     function initialise(context) {
         document = context.document;
+        currentPage = [document currentPage]
         selection = context.selection;
         textToFind = "";
         textToReplace = "";
         readyToReplace = null;
         caseSensitivity = 0; // Off by default
+        caseReplace = 1; // Intelligent by default
         matchWhere = 1; // Anywhere by default
-        matchWhole = 1; // Whole words by default
-        searchOptions = (selection && selection.count() > 0);
-        searchScope = (selection && selection.count() > 0);
+        matchWhole = 0; // Not whole words by default
+        showScopeOptions = (selection && selection.count() > 0);
+        searchScope = (selection && selection.count() > 0) ? 1 : 0;
         matchRegex = null;
         matchRegexStart = [
-            ['^(','(?:^|\\b)(', '^(','('],
-            ['^(','(', '^(','(']
+            ['^(','(', '^(','('],
+            ['^(','(?:^|\\b)(', '^(','(']
         ];
         matchRegexEnd = [
-            [')$',')(?=\\b|\\$)',')(?=\\b)',')$'],
-            [')$',')',')',')$']
+            [')$',')',')',')$'],
+            [')$',')(?=\\b|\\$)',')(?=\\b)',')$']
         ];
         matchRegexCase = ['gi','g'];
         REPLACE_ALL = 1000;
@@ -98,20 +100,24 @@ var FindAndReplace = function (context) {
         userInterface.addTextFieldWithValue(textToReplace);
 
         // Scope
-        userInterface.addTextLabelWithValue("Scope");
-        var options = searchOptions ? ['Document', 'Selected layer' + ([selection count] > 1 ? "s" : "")] : ['Document'];
-        userInterface.addAccessoryView(createRadioButtons(options, searchScope));
+        userInterface.addTextLabelWithValue("Search scope");
+        var options = showScopeOptions ? ['Whole document', 'Current page','Selected layer' + ([selection count] > 1 ? "s" : "")] : ["Whole document","Current page"];
+        userInterface.addAccessoryView(createRadioButtons(options, (showScopeOptions ? searchScope : 1)));
 
         // Case-sensitivity
-        userInterface.addTextLabelWithValue("Case sensitive")
-        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], !caseSensitivity))
+        userInterface.addTextLabelWithValue("Case matching")
+        userInterface.addAccessoryView(createRadioButtons(["Case insensitive", "Case sensitive"], caseSensitivity))
+
+        // Case-sensitivity
+        userInterface.addTextLabelWithValue("Case replacement")
+        userInterface.addAccessoryView(createRadioButtons(["Intelligent", "Standard"], !caseReplace))
 
         // Where to match
-        userInterface.addTextLabelWithValue("Match in text layer")
-        userInterface.addAccessoryView(createRadioButtons(["Complete", "Anywhere", "At start","At end"], matchWhere))
+        userInterface.addTextLabelWithValue("Where to match")
+        userInterface.addAccessoryView(createRadioButtons(["Exact match only", "Anywhere in layer", "At start of layer","At end of layer"], matchWhere))
         
         // How to match
-        userInterface.addTextLabelWithValue("Match whole words or phrases")
+        userInterface.addTextLabelWithValue("Match whole words or phrases only")
         userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], !matchWhole))
         
         // Replace and cancel buttons
@@ -142,13 +148,21 @@ var FindAndReplace = function (context) {
         
         // And the matrix to contain the cells in Radio mode
         var buttonMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(20.0, 20.0, 300.0, rows * 25) mode:NSRadioModeMatrix prototype:buttonCell numberOfRows:rows numberOfColumns:columns];
-            [buttonMatrix setCellSize: NSMakeSize(110, 20)]
+            [buttonMatrix setCellSize: NSMakeSize(140, 20)];
 
         // Add the options as cells
         for (i = 0; i < options.length; i++) {
             [[[buttonMatrix cells] objectAtIndex: i] setTitle: options[i]];
             [[[buttonMatrix cells] objectAtIndex: i] setTag: i];
         }
+        
+        // If there's an odd number of cells, hide the last one or it displays "Button".  There must be something i've missed that it displays "Button" in the first place!
+		if (rows*columns > options.length) {
+			[[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
+			[[[buttonMatrix cells] objectAtIndex:(options.length)] setEnabled: false];
+
+		}
+
         
         // Select the default one
         [buttonMatrix selectCellAtRow: selectedRow column: selectedColumn]
@@ -172,10 +186,15 @@ var FindAndReplace = function (context) {
             textToFind = [[modal viewAtIndex: 1] stringValue];
             textToReplace = modal.viewAtIndex(3).stringValue();
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
-            caseSensitivity = 1 - [[[modal viewAtIndex: 7] selectedCell] tag];
-            matchWhere = [[[modal viewAtIndex: 9] selectedCell] tag];
-            matchWhole = [[[modal viewAtIndex: 11] selectedCell] tag];
+            caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];
+            caseReplace = 1 - [[[modal viewAtIndex: 9] selectedCell] tag];
+            matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
+            matchWhole = 1 - [[[modal viewAtIndex: 13] selectedCell] tag];
 
+            
+            log ("Scope " + searchScope + " - Case " + caseSensitivity + " - Replace " + caseReplace + " - Where " + matchWhere + " - Whole " + matchWhole);
+            
+            
             // Make sure we have both text to find and replace
             if (textToFind != "" && textToReplace != "") {
                 
@@ -212,18 +231,26 @@ var FindAndReplace = function (context) {
         matchRegex = new RegExp(matchRegexStart[matchWhole][matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhole][matchWhere],matchRegexCase[caseSensitivity]);
 
         // Determine the scope and launch the search accordingly
-        if (searchScope == 1) {
+        switch (searchScope) {
             
-            // Loop through all the selected layers
-            for (var i = 0; i < [selection count]; i++) {
-                 searchInLayer(selection[i]);
-            }
-            
-        } else {
-            
+        case 0:
             // Start at the document root
             searchInLayer(document);
-        }
+            break;
+
+        case 1:
+            // Search in the current page only
+            searchInLayer(currentPage);
+            break;
+        
+        case 2:    
+            // Loop through all the selected layers
+            for (var i = 0; i < [selection count]; i++) {
+                     searchInLayer(selection[i]);
+                }
+            break;
+            
+    }
 
         // Display a small result message
         [document showMessage: itemsMatched + " instance" + (itemsMatched != 1 ? "s" : "") + " replaced"];
@@ -258,6 +285,26 @@ var FindAndReplace = function (context) {
     };
     
     
+    // Intelligent replace which attempts to match case if possible
+    function doIntelligentReplace(replaceThis, replaceWith) {
+        var replacement = replaceWith;
+        if (caseReplace == 1) {
+            if (replaceThis.charAt(0) == replaceThis.charAt(0).toLowerCase()) {
+                replacement = replaceWith.charAt(0).toLowerCase() + replaceWith.slice(1);
+            }
+            if (replaceThis.charAt(0) == replaceThis.charAt(0).toUpperCase()) {
+                replacement = replaceWith.charAt(0).toUpperCase() + replaceWith.slice(1);
+            }
+            if (replaceThis == replaceThis.toLowerCase()) {
+                replacement = replaceWith.toLowerCase()
+            }
+            if (replaceThis == replaceThis.toUpperCase()) {
+                replacement = replaceWith.toUpperCase()
+            }
+        }
+        return replacement;
+    }
+    
 
     // Do the actual search within the specified layer.  Recursive to drill down into sublayers.
     
@@ -270,7 +317,7 @@ var FindAndReplace = function (context) {
             case MSTextLayer:
                 if ([layer stringValue].trim().match(matchRegex)) {
                     itemsMatched++;
-                    layer.setStringValue(layer.stringValue().trim().replace(matchRegex,textToReplace)); 
+                    layer.setStringValue(layer.stringValue().trim().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);})); 
                     layer.setName(layer.stringValue().replace(/(\r\n|\n|\r)/gm," "));
                 }
                 break;
@@ -299,4 +346,3 @@ var FindAndReplace = function (context) {
 
 
 }
-
