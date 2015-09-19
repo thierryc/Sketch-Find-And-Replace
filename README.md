@@ -13,30 +13,30 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 
 ##Options
 **Search scope** - How much of your document it will actually search  
-* If you have selected layers to search in, then *Selected layers* will be chosen automatically.
-* You can also choose to search all layers in the current page 
-* Or you can search the *Whole document* is your only choice and it will search every layer in every artboard in every page of your document.
+* If you have selected layers to search in, then **Selected layers** will be chosen automatically.
+* You can also choose to search all layers in the **Current page** 
+* Or you can search the **Whole document** and it will search every layer in every artboard in every page of your document.
 
 **Case matching** - Whether it matches exactly as you typed or not
-* *Case insensitive* by default ("john" will match "John") 
-* *Case sensitive* it will match exactly as you typed it ("john" won't match "John").
+* **Case insensitive** by default ("john" will match "John") 
+* **Case sensitive** it will match exactly as you typed it ("john" won't match "John").
 
 **Case replacement** - How it deals with capitalisation when replacing
-* *Intelligent* by default - In intelligent mode and, in conjunction with other search options, it will analyse the current capitalisation and try to match your replacement if possible.  
+* **Intelligent** by default - In intelligent mode and, in conjunction with other search options, it will analyse the current capitalisation and try to match your replacement if possible.  
   * For example, if you find "smith" and replace with "Street" it will match the "Smith" in "John Smith" and change it to "John Street", preserving the capitalisation.  
   * It might also match "Blacksmith", but rather than change it to "BlackStreet" it would recognise that it wasn't capitalised to begin with and change it to "Blackstreet".  
   * If it was "John SMITH", it would recognise the all-capitals presentation of "SMITH" and change it to "John STREET" to preserve the capitalisation.
-* *Standard* - Replaces exactly what you typed, so could change "John Smith" to "John Street", "Blacksmith" to "BlackStreet" and "John SMITH" to "John Street" 
+* **Standard** - Replaces exactly what you typed, so could change "John Smith" to "John Street", "Blacksmith" to "BlackStreet" and "John SMITH" to "John Street" 
 
 **Where to match** - Where in your text layer it should match the search term
-* *Exact match only* will match your Find text against a text layer if it is *exactly* the same - excluding whitespace at the start or end (example "John Smith" will match text layers that read "John Smith").
-* *Anywhere in layer* will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
-* *At start of layer* will only match at the start of the text layer ("John" will match against "John Smith", but "Smith" won't)
-* *At end of layer* will only match at the end of the text layer ("Smith" will match against "John Smith", but "John" won't)
+* **Exact match only** will match your Find text against a text layer if it is *exactly* the same - excluding whitespace at the start or end (example "John Smith" will match text layers that read "John Smith").
+* **Anywhere in layer** will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
+* **At start of layer** will only match at the start of the text layer ("John" will match against "John Smith", but "Smith" won't)
+* **At end of layer** will only match at the end of the text layer ("Smith" will match against "John Smith", but "John" won't)
 
 **Match whole words or phrases only** - Whether it matches whole or partial words
-* *Yes* (default) will match whole words ("oh" will not match "John")
-* *No* will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
+* **Yes** (default) will match whole words ("oh" will not match "John")
+* **No** will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
 
 ## Other features
 * **Default find text** - If you have a text field selected, it will use that text as the default find text
