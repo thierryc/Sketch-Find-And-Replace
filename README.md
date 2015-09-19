@@ -39,9 +39,10 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * **Default find text** - If you have a text field selected, it will use that text as the default find text
 * **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
-##Future
-
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue.
+***
+###Credits and thanks
+Thanks to Aby Nimbalkar - @abynim - for the SketchPlugin-Remember code to save user settings
 ***
 *Disclaimer.  I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring.  I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk. Remember, cmd-z is your saviour.*
