@@ -22,7 +22,10 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * *Case sensitive* it will match exactly as you typed it ("john" won't match "John").
 
 **Case replacement** - How it deals with capitalisation when replacing
-* *Intelligent* by default - In intelligent mode and, in conjunction with other search options, it will analyse the current capitalisation and try to match your replacement if possible.  For example, if you find "smith" and replace with "Street" it will match the "Smith" in "John Smith" and change it to "John Street", preserving the capitalisation.  It might also match "Blacksmith", but rather than change it to "BlackStreet" it would recognise that it wasn't capitalised to begin with and change it to "Blackstreet".  If it was "John SMITH", it would recognise the all-capitals presentation of "SMITH" and change it to "John STREET" to preserve the capitalisation.
+* *Intelligent* by default - In intelligent mode and, in conjunction with other search options, it will analyse the current capitalisation and try to match your replacement if possible.  
+  * For example, if you find "smith" and replace with "Street" it will match the "Smith" in "John Smith" and change it to "John Street", preserving the capitalisation.  
+  * It might also match "Blacksmith", but rather than change it to "BlackStreet" it would recognise that it wasn't capitalised to begin with and change it to "Blackstreet".  
+  * If it was "John SMITH", it would recognise the all-capitals presentation of "SMITH" and change it to "John STREET" to preserve the capitalisation.
 * *Standard* - Replaces exactly what you typed, so could change "John Smith" to "John Street", "Blacksmith" to "BlackStreet" and "John SMITH" to "John Street" 
 
 **Where to match** - Where in your text layer it should match the search term
