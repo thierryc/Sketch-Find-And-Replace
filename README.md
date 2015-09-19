@@ -40,7 +40,7 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 * **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
 ##Issues or ideas
-If you have any problems, or ideas, please open an issue.
+If you have any problems, or ideas, please open an issue!
 ***
 ###Credits and thanks
 Thanks to Aby Nimbalkar - @abynim - for the SketchPlugin-Remember code to save user settings
