@@ -1,6 +1,9 @@
 #Find and replace for Sketch 3
 
 ##CHANGELOG
+**1.11** 19/09/2015
+* NEW : Remembers user settings for case matching, case replacement, where to match and match whole words
+
 **1.10** 19/09/2015
 * NEW : Intelligent replace feature added which is now the default option
 * NEW : Search all layers in the current page 

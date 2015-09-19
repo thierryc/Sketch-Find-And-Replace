@@ -1,7 +1,8 @@
+@import "plugindefaults.js"
+
 var FindAndReplace = function (context) {
 
-    var document, selection, textToFind, textToReplace, caseSensitivity, matchWhere, matchWhole, searchOptions, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-
+    var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
     
     // Initialise
     initialise(context);
@@ -12,16 +13,22 @@ var FindAndReplace = function (context) {
     
     
     function initialise(context) {
+
+        presets = {
+            caseSensitivity : 0,    // Off by default
+            caseReplace : 0,        // Intelligent by default
+            matchWhere : 1,         // Anywhere by default
+            matchWhole : 1          // Not whole words by default
+            }
+        
+        userDefaults = initDefaults("com.martinsteven.sketch-find-and-replace", presets);
+        
         document = context.document;
         currentPage = [document currentPage]
         selection = context.selection;
         textToFind = "";
         textToReplace = "";
         readyToReplace = null;
-        caseSensitivity = 0; // Off by default
-        caseReplace = 1; // Intelligent by default
-        matchWhere = 1; // Anywhere by default
-        matchWhole = 0; // Not whole words by default
         showScopeOptions = (selection && selection.count() > 0);
         searchScope = (selection && selection.count() > 0) ? 1 : 0;
         matchRegex = null;
@@ -106,19 +113,19 @@ var FindAndReplace = function (context) {
 
         // Case-sensitivity
         userInterface.addTextLabelWithValue("Case matching")
-        userInterface.addAccessoryView(createRadioButtons(["Case insensitive", "Case sensitive"], caseSensitivity))
+        userInterface.addAccessoryView(createRadioButtons(["Case insensitive", "Case sensitive"], userDefaults.caseSensitivity))
 
         // Case-sensitivity
         userInterface.addTextLabelWithValue("Case replacement")
-        userInterface.addAccessoryView(createRadioButtons(["Intelligent", "Standard"], !caseReplace))
+        userInterface.addAccessoryView(createRadioButtons(["Intelligent", "Standard"], userDefaults.caseReplace))
 
         // Where to match
         userInterface.addTextLabelWithValue("Where to match")
-        userInterface.addAccessoryView(createRadioButtons(["Exact match only", "Anywhere in layer", "At start of layer","At end of layer"], matchWhere))
+        userInterface.addAccessoryView(createRadioButtons(["Exact match only", "Anywhere in layer", "At start of layer","At end of layer"], userDefaults.matchWhere))
         
         // How to match
         userInterface.addTextLabelWithValue("Match whole words or phrases only")
-        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], !matchWhole))
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.matchWhole))
         
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
@@ -186,13 +193,15 @@ var FindAndReplace = function (context) {
             textToFind = [[modal viewAtIndex: 1] stringValue];
             textToReplace = modal.viewAtIndex(3).stringValue();
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
-            caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];
-            caseReplace = 1 - [[[modal viewAtIndex: 9] selectedCell] tag];
-            matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
-            matchWhole = 1 - [[[modal viewAtIndex: 13] selectedCell] tag];
 
+            userDefaults.caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];
+            userDefaults.caseReplace = [[[modal viewAtIndex: 9] selectedCell] tag];
+            userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
+            userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
+
+            saveDefaults(userDefaults);
             
-            log ("Scope " + searchScope + " - Case " + caseSensitivity + " - Replace " + caseReplace + " - Where " + matchWhere + " - Whole " + matchWhole);
+            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
             
             
             // Make sure we have both text to find and replace
@@ -228,7 +237,7 @@ var FindAndReplace = function (context) {
         itemsMatched = 0;
         
         // Build the regex to match on, based on the user options
-        matchRegex = new RegExp(matchRegexStart[matchWhole][matchWhere] + cleanSearch(textToFind) + matchRegexEnd[matchWhole][matchWhere],matchRegexCase[caseSensitivity]);
+        matchRegex = new RegExp(matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere],matchRegexCase[userDefaults.caseSensitivity]);
 
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
@@ -288,7 +297,7 @@ var FindAndReplace = function (context) {
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
         var replacement = replaceWith;
-        if (caseReplace == 1) {
+        if (userDefaults.caseReplace == 1) {
             if (replaceThis.charAt(0) == replaceThis.charAt(0).toLowerCase()) {
                 replacement = replaceWith.charAt(0).toLowerCase() + replaceWith.slice(1);
             }

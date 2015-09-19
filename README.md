@@ -37,9 +37,9 @@ Download and unzip, then double-click on the .sketchplugin file to copy it to th
 
 ## Other features
 * **Default find text** - If you have a text field selected, it will use that text as the default find text
+* **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
 ##Future
-* **Persist settings** - Remember your settings for next time you do a find/replace
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue.
