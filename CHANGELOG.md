@@ -1,6 +1,10 @@
 #Find and replace for Sketch 3
 
 ##CHANGELOG
+**1.10** 19/09/2015
+* NEW : Intelligent replace feature added which is now the default option
+* NEW : Search all layers in the current page 
+* FIX : Some cosmetic changes
 
 **1.09** 19/09/2015
 * FIX : Cosmetic change for consistency in order of radio buttons
