@@ -2,6 +2,9 @@
 
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text.  Now updated to do partial, case sensitive and full-document matching.
 
+##Screenshot
+![Alt text](/Screenshots/Screenshot.jpg?raw=true "Screenshot")
+
 ##Installation
 Download and unzip, then double-click on the .sketchplugin file to copy it to the plugins folder and install automatically into Sketch 3. 
 
@@ -52,9 +55,6 @@ Whether it matches whole or partial words
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue!
-
-##Screenshot
-![Alt text](/Screenshots/Screenshot.jpg?raw=true "Screenshot")
 
 ####Credits and thanks
 Thanks to Aby Nimbalkar - @abynim - for the SketchPlugin-Remember code to save user settings
