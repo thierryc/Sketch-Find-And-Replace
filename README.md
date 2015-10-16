@@ -43,15 +43,18 @@ Whether it matches whole or partial words
 * **Yes** (default) will match whole words ("oh" will not match "John")
 * **No** will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
 
-## Other features
+##Other features
 * **Default find text** - If you have a text field selected, it will use that text as the default find text
 * **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
-## Future development
+##Future development
 * **Regex search** - Maybe implement a full regex-based search for power users
 
 ##Issues or ideas
 If you have any problems, or ideas, please open an issue!
+
+##Screenshot
+![Alt text](/Screenshots/Screenshot.jpg?raw=true "Screenshot")
 
 ####Credits and thanks
 Thanks to Aby Nimbalkar - @abynim - for the SketchPlugin-Remember code to save user settings
