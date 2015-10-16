@@ -1,6 +1,9 @@
 #Find and replace for Sketch 3
 
 ##CHANGELOG
+**1.13** 16/10/2015
+* FIX : Was incorrectly trimming whitespace from the start of layers
+
 **1.12** 16/10/2015
 * FIX : Scope was incorrectly set as Current Page when layers selected
 

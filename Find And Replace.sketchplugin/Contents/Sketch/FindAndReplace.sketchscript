@@ -326,8 +326,8 @@ var FindAndReplace = function (context) {
             case MSTextLayer:
                 if ([layer stringValue].trim().match(matchRegex)) {
                     itemsMatched++;
-                    layer.setStringValue(layer.stringValue().trim().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);})); 
-                    layer.setName(layer.stringValue().replace(/(\r\n|\n|\r)/gm," "));
+                    layer.setStringValue(layer.stringValue().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);})); 
+                    layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
                 }
                 break;
 
