@@ -1,6 +1,9 @@
 #Find and replace for Sketch 3
 
 ##CHANGELOG
+**1.12** 16/10/2015
+* FIX : Scope was incorrectly set as Current Page when layers selected
+
 **1.11** 19/09/2015
 * NEW : Remembers user settings for case matching, case replacement, where to match and match whole words
 
