@@ -204,8 +204,8 @@ var FindAndReplace = function (context) {
             log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
             
             
-            // Make sure we have both text to find and replace
-            if (textToFind != "" && textToReplace != "") {
+            // Make sure we have text to find
+            if (textToFind != "") {
                 
                 // Yeah, ready to go
                 result = READY_TO_SEARCH;
