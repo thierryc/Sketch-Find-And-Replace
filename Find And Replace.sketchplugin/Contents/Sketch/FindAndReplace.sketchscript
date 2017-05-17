@@ -353,7 +353,6 @@ var FindAndReplace = function (context) {
                 break;
 
             case MSSymbolInstance:
-              log(layer);
               searchInSymbols(layer);
               break;
         }
@@ -362,7 +361,7 @@ var FindAndReplace = function (context) {
 
     function searchInSymbols(symbol) {
         var existingOverrides = symbol.overrides() || NSDictionary.dictionary();
-        var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);        
+        var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);
         for (var index in overrides) {
           if (overrides[index].trim().match(matchRegex)) {
             overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
