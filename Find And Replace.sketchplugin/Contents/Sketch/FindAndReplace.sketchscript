@@ -3,15 +3,15 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    
+
     // Initialise
     initialise(context);
-    
+
     // Display the user interface
     userInterfaceLoop();
 
-    
-    
+
+
     function initialise(context) {
 
         presets = {
@@ -20,9 +20,9 @@ var FindAndReplace = function (context) {
             matchWhere : 1,         // Anywhere by default
             matchWhole : 1          // Not whole words by default
             }
-        
+
         userDefaults = initDefaults("com.martinsteven.sketch-find-and-replace", presets);
-        
+
         document = context.document;
         currentPage = [document currentPage]
         selection = context.selection;
@@ -45,28 +45,28 @@ var FindAndReplace = function (context) {
         READY_TO_SEARCH = true;
         CANCELLED = false;
         NOT_READY = null;
-        
-        
+
+
         // If the selected layer is a text layer, bring the text in automatically
         if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
             textToFind = selection[0].stringValue().trim();
         }
-    }    
+    }
 
 
     // Keep displaying the user interface until we've either cancelled or clicked search
     function userInterfaceLoop() {
-        
+
         var uiResponse = NOT_READY;
-        
+
         while (uiResponse === NOT_READY) {
-        
+
             // Creatte the interface
             var modal = createUserInterface();
-            
+
             // Show it and process the form
             uiResponse = processButtonClick(modal, modal.runModal());
-            
+
             // Process the response
             switch (uiResponse) {
 
@@ -78,8 +78,8 @@ var FindAndReplace = function (context) {
                 // Let's go
                 case READY_TO_SEARCH:
                     doFindAndReplace();
-                    break;                
-                    
+                    break;
+
                 // Cancelled
                 case CANCELLED:
                     [document showMessage: "Cancelled"];
@@ -87,8 +87,8 @@ var FindAndReplace = function (context) {
             }
         }
     }
-    
-    
+
+
     function createUserInterface() {
 
         // Create modal window
@@ -122,11 +122,11 @@ var FindAndReplace = function (context) {
         // Where to match
         userInterface.addTextLabelWithValue("Where to match")
         userInterface.addAccessoryView(createRadioButtons(["Exact match only", "Anywhere in layer", "At start of layer","At end of layer"], userDefaults.matchWhere))
-        
+
         // How to match
         userInterface.addTextLabelWithValue("Match whole words or phrases only")
         userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.matchWhole))
-        
+
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
         userInterface.addButtonWithTitle('Cancel');
@@ -135,24 +135,24 @@ var FindAndReplace = function (context) {
         return userInterface;
     }
 
-    
-    
+
+
     // Creates a matrix of radio buttons for options
-    
+
     function createRadioButtons(options, selectedItem) {
 
         // Work out how many rows and columns we need for the options
         var rows = Math.ceil(options.length / 2);
         var columns = ((options.length < 2) ? 1 : 2);
-        
+
         // And which row and column contains the selected item
         var selectedRow = Math.floor(selectedItem / 2);
         var selectedColumn = selectedItem - (selectedRow * 2);
-        
+
         // Make a prototype cell
         var buttonCell = [[NSButtonCell alloc] init];
             [buttonCell setButtonType:NSRadioButton]
-        
+
         // And the matrix to contain the cells in Radio mode
         var buttonMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(20.0, 20.0, 300.0, rows * 25) mode:NSRadioModeMatrix prototype:buttonCell numberOfRows:rows numberOfColumns:columns];
             [buttonMatrix setCellSize: NSMakeSize(140, 20)];
@@ -162,7 +162,7 @@ var FindAndReplace = function (context) {
             [[[buttonMatrix cells] objectAtIndex: i] setTitle: options[i]];
             [[[buttonMatrix cells] objectAtIndex: i] setTag: i];
         }
-        
+
         // If there's an odd number of cells, hide the last one or it displays "Button".  There must be something i've missed that it displays "Button" in the first place!
 		if (rows*columns > options.length) {
 			[[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
@@ -170,22 +170,22 @@ var FindAndReplace = function (context) {
 
 		}
 
-        
+
         // Select the default one
         [buttonMatrix selectCellAtRow: selectedRow column: selectedColumn]
-        
+
         // Return the matrix so we can display it
         return buttonMatrix;
     }
 
 
-    
+
     // Processes the result of the UI
-    
+
     function processButtonClick(modal, buttonClick) {
-        
+
         var result;
-        
+
         // We're only concerned if the replace all button has been clicked
         if (buttonClick === REPLACE_ALL) {
 
@@ -200,48 +200,48 @@ var FindAndReplace = function (context) {
             userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
 
             saveDefaults(userDefaults);
-            
+
             log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
-            
-            
+
+
             // Make sure we have text to find
             if (textToFind != "") {
-                
+
                 // Yeah, ready to go
                 result = READY_TO_SEARCH;
-                
+
             } else {
-                
+
                 // Need something in find and replace
                 result = NOT_READY;
-                
+
             }
-            
+
         } else {
-            
+
             // Cancel button pressed
             result = CANCELLED;
 
         }
 
-        return result;        
+        return result;
     }
-    
-    
+
+
 
     // Kick off the find and replace loop at the correct start point(s)
-    
+
     function doFindAndReplace() {
 
         // Reset the counter
         itemsMatched = 0;
-        
+
         // Build the regex to match on, based on the user options
         matchRegex = new RegExp(matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere],matchRegexCase[userDefaults.caseSensitivity]);
 
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
-            
+
         case 0:
             // Start at the document root
             searchInLayer(document);
@@ -251,49 +251,49 @@ var FindAndReplace = function (context) {
             // Search in the current page only
             searchInLayer(currentPage);
             break;
-        
-        case 2:    
+
+        case 2:
             // Loop through all the selected layers
             for (var i = 0; i < [selection count]; i++) {
                      searchInLayer(selection[i]);
                 }
             break;
-            
+
     }
 
         // Display a small result message
         [document showMessage: itemsMatched + " instance" + (itemsMatched != 1 ? "s" : "") + " replaced"];
-        
+
     }
-    
-    
-    
+
+
+
     // Show a small alert dialog
-    
+
     function alert(message) {
-        
+
         // Create the dialog
         var alertDialog = COSAlertWindow.new();
-        
+
         // Add a title, message and button
         [alertDialog setMessageText: "Find And Replace"];
         [alertDialog setInformativeText: message];
         [alertDialog addButtonWithTitle: "OK"];
-        
+
         // And show it
         [alertDialog runModal];
-        
+
     }
 
 
-    
-    // Clean find input so it's suitable for use in the regex 
-    
+
+    // Clean find input so it's suitable for use in the regex
+
     function cleanSearch(s) {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
     };
-    
-    
+
+
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
         var replacement = replaceWith;
@@ -313,20 +313,21 @@ var FindAndReplace = function (context) {
         }
         return replacement;
     }
-    
+
 
     // Do the actual search within the specified layer.  Recursive to drill down into sublayers.
-    
+
     function searchInLayer(layer) {
-    
+
         // Determine the type of layer we're looking at
+
         switch ([layer class]) {
 
             // Text layer - this is the important one
             case MSTextLayer:
                 if ([layer stringValue].trim().match(matchRegex)) {
                     itemsMatched++;
-                    layer.setStringValue(layer.stringValue().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);})); 
+                    layer.setStringValue(layer.stringValue().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);}));
                     layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
                 }
                 break;
@@ -350,7 +351,23 @@ var FindAndReplace = function (context) {
                     searchInLayer(sublayer);
                 }
                 break;
+
+            case MSSymbolInstance:
+              searchInSymbols(layer);
+              break;
         }
+    }
+
+
+    function searchInSymbols(symbol) {
+        var existingOverrides = symbol.overrides() || NSDictionary.dictionary();
+        var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);
+        for (var index in overrides) {
+          if (overrides[index].trim().match(matchRegex)) {
+            overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+          }
+        }
+        symbol.overrides = overrides;
     }
 
 
