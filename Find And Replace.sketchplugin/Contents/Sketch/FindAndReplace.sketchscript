@@ -201,7 +201,7 @@ var FindAndReplace = function (context) {
 
             saveDefaults(userDefaults);
 
-            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
+            log ("FIND AND REPLACE: Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
 
 
             // Make sure we have text to find
@@ -382,7 +382,7 @@ var FindAndReplace = function (context) {
         for (var index in overrides) {
           var stringValue = false;
           if (overrides[index].class() == __NSCFString) {
-            stringValue = overrides[index] + ''; //  TODO:  better string convertion 
+            stringValue = overrides[index] + ''; //  TODO:  better string convertion
           }
           if (stringValue && overrides[index].trim().match(matchRegex)) {
             overrides[index] = stringValue.replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
