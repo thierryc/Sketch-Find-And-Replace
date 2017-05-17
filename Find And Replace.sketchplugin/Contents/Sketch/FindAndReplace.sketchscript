@@ -363,12 +363,35 @@ var FindAndReplace = function (context) {
         var existingOverrides = symbol.overrides() || NSDictionary.dictionary();
         var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);
         for (var index in overrides) {
-          if (overrides[index].trim().match(matchRegex)) {
-            overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+          var stringValue = false;
+          if (overrides[index].class() == __NSCFString) {
+            stringValue = overrides[index] + ''; //  TODO:  better string convertion
+          }
+          if (stringValue && overrides[index].trim().match(matchRegex)) {
+            overrides[index] = stringValue.replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+          } else {
+            // Class __NSDictionaryM TODO: find __NSDictionaryM documentation
+            var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);
+            overrides[index] = searchInOverrides(overrides[index])
           }
         }
         symbol.overrides = overrides;
     }
 
+    function searchInOverrides(overrides) {
+        for (var index in overrides) {
+          var stringValue = false;
+          if (overrides[index].class() == __NSCFString) {
+            stringValue = overrides[index] + ''; //  TODO:  better string convertion 
+          }
+          if (stringValue && overrides[index].trim().match(matchRegex)) {
+            overrides[index] = stringValue.replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+          } else {
+            // inception
+            overrides[index] = searchInOverrides(overrides[index])
+          }
+        }
+        return overrides;
+    }
 
 }
