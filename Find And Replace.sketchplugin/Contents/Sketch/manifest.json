@@ -18,7 +18,7 @@
     }
   ],
   "menu": {
-    "title": "Find And Replace",
+    "isRoot": true,
     "items": [
       "FindAndReplace"
     ]
