@@ -10,8 +10,6 @@ var FindAndReplace = function (context) {
     // Display the user interface
     userInterfaceLoop();
 
-
-
     function initialise(context) {
 
         presets = {
@@ -95,7 +93,7 @@ var FindAndReplace = function (context) {
         var userInterface = COSAlertWindow.new();
 
         // Text for modal
-        userInterface.setMessageText("Find And Replace");
+        userInterface.setMessageText("Find and Replace");
         userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document.");
 
         // Find text input
@@ -144,7 +142,6 @@ var FindAndReplace = function (context) {
     }
 
 
-
     // Creates a matrix of radio buttons for options
 
     function createRadioButtons(options, selectedItem) {
@@ -172,11 +169,11 @@ var FindAndReplace = function (context) {
         }
 
         // If there's an odd number of cells, hide the last one or it displays "Button".  There must be something i've missed that it displays "Button" in the first place!
-		if (rows*columns > options.length) {
-			[[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
-			[[[buttonMatrix cells] objectAtIndex:(options.length)] setEnabled: false];
+    if (rows*columns > options.length) {
+      [[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
+      [[[buttonMatrix cells] objectAtIndex:(options.length)] setEnabled: false];
 
-		}
+    }
 
 
         // Select the default one
@@ -284,7 +281,7 @@ var FindAndReplace = function (context) {
         var alertDialog = COSAlertWindow.new();
 
         // Add a title, message and button
-        [alertDialog setMessageText: "Find And Replace"];
+        [alertDialog setMessageText: "Find and Replace"];
         [alertDialog setInformativeText: message];
         [alertDialog addButtonWithTitle: "OK"];
 
