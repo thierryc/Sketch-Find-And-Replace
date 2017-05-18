@@ -72,7 +72,7 @@ var FindAndReplace = function (context) {
 
                 // Reload the interface
                 case NOT_READY:
-                    alert("Find or replace cannot be blank");
+                    alert("Find or replace cannot be blank.");
                     break;
 
                 // Let's go
@@ -82,7 +82,7 @@ var FindAndReplace = function (context) {
 
                 // Cancelled
                 case CANCELLED:
-                    [document showMessage: "Cancelled"];
+                    [document showMessage: "Find and Replace cancelled."];
                     break;
             }
         }
