@@ -131,6 +131,14 @@ var FindAndReplace = function (context) {
         userInterface.addButtonWithTitle('Replace All');
         userInterface.addButtonWithTitle('Cancel');
 
+        // Allow tab to switch between inputs
+        var findInput = userInterface.viewAtIndex(1);
+        var replaceWithInput = userInterface.viewAtIndex(3);
+        // focus on Find field on start
+        userInterface.alert().window().setInitialFirstResponder(findInput);
+        findInput.setNextKeyView(replaceWithInput);
+        replaceWithInput.setNextKeyView(findInput);
+
         // Return the Modal structure
         return userInterface;
     }
