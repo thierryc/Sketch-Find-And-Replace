@@ -1,6 +1,6 @@
 # Find and Replace for Sketch 3.3+
 
-** IMPORTANT : I don't use Sketch any more so am unable to commit to update or maintain this code going forward.  There are a lot of people interested with some great suggestions, so if someone else is able to take it over that would be appreciated by everyone.  Please let me know!  MS**
+**IMPORTANT : I don't use Sketch any more so am unable to commit to update or maintain this code going forward.  There are a lot of people interested with some great suggestions, so if someone else is able to take it over that would be appreciated by everyone.  Please let me know!  MS**
 
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
 
