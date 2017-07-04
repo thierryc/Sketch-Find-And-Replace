@@ -1,11 +1,12 @@
 {
   "name": "Find and Replace",
   "description": "A robust tool for changing text within layers and symbol overrides.",
-  "author": "Martin Steven",
-  "homepage": "https://github.com/mscodemonkey/Sketch-Find-And-Replace",
-  "version": 1.3,
-  "identifier": "com.martinsteven.sketch-find-and-replace",
-  "updateURL": "https://raw.githubusercontent.com/mscodemonkey/Sketch-Find-And-Replace/master/Find%20And%20Replace.sketchplugin/Contents/Sketch/manifest.json",
+  "author": "Martin Steven and Thierry Charbonnel",
+  "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace/",
+  "version": 1.4,
+  "identifier": "cx.ap.sketch-find-and-replace",
+  "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Find%20And%20Replace.sketchplugin/Contents/Sketch/manifest.json",
+  "appcast": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/appcast.xml",
   "compatibleVersion": 3.03,
   "bundleVersion": 1,
   "commands" : [

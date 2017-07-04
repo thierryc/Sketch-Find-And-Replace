@@ -2,6 +2,15 @@
 
 ## CHANGELOG
 
+#### 1.4 04/07/2017
+
+* Sketch 45 plugin update system
+* first auto update
+
+#### 1.3 04/07/2017
+
+* Sketch 45 plugin update system
+
 #### 1.2 18/05/2017
 
 * NEW : Replaces text within symbol overrides.
