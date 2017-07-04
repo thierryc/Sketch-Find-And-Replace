@@ -49,6 +49,7 @@ var FindAndReplace = function (context) {
         if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
             textToFind = selection[0].stringValue().trim();
         }
+
     }
 
 
