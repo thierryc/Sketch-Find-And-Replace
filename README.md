@@ -1,7 +1,5 @@
 # Find and Replace for Sketch 3.3+
 
-**IMPORTANT : I don't use Sketch any more so am unable to commit to update or maintain this code going forward.  There are a lot of people interested with some great suggestions, so if someone else is able to take it over that would be appreciated by everyone.  Please let me know!  MS**
-
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
 
 Now works with symbol overrides. 🎉
@@ -84,12 +82,18 @@ Whether it matches whole or partial words
 
 If you have any problems, or ideas, please open an issue!
 
+
 ### Credits and Thanks
+
+Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) - Thank you Martin.
+
 Thanks to [Aby Nimbalkar - @abynim](https://github.com/abynim) - for the SketchPlugin-Remember code to save user settings.
 
 Thanks to [Autre Planete - @thierryc](https://github.com/thierryc) - for writing the code to change text within symbol overrides.
 
 Thanks to [Vincenzo Petito - @vincenzopetito](https://github.com/vincenzopetito) - for code within [Shapr](https://github.com/vincenzopetito/Shapr) showing how to focus the text field on start and tabbing between input fields found within the dialog.
+
+Thanks to [Sean Dellis - @seandellis](https://github.com/seandellis) - for his help, test sketch doc and issues review.
 
 ### Disclaimer
 
