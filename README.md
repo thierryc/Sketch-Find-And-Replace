@@ -1,5 +1,5 @@
 
-![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-512.png)
+![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
 
 # Find and Replace for Sketch
 
