@@ -2,7 +2,11 @@
 
 ## CHANGELOG
 
-#### 1.4 04/07/2017
+#### 1.7 04/07/2017
+
+* new logo
+
+#### 1.6 04/07/2017
 
 * Sketch 45 plugin update system
 * first auto update
