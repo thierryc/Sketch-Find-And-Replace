@@ -92,6 +92,9 @@ var FindAndReplace = function (context) {
 
         // Create modal window
         var userInterface = COSAlertWindow.new();
+        
+        // add new logo
+        userInterface.setIcon(NSImage.alloc().initByReferencingFile(context.plugin.urlForResourceNamed("icon.png").path()));
 
         // Text for modal
         userInterface.setMessageText("Find and Replace");
@@ -170,12 +173,11 @@ var FindAndReplace = function (context) {
         }
 
         // If there's an odd number of cells, hide the last one or it displays "Button".  There must be something i've missed that it displays "Button" in the first place!
-    if (rows*columns > options.length) {
-      [[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
-      [[[buttonMatrix cells] objectAtIndex:(options.length)] setEnabled: false];
+        if (rows*columns > options.length) {
+          [[[buttonMatrix cells] objectAtIndex:(options.length)] setTransparent: true];
+          [[[buttonMatrix cells] objectAtIndex:(options.length)] setEnabled: false];
 
-    }
-
+        }
 
         // Select the default one
         [buttonMatrix selectCellAtRow: selectedRow column: selectedColumn]
@@ -265,17 +267,14 @@ var FindAndReplace = function (context) {
                 }
             break;
 
-    }
+        }
 
         // Display a small result message
         [document showMessage: itemsMatched + " instance" + (itemsMatched != 1 ? "s" : "") + " replaced"];
 
     }
 
-
-
     // Show a small alert dialog
-
     function alert(message) {
 
         // Create the dialog
@@ -292,9 +291,7 @@ var FindAndReplace = function (context) {
     }
 
 
-
     // Clean find input so it's suitable for use in the regex
-
     function cleanSearch(s) {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
     };
