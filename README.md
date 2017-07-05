@@ -1,3 +1,6 @@
+
+![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-512.png)
+
 # Find and Replace for Sketch
 
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
