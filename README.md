@@ -10,9 +10,15 @@ Now works with symbol overrides. 🎉
 ![Find and Replace dialog](./Screenshots/screenshot.png)
 
 ## Installation
-Download and unzip, then double-click on the `Find and Replace.sketchplugin` file. Sketch will copy it to the plugins folder and install it automatically.
 
-### Install with Sketch Runner
+Download and unzip, then double-click on the `Find and Replace.sketchplugin` file. 
+Sketch will copy it to the plugins folder and install it automatically.
+
+## Update > 1.6
+
+Use Sketch Automatic Update (Sketch 45+)
+
+### Install with Sketch Runner 
 
 With Sketch Runner, just go to the `install` command and search for `Find and Replace`. Runner allows you to manage plugins and do much more to speed up your workflow in Sketch. [Download Runner here](http://www.sketchrunner.com).
 
