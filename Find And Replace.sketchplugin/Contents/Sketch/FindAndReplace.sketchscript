@@ -214,7 +214,6 @@ var FindAndReplace = function (context) {
 
             log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
 
-
             // Make sure we have text to find
             if (textToFind != "") {
 
@@ -248,7 +247,8 @@ var FindAndReplace = function (context) {
         itemsMatched = 0;
 
         // Build the regex to match on, based on the user options
-        matchRegex = new RegExp(matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere],matchRegexCase[userDefaults.caseSensitivity]);
+        var regexString = matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere];
+        matchRegex = new RegExp(regexString, matchRegexCase[userDefaults.caseSensitivity]);
 
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
@@ -378,7 +378,11 @@ var FindAndReplace = function (context) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
             if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-              overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+              overrides[index] = overrides[index].replace(matchRegex,
+                function(eachMatch){
+                  return doIntelligentReplace(eachMatch, textToReplace);
+                }
+              );
             }
           }
         }
@@ -392,9 +396,12 @@ var FindAndReplace = function (context) {
         if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
             overrides[index] = searchInSymbolsInception(overrides[index]);
         } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
-          //
           if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-            overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+            overrides[index] = overrides[index].replace(matchRegex,
+              function(eachMatch) {
+                return doIntelligentReplace(eachMatch, textToReplace);
+              }
+            );
           }
         }
       }
