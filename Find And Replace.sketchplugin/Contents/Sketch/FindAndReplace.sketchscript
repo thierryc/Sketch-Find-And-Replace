@@ -1,5 +1,8 @@
 @import "plugindefaults.js"
 
+// defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
+// defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool NO
+
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
@@ -338,6 +341,9 @@ var FindAndReplace = function (context) {
             // If we've started our search at the document root, loop through the pages
             case MSDocument:
                 var documentPages = [layer pages];
+
+                log([documentPages count]);
+
                 for (var i = 0; i < [documentPages count]; i++) {
                     var documentPage = [documentPages objectAtIndex:i];
                     searchInLayer(documentPage);
@@ -361,17 +367,38 @@ var FindAndReplace = function (context) {
         }
     }
 
-
     function searchInSymbols(symbol) {
         var existingOverrides = symbol.overrides() || NSDictionary.dictionary();
         var overrides = NSMutableDictionary.dictionaryWithDictionary(existingOverrides);
-        for (var index in overrides) {
-          if (overrides[index].trim().match(matchRegex)) {
-            overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+        var keys = overrides.allKeys();
+
+        for (var i = 0; i < keys.count(); i++) {
+          var index = keys.objectAtIndex(i);
+          if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
+              overrides[index] = searchInSymbolsInception(overrides[index]);
+          } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
+            if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
+              overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+            }
           }
         }
         symbol.overrides = overrides;
     }
 
+    function searchInSymbolsInception(overrides) {
+      var keys = overrides.allKeys();
+      for (var i = 0; i < keys.count(); i++) {
+        var index = keys.objectAtIndex(i);
+        if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
+            overrides[index] = searchInSymbolsInception(overrides[index]);
+        } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
+          //
+          if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
+            overrides[index] = overrides[index].replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);});
+          }
+        }
+      }
+      return overrides;
+    }
 
 }
