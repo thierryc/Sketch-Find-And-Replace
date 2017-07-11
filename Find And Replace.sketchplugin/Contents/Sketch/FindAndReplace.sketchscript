@@ -13,11 +13,11 @@ var FindAndReplace = function (context) {
     function initialise(context) {
 
         presets = {
-            caseSensitivity : 0,    // Off by default
-            caseReplace : 0,        // Intelligent by default
-            matchWhere : 1,         // Anywhere by default
-            matchWhole : 1          // Not whole words by default
-            }
+          caseSensitivity : 0,    // Off by default
+          caseReplace : 0,        // Intelligent by default
+          matchWhere : 1,         // Anywhere by default
+          matchWhole : 1          // Not whole words by default
+        }
 
         userDefaults = initDefaults("com.martinsteven.sketch-find-and-replace", presets);
 
@@ -92,7 +92,7 @@ var FindAndReplace = function (context) {
 
         // Create modal window
         var userInterface = COSAlertWindow.new();
-        
+
         // add new logo
         userInterface.setIcon(NSImage.alloc().initByReferencingFile(context.plugin.urlForResourceNamed("icon.png").path()));
 
@@ -263,8 +263,8 @@ var FindAndReplace = function (context) {
         case 2:
             // Loop through all the selected layers
             for (var i = 0; i < [selection count]; i++) {
-                     searchInLayer(selection[i]);
-                }
+              searchInLayer(selection[i]);
+            }
             break;
 
         }
