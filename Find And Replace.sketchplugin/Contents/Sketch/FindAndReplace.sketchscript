@@ -313,6 +313,7 @@ var FindAndReplace = function (context) {
 
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
+        log(replaceThis + ' -- ' + replaceWith);
         var replacement = replaceWith;
         if (userDefaults.caseReplace == 1) {
             if (replaceThis.charAt(0) == replaceThis.charAt(0).toLowerCase()) {
@@ -331,6 +332,19 @@ var FindAndReplace = function (context) {
         return replacement;
     }
 
+    function replaceValue(sourceString, replaceString) {
+      var newStringValue;
+      if (!userDefaults.regex) {
+        newStringValue = sourceString.replace(matchRegex,
+          function(eachMatch){
+            return doIntelligentReplace(eachMatch, replaceString);
+          }
+        );
+      } else {
+        newStringValue = sourceString.replace(matchRegex, replaceString);
+      }
+      return newStringValue
+    }
 
     // Do the actual search within the specified layer.  Recursive to drill down into sublayers.
 
@@ -344,7 +358,7 @@ var FindAndReplace = function (context) {
             case MSTextLayer:
                 if ([layer stringValue].trim().match(matchRegex)) {
                     itemsMatched++;
-                    layer.setStringValue(layer.stringValue().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);}));
+                    layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
                     layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
                 }
                 break;
@@ -389,11 +403,7 @@ var FindAndReplace = function (context) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
             if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-              overrides[index] = overrides[index].replace(matchRegex,
-                function(eachMatch){
-                  return doIntelligentReplace(eachMatch, textToReplace);
-                }
-              );
+              overrides[index] = replaceValue(overrides[index], textToReplace);
             }
           }
         }
@@ -408,11 +418,7 @@ var FindAndReplace = function (context) {
             overrides[index] = searchInSymbolsInception(overrides[index]);
         } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
           if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-            overrides[index] = overrides[index].replace(matchRegex,
-              function(eachMatch) {
-                return doIntelligentReplace(eachMatch, textToReplace);
-              }
-            );
+            overrides[index] = replaceValue(overrides[index], textToReplace);
           }
         }
       }
