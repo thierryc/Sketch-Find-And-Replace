@@ -83,14 +83,21 @@ Whether it matches whole or partial words
 
 **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
-## Future development
+## Regex new feature
 
-**Regex search** - Maybe implement a full regex-based search for power users
+Get the Regex Power ! ⚡️
+
+String: "John Smith"
+
+Find: (\w+)\s+(\w+)
+
+Replace with: "$2 $1"
+
+Result: Smith John.
 
 ## Issues or ideas
 
 If you have any problems, or ideas, please open an issue!
-
 
 ### Credits and Thanks
 
