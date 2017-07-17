@@ -16,10 +16,11 @@ var FindAndReplace = function (context) {
     function initialise(context) {
 
         presets = {
-          caseSensitivity : 0,    // Off by default
-          caseReplace : 0,        // Intelligent by default
-          matchWhere : 1,         // Anywhere by default
-          matchWhole : 1          // Not whole words by default
+          caseSensitivity: 0,    // Off by default
+          caseReplace: 0,        // Intelligent by default
+          matchWhere: 1,         // Anywhere by default
+          matchWhole: 1,         // Not whole words by default
+          regex: 1              // Not active
         }
 
         userDefaults = initDefaults("cx.ap.sketch-find-and-replace", presets);
@@ -132,6 +133,10 @@ var FindAndReplace = function (context) {
         userInterface.addTextLabelWithValue("Match whole words or phrases only")
         userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.matchWhole))
 
+        // Regex
+        userInterface.addTextLabelWithValue("RegEx (for expert)")
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.regex))
+
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
         userInterface.addButtonWithTitle('Cancel');
@@ -209,10 +214,11 @@ var FindAndReplace = function (context) {
             userDefaults.caseReplace = [[[modal viewAtIndex: 9] selectedCell] tag];
             userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
             userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
+            userDefaults.regexString = [[[modal viewAtIndex: 15] selectedCell] tag];
 
             saveDefaults(userDefaults);
 
-            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole);
+            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole + " - regex " + userDefaults.regex);
 
             // Make sure we have text to find
             if (textToFind != "") {
@@ -248,7 +254,13 @@ var FindAndReplace = function (context) {
 
         // Build the regex to match on, based on the user options
         var regexString = matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere];
-        matchRegex = new RegExp(regexString, matchRegexCase[userDefaults.caseSensitivity]);
+        if (!userDefaults.regex) {
+          matchRegex = new RegExp(regexString, matchRegexCase[userDefaults.caseSensitivity]);
+        } else {
+          matchRegex = new RegExp(textToFind, matchRegexCase[userDefaults.caseSensitivity]);
+        }
+
+
 
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
@@ -293,7 +305,6 @@ var FindAndReplace = function (context) {
 
     }
 
-
     // Clean find input so it's suitable for use in the regex
     function cleanSearch(s) {
         return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
@@ -302,6 +313,7 @@ var FindAndReplace = function (context) {
 
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
+        log(replaceThis + ' -- ' + replaceWith);
         var replacement = replaceWith;
         if (userDefaults.caseReplace == 1) {
             if (replaceThis.charAt(0) == replaceThis.charAt(0).toLowerCase()) {
@@ -320,6 +332,19 @@ var FindAndReplace = function (context) {
         return replacement;
     }
 
+    function replaceValue(sourceString, replaceString) {
+      var newStringValue;
+      if (!userDefaults.regex) {
+        newStringValue = sourceString.replace(matchRegex,
+          function(eachMatch){
+            return doIntelligentReplace(eachMatch, replaceString);
+          }
+        );
+      } else {
+        newStringValue = sourceString.replace(matchRegex, replaceString);
+      }
+      return newStringValue
+    }
 
     // Do the actual search within the specified layer.  Recursive to drill down into sublayers.
 
@@ -333,7 +358,7 @@ var FindAndReplace = function (context) {
             case MSTextLayer:
                 if ([layer stringValue].trim().match(matchRegex)) {
                     itemsMatched++;
-                    layer.setStringValue(layer.stringValue().replace(matchRegex,function(eachMatch){return doIntelligentReplace(eachMatch, textToReplace);}));
+                    layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
                     layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
                 }
                 break;
@@ -378,11 +403,7 @@ var FindAndReplace = function (context) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
             if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-              overrides[index] = overrides[index].replace(matchRegex,
-                function(eachMatch){
-                  return doIntelligentReplace(eachMatch, textToReplace);
-                }
-              );
+              overrides[index] = replaceValue(overrides[index], textToReplace);
             }
           }
         }
@@ -397,11 +418,7 @@ var FindAndReplace = function (context) {
             overrides[index] = searchInSymbolsInception(overrides[index]);
         } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
           if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
-            overrides[index] = overrides[index].replace(matchRegex,
-              function(eachMatch) {
-                return doIntelligentReplace(eachMatch, textToReplace);
-              }
-            );
+            overrides[index] = replaceValue(overrides[index], textToReplace);
           }
         }
       }
