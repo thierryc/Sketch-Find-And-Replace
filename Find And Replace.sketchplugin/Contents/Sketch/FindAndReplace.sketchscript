@@ -23,7 +23,7 @@ var FindAndReplace = function (context) {
           regex: 1              // Not active
         }
 
-        userDefaults = initDefaults("com.martinsteven.sketch-find-and-replace", presets);
+        userDefaults = initDefaults("cx.ap.sketch-find-and-replace", presets);
 
         document = context.document;
         currentPage = [document currentPage]
