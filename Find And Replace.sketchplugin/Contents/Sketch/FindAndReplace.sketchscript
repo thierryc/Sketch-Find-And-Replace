@@ -22,7 +22,7 @@ var FindAndReplace = function (context) {
           matchWhole : 1          // Not whole words by default
         }
 
-        userDefaults = initDefaults("com.martinsteven.sketch-find-and-replace", presets);
+        userDefaults = initDefaults("cx.ap.sketch-find-and-replace", presets);
 
         document = context.document;
         currentPage = [document currentPage]
