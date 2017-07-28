@@ -87,15 +87,20 @@ Whether it matches whole or partial words
 
 Get the Regex Power ! ⚡️
 
-String: "John Smith"
+### "John Smith" to "Smith John"
 
-Find: (\w+)\s+(\w+)
+Find 
+```
+(\w+)\s+(\w+)
+```
 
-Replace with: "$2 $1"
+Replace with
+```
+$2 $1
+```
 
 Result: Smith John.
-
-### Tips: 
+ 
 
 #### Replace all double spaces 
 
@@ -105,7 +110,7 @@ Find
 
 ```
 
-Replace
+Replace with
 ``` 
 (one space)
 
