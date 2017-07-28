@@ -95,6 +95,27 @@ Replace with: "$2 $1"
 
 Result: Smith John.
 
+### Tips: 
+
+#### Replace all double spaces 
+
+Find
+```
+\s{2,}
+
+```
+
+Replace
+``` 
+(one space)
+
+```
+
+Follow me on twitter for more tips. 
+
+https://twitter.com/Autre_planete
+
+
 ## Issues or ideas
 
 If you have any problems, or ideas, please open an issue!
