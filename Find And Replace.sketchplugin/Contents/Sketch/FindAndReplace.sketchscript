@@ -6,6 +6,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
+    var version = '1.11';
 
     // Initialise
     initialise(context);
@@ -102,7 +103,7 @@ var FindAndReplace = function (context) {
 
         // Text for modal
         userInterface.setMessageText("Find and Replace");
-        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document.");
+        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document. " + version );
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
@@ -313,7 +314,7 @@ var FindAndReplace = function (context) {
 
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
-        log(replaceThis + ' -- ' + replaceWith);
+        // log(replaceThis + ' -- ' + replaceWith);
         var replacement = replaceWith;
         if (userDefaults.caseReplace == 1) {
             if (replaceThis.charAt(0) == replaceThis.charAt(0).toLowerCase()) {
@@ -356,19 +357,17 @@ var FindAndReplace = function (context) {
 
             // Text layer - this is the important one
             case MSTextLayer:
-                if ([layer stringValue].trim().match(matchRegex)) {
-                    itemsMatched++;
-                    layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
-                    layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
-                }
-                break;
+              // log(layer.stringValue());
+              if (layer.stringValue() && layer.stringValue().trim().match(matchRegex)) {
+                  itemsMatched++;
+                  layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
+                  layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
+              }
+              break;
 
             // If we've started our search at the document root, loop through the pages
             case MSDocument:
                 var documentPages = [layer pages];
-
-                log([documentPages count]);
-
                 for (var i = 0; i < [documentPages count]; i++) {
                     var documentPage = [documentPages objectAtIndex:i];
                     searchInLayer(documentPage);
@@ -402,7 +401,8 @@ var FindAndReplace = function (context) {
           if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
-            if (overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
+            // log(overrides[index]);
+            if (overrides[index] && overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
               overrides[index] = replaceValue(overrides[index], textToReplace);
             }
           }
