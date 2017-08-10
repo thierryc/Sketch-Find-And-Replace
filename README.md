@@ -129,6 +129,8 @@ If you have any problems, or ideas, please open an issue!
 
 Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) - Thank you Martin.
 
+Maintained and improved by [Autre Planete - @thierryc](https://github.com/thierryc).
+
 Thanks to [Aby Nimbalkar - @abynim](https://github.com/abynim) - for the SketchPlugin-Remember code to save user settings.
 
 Thanks to [Autre Planete - @thierryc](https://github.com/thierryc) - for writing the code to change text within symbol overrides.
