@@ -17,11 +17,12 @@ var FindAndReplace = function (context) {
     function initialise(context) {
 
         presets = {
-          caseSensitivity: 0,    // Off by default
+          caseSensitivity: 0,    // on by default
           caseReplace: 0,        // Intelligent by default
           matchWhere: 1,         // Anywhere by default
           matchWhole: 1,         // Not whole words by default
-          regex: 1              // Not active
+          regex: 1,              // Not active
+          replaceTextPreservingAttributeRanges: 1              // Not active
         }
 
         userDefaults = initDefaults("cx.ap.sketch-find-and-replace", presets);
@@ -138,6 +139,10 @@ var FindAndReplace = function (context) {
         userInterface.addTextLabelWithValue("RegEx (for expert)")
         userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.regex))
 
+        // replaceTextPreservingAttributeRanges
+        userInterface.addTextLabelWithValue("Preserving Attribute Ranges (experiment)")
+        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.replaceTextPreservingAttributeRanges))
+
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
         userInterface.addButtonWithTitle('Cancel');
@@ -215,11 +220,12 @@ var FindAndReplace = function (context) {
             userDefaults.caseReplace = [[[modal viewAtIndex: 9] selectedCell] tag];
             userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
             userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
-            userDefaults.regexString = [[[modal viewAtIndex: 15] selectedCell] tag];
+            userDefaults.regex = [[[modal viewAtIndex: 15] selectedCell] tag];
+            userDefaults.replaceTextPreservingAttributeRanges = [[[modal viewAtIndex: 17] selectedCell] tag];
 
             saveDefaults(userDefaults);
 
-            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole + " - regex " + userDefaults.regex);
+            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole + " - regex " + userDefaults.regex + " - preservingAttributeRanges " + userDefaults.replaceTextPreservingAttributeRanges);
 
             // Make sure we have text to find
             if (textToFind != "") {
@@ -335,7 +341,7 @@ var FindAndReplace = function (context) {
 
     function replaceValue(sourceString, replaceString) {
       var newStringValue;
-      if (!userDefaults.regex) {
+      if (userDefaults.regex == 1) {
         newStringValue = sourceString.replace(matchRegex,
           function(eachMatch){
             return doIntelligentReplace(eachMatch, replaceString);
@@ -360,7 +366,12 @@ var FindAndReplace = function (context) {
               // log(layer.stringValue());
               if (layer.stringValue() && layer.stringValue().trim().match(matchRegex)) {
                   itemsMatched++;
-                  layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
+                  if(userDefaults.replaceTextPreservingAttributeRanges == 0) {
+                    layer.replaceTextPreservingAttributeRanges(replaceValue(layer.stringValue(), textToReplace));
+                  } else {
+                    layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
+                  }
+
                   layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
               }
               break;
@@ -401,7 +412,6 @@ var FindAndReplace = function (context) {
           if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
-            // log(overrides[index]);
             if (overrides[index] && overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
               overrides[index] = replaceValue(overrides[index], textToReplace);
             }
