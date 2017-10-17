@@ -17,7 +17,7 @@ var FindAndReplace = function (context) {
     function initialise(context) {
 
         presets = {
-          caseSensitivity: 0,    // Off by default
+          caseSensitivity: 0,    // on by default
           caseReplace: 0,        // Intelligent by default
           matchWhere: 1,         // Anywhere by default
           matchWhole: 1,         // Not whole words by default
@@ -215,7 +215,7 @@ var FindAndReplace = function (context) {
             userDefaults.caseReplace = [[[modal viewAtIndex: 9] selectedCell] tag];
             userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
             userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
-            userDefaults.regexString = [[[modal viewAtIndex: 15] selectedCell] tag];
+            userDefaults.regex = [[[modal viewAtIndex: 15] selectedCell] tag];
 
             saveDefaults(userDefaults);
 
@@ -335,7 +335,7 @@ var FindAndReplace = function (context) {
 
     function replaceValue(sourceString, replaceString) {
       var newStringValue;
-      if (!userDefaults.regex) {
+      if (userDefaults.regex == 1) {
         newStringValue = sourceString.replace(matchRegex,
           function(eachMatch){
             return doIntelligentReplace(eachMatch, replaceString);
@@ -360,7 +360,7 @@ var FindAndReplace = function (context) {
               // log(layer.stringValue());
               if (layer.stringValue() && layer.stringValue().trim().match(matchRegex)) {
                   itemsMatched++;
-                  layer.setStringValue(replaceValue(layer.stringValue(), textToReplace));
+                  layer.replaceTextPreservingAttributeRanges(replaceValue(layer.stringValue(), textToReplace));
                   layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
               }
               break;
@@ -401,7 +401,6 @@ var FindAndReplace = function (context) {
           if(overrides[index].class().isSubclassOfClass_(NSMutableDictionary.class()) ) {
               overrides[index] = searchInSymbolsInception(overrides[index]);
           } else if(overrides[index].class().isSubclassOfClass_(NSString.class()) ) {
-            // log(overrides[index]);
             if (overrides[index] && overrides[index].trim() && overrides[index].trim().match(matchRegex)) {
               overrides[index] = replaceValue(overrides[index], textToReplace);
             }
