@@ -1,20 +1,21 @@
 
 ![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
-
 # Find and Replace for Sketch
 
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
 
 Now works with symbol overrides. 🎉
 
+Ready for Sketch 47.
+
 ![Find and Replace dialog](./Screenshots/screenshot.png)
 
 ## Installation
 
-Download and unzip, then double-click on the `Find and Replace.sketchplugin` file. 
+Download and unzip, then double-click on the `Find and Replace.sketchplugin` file.
 Sketch will copy it to the plugins folder and install it automatically.
 
-### Install with Sketch Runner 
+### Install with Sketch Runner
 
 With Sketch Runner, just go to the `install` command and search for `Find and Replace`. Runner allows you to manage plugins and do much more to speed up your workflow in Sketch. [Download Runner here](http://www.sketchrunner.com).
 
@@ -89,7 +90,7 @@ Get the Regex Power ! ⚡️
 
 ### "John Smith" to "Smith John"
 
-Find 
+Find
 ```
 (\w+)\s+(\w+)
 ```
@@ -100,9 +101,9 @@ $2 $1
 ```
 
 Result: Smith John.
- 
 
-#### Replace all double spaces 
+
+#### Replace all double spaces
 
 Find
 ```
@@ -111,12 +112,12 @@ Find
 ```
 
 Replace with
-``` 
+```
 (one space)
 
 ```
 
-Follow me on twitter for more tips. 
+Follow me on twitter for more tips.
 
 https://twitter.com/Autre_planete
 

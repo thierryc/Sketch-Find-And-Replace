@@ -6,7 +6,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.13';
+    var version = '1.15';
 
     // Initialise
     initialise(context);
@@ -107,11 +107,11 @@ var FindAndReplace = function (context) {
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
-        userInterface.addTextFieldWithValue(textToFind);
+        userInterface.addTextFieldWithValue(userDefaults.textToFindOrigine || '');
 
         // Replace with text input
         userInterface.addTextLabelWithValue("Replace with");
-        userInterface.addTextFieldWithValue(textToReplace);
+        userInterface.addTextFieldWithValue(userDefaults.textToReplaceOrigine || '');
 
         // Scope
         userInterface.addTextLabelWithValue("Search scope");
@@ -136,7 +136,7 @@ var FindAndReplace = function (context) {
 
         // Regex
         userInterface.addTextLabelWithValue("RegEx (for expert)")
-        userInterface.addAccessoryView(createRadioButtons(["Yes", "No"], userDefaults.regex))
+        userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], userDefaults.regex))
 
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
@@ -211,6 +211,9 @@ var FindAndReplace = function (context) {
             textToReplace = modal.viewAtIndex(3).stringValue();
             searchScope = [[[modal viewAtIndex: 5] selectedCell] tag];
 
+            userDefaults.textToFindOrigine = textToFind;
+            userDefaults.textToReplaceOrigine = textToReplace;
+
             userDefaults.caseSensitivity = [[[modal viewAtIndex: 7] selectedCell] tag];
             userDefaults.caseReplace = [[[modal viewAtIndex: 9] selectedCell] tag];
             userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
@@ -223,15 +226,11 @@ var FindAndReplace = function (context) {
 
             // Make sure we have text to find
             if (textToFind != "") {
-
                 // Yeah, ready to go
                 result = READY_TO_SEARCH;
-
             } else {
-
                 // Need something in find and replace
                 result = NOT_READY;
-
             }
 
         } else {
@@ -255,13 +254,12 @@ var FindAndReplace = function (context) {
 
         // Build the regex to match on, based on the user options
         var regexString = matchRegexStart[userDefaults.matchWhole][userDefaults.matchWhere] + cleanSearch(textToFind) + matchRegexEnd[userDefaults.matchWhole][userDefaults.matchWhere];
-        if (!userDefaults.regex) {
+
+        if (!userDefaults.regex) { // 0
           matchRegex = new RegExp(regexString, matchRegexCase[userDefaults.caseSensitivity]);
-        } else {
+        } else { // 1
           matchRegex = new RegExp(textToFind, matchRegexCase[userDefaults.caseSensitivity]);
         }
-
-
 
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
@@ -335,13 +333,13 @@ var FindAndReplace = function (context) {
 
     function replaceValue(sourceString, replaceString) {
       var newStringValue;
-      if (userDefaults.regex == 1) {
+      if (!userDefaults.regex) { // 0
         newStringValue = sourceString.replace(matchRegex,
           function(eachMatch){
             return doIntelligentReplace(eachMatch, replaceString);
           }
         );
-      } else {
+      } else { // 1
         newStringValue = sourceString.replace(matchRegex, replaceString);
       }
       return newStringValue
