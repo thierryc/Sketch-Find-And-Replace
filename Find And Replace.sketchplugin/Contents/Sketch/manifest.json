@@ -4,7 +4,7 @@
   "author": "Martin Steven and Thierry Charbonnel",
   "authorEmail" : "thierry.charbonnel@autreplanete.com",
   "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace/",
-  "version": "1.15",
+  "version": "1.16",
   "identifier": "cx.ap.sketch-find-and-replace",
   "icon" : "runner-icon.png",
   "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Find%20And%20Replace.sketchplugin/Contents/Sketch/manifest.json",
