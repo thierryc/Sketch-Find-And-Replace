@@ -6,7 +6,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.15';
+    var version = '1.17';
 
     // Initialise
     initialise(context);
@@ -306,8 +306,8 @@ var FindAndReplace = function (context) {
 
     // Clean find input so it's suitable for use in the regex
     function cleanSearch(s) {
-        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
-    };
+      return (s+'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
+    }
 
 
     // Intelligent replace which attempts to match case if possible
