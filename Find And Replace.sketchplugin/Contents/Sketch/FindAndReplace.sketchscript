@@ -3,10 +3,13 @@
 // defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
 // defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool NO
 
+// tail -F ~/Library/Logs/com.bohemiancoding.sketch3/Plugin\ Output.log
+// touch ~/Library/Logs/com.bohemiancoding.sketch3/Plugin\ Output.log
+
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.17';
+    var version = '1.19';
 
     // Initialise
     initialise(context);
@@ -49,12 +52,10 @@ var FindAndReplace = function (context) {
         CANCELLED = false;
         NOT_READY = null;
 
-
         // If the selected layer is a text layer, bring the text in automatically
         if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
             textToFind = selection[0].stringValue().trim();
         }
-
     }
 
 
@@ -107,7 +108,7 @@ var FindAndReplace = function (context) {
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
-        userInterface.addTextFieldWithValue(userDefaults.textToFindOrigine || '');
+        userInterface.addTextFieldWithValue(textToFind || userDefaults.textToFindOrigine || '');
 
         // Replace with text input
         userInterface.addTextLabelWithValue("Replace with");
@@ -115,7 +116,7 @@ var FindAndReplace = function (context) {
 
         // Scope
         userInterface.addTextLabelWithValue("Search scope");
-        var options = showScopeOptions ? ['Whole document', 'Current page','Selected layer' + ([selection count] > 1 ? "s" : "")] : ["Whole document","Current page"];
+        var options = showScopeOptions ? ['Whole document', 'Current page', 'Selected layer' + ([selection count] > 1 ? "s" : "")] : ["Whole document","Current page"];
         userInterface.addAccessoryView(createRadioButtons(options, (showScopeOptions ? searchScope : 1)));
 
         // Case-sensitivity
@@ -198,7 +199,6 @@ var FindAndReplace = function (context) {
 
 
     // Processes the result of the UI
-
     function processButtonClick(modal, buttonClick) {
 
         var result;
@@ -261,6 +261,8 @@ var FindAndReplace = function (context) {
           matchRegex = new RegExp(textToFind, matchRegexCase[userDefaults.caseSensitivity]);
         }
 
+        currentPage.changeSelectionBySelectingLayers_([]);
+
         // Determine the scope and launch the search accordingly
         switch (searchScope) {
 
@@ -282,9 +284,10 @@ var FindAndReplace = function (context) {
             break;
 
         }
-
         // Display a small result message
         [document showMessage: itemsMatched + " instance" + (itemsMatched != 1 ? "s" : "") + " replaced"];
+
+        currentPage.changeSelectionBySelectingLayers_(selection);
 
     }
 
@@ -308,7 +311,6 @@ var FindAndReplace = function (context) {
     function cleanSearch(s) {
       return (s+'').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&').trim();
     }
-
 
     // Intelligent replace which attempts to match case if possible
     function doIntelligentReplace(replaceThis, replaceWith) {
