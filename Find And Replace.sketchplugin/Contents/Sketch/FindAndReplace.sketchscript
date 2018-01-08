@@ -9,7 +9,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.20';
+    var version = '1.21';
 
     // Initialise
     initialise(context);
@@ -273,7 +273,7 @@ var FindAndReplace = function (context) {
 
         case 1:
             // Search in the current page only
-            log(currentPage.name);
+            //log(currentPage.name);
             searchInLayer(currentPage, false);
             break;
 
@@ -353,7 +353,6 @@ var FindAndReplace = function (context) {
     function searchInLayer(layer, inSymbolMaster) {
 
         // Determine the type of layer we're looking at
-        log([layer class]);
 
         switch ([layer class]) {
 
