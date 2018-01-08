@@ -9,7 +9,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.19';
+    var version = '1.20';
 
     // Initialise
     initialise(context);
@@ -268,18 +268,19 @@ var FindAndReplace = function (context) {
 
         case 0:
             // Start at the document root
-            searchInLayer(document);
+            searchInLayer(document, false);
             break;
 
         case 1:
             // Search in the current page only
-            searchInLayer(currentPage);
+            log(currentPage.name);
+            searchInLayer(currentPage, false);
             break;
 
         case 2:
             // Loop through all the selected layers
             for (var i = 0; i < [selection count]; i++) {
-              searchInLayer(selection[i]);
+              searchInLayer(selection[i], true);
             }
             break;
 
@@ -349,9 +350,10 @@ var FindAndReplace = function (context) {
 
     // Do the actual search within the specified layer.  Recursive to drill down into sublayers.
 
-    function searchInLayer(layer) {
+    function searchInLayer(layer, inSymbolMaster) {
 
         // Determine the type of layer we're looking at
+        log([layer class]);
 
         switch ([layer class]) {
 
@@ -370,7 +372,7 @@ var FindAndReplace = function (context) {
                 var documentPages = [layer pages];
                 for (var i = 0; i < [documentPages count]; i++) {
                     var documentPage = [documentPages objectAtIndex:i];
-                    searchInLayer(documentPage);
+                    searchInLayer(documentPage, false);
                 }
                 break;
 
@@ -381,9 +383,18 @@ var FindAndReplace = function (context) {
                 var sublayers = [layer layers];
                 for (var i = 0; i < [sublayers count]; i++) {
                     var sublayer = [sublayers objectAtIndex: i];
-                    searchInLayer(sublayer);
+                    searchInLayer(sublayer, false);
                 }
                 break;
+
+            case MSSymbolMaster:
+              if (inSymbolMaster != true) break;
+              var sublayers = [layer layers];
+              for (var i = 0; i < [sublayers count]; i++) {
+                  var sublayer = [sublayers objectAtIndex: i];
+                  searchInLayer(sublayer, inSymbolMaster);
+              }
+              break;
 
             case MSSymbolInstance:
               searchInSymbols(layer);

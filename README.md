@@ -6,7 +6,9 @@ Finds text in selected layer(s) and all layers contained within - and replaces i
 
 Now works with symbol overrides. 🎉
 
-Ready for Sketch 47.
+Ready for Sketch 48, 47, 46.
+
+New in 1.20: Find and replace in Master Symbol (selection mode only).
 
 ![Find and Replace dialog](./Screenshots/screenshot.png)
 
