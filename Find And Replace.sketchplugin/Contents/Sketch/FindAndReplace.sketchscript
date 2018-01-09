@@ -9,7 +9,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.21';
+    var version = '1.22';
 
     // Initialise
     initialise(context);
@@ -125,7 +125,7 @@ var FindAndReplace = function (context) {
 
         // Case-sensitivity
         userInterface.addTextLabelWithValue("Case replacement")
-        userInterface.addAccessoryView(createRadioButtons(["Intelligent", "Standard"], userDefaults.caseReplace))
+        userInterface.addAccessoryView(createRadioButtons(["Standard", "Intelligent"], userDefaults.caseReplace))
 
         // Where to match
         userInterface.addTextLabelWithValue("Where to match")
