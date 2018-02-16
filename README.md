@@ -1,31 +1,27 @@
+# [Find and Replace](https://github.com/thierryc/Sketch-Find-And-Replace/) for Sketch
 
 ![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
-# Find and Replace for Sketch
 
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
 
 Now works with symbol overrides. 🎉
 
+Find and Replace [Sketch Plugin source code](https://github.com/thierryc/Sketch-Find-And-Replace/) on github
+
 Ready for Sketch 48, 47, 46.
 
 New in 1.20: Find and replace in Master Symbol (selection mode only).
 
-![Find and Replace dialog](./Screenshots/screenshot.png)
+![Find and Replace dialog](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Screenshots/screenshot.png)
 
 ## Installation
 
 Download and unzip, then double-click on the `Find and Replace.sketchplugin` file.
 Sketch will copy it to the plugins folder and install it automatically.
 
-### Install with Sketch Runner
-
-With Sketch Runner, just go to the `install` command and search for `Find and Replace`. Runner allows you to manage plugins and do much more to speed up your workflow in Sketch. [Download Runner here](http://www.sketchrunner.com).
-
-![Sketch Runner screenshot](./Screenshots/sketch-runner.png)
-
 ## Update > 1.6
 
-Use Sketch Automatic Update (Sketch 45+)
+Use Sketch Automatic Update (Sketch 45+).
 
 ## Usage
 **Menu** - You can access it from the menu **Plugins → Find and Replace**
@@ -132,7 +128,7 @@ If you have any problems, or ideas, please open an issue!
 
 Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) - Thank you Martin.
 
-Maintained and improved by [Autre Planete - @thierryc](https://github.com/thierryc).
+Maintained and improved by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
 
 Thanks to [Aby Nimbalkar - @abynim](https://github.com/abynim) - for the SketchPlugin-Remember code to save user settings.
 
@@ -145,5 +141,7 @@ Thanks to [Sean Dellis - @seandellis](https://github.com/seandellis) - for his h
 ### Disclaimer
 
 I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring. I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk. Remember, cmd-z is your saviour.*
+
+
 
 [![Install PLUGIN NAME with Sketchpacks](http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png "Install PLUGIN NAME with Sketchpacks")](https://sketchpacks.com/YOUR_NAME/PLUGIN_NAME/install)
