@@ -145,3 +145,5 @@ Thanks to [Sean Dellis - @seandellis](https://github.com/seandellis) - for his h
 ### Disclaimer
 
 I take no responsibility for what you find and replace, or for any changes made unintentionally due to this software erroring. I do test it before I release it so the chances of bugs are minimised, but still, use wisely and completely at your own risk. Remember, cmd-z is your saviour.*
+
+[![Install PLUGIN NAME with Sketchpacks](http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png "Install PLUGIN NAME with Sketchpacks")](https://sketchpacks.com/YOUR_NAME/PLUGIN_NAME/install)
