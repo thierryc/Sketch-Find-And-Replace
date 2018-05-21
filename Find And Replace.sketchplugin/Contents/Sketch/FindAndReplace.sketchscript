@@ -9,7 +9,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.22';
+    var version = '1.24';
 
     // Initialise
     initialise(context);
@@ -24,7 +24,8 @@ var FindAndReplace = function (context) {
           caseReplace: 0,        // Intelligent by default
           matchWhere: 1,         // Anywhere by default
           matchWhole: 1,         // Not whole words by default
-          regex: 1              // Not active
+          regex: 1,              // Not active
+          renameLabel: 1        // rename the label
         }
 
         userDefaults = initDefaults("cx.ap.sketch-find-and-replace", presets);
@@ -139,6 +140,10 @@ var FindAndReplace = function (context) {
         userInterface.addTextLabelWithValue("RegEx (for expert)")
         userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], userDefaults.regex))
 
+        // Replace text label
+        userInterface.addTextLabelWithValue("Replace text label (default “Yes”)")
+        userInterface.addAccessoryView(createRadioButtons(["No", "Yes"], userDefaults.renameLabel))
+
         // Replace and cancel buttons
         userInterface.addButtonWithTitle('Replace All');
         userInterface.addButtonWithTitle('Cancel');
@@ -219,10 +224,18 @@ var FindAndReplace = function (context) {
             userDefaults.matchWhere = [[[modal viewAtIndex: 11] selectedCell] tag];
             userDefaults.matchWhole = [[[modal viewAtIndex: 13] selectedCell] tag];
             userDefaults.regex = [[[modal viewAtIndex: 15] selectedCell] tag];
+            userDefaults.renameLabel = [[[modal viewAtIndex: 17] selectedCell] tag];
 
             saveDefaults(userDefaults);
 
-            log ("Scope " + searchScope + " - Case " + userDefaults.caseSensitivity + " - Replace " + userDefaults.caseReplace + " - Where " + userDefaults.matchWhere + " - Whole " + userDefaults.matchWhole + " - regex " + userDefaults.regex);
+            log ("Scope " + searchScope
+              + " - Case " + userDefaults.caseSensitivity
+              + " - Replace " + userDefaults.caseReplace
+              + " - Where " + userDefaults.matchWhere
+              + " - Whole " + userDefaults.matchWhole
+              + " - regex " + userDefaults.regex
+              + " - renameLabel " + userDefaults.renameLabel
+            );
 
             // Make sure we have text to find
             if (textToFind != "") {
@@ -362,7 +375,9 @@ var FindAndReplace = function (context) {
               if (layer.stringValue() && layer.stringValue().trim().match(matchRegex)) {
                   itemsMatched++;
                   layer.replaceTextPreservingAttributeRanges(replaceValue(layer.stringValue(), textToReplace));
-                  layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
+                  if (userDefaults.renameLabel == 1) {
+                    layer.setName(layer.stringValue().trim().replace(/(\r\n|\n|\r)/gm," "));
+                  }
               }
               break;
 
