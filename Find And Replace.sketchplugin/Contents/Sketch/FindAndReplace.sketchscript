@@ -9,7 +9,7 @@
 var FindAndReplace = function (context) {
 
     var presets, userDefaults, document, selection, textToFind, textToReplace, searchScope, matchRegex, matchRegexStart, matchRegexEnd, matchRegexCase, REPLACE_ALL, READY_TO_SEARCH, CANCELLED, NOT_READY, itemsMatched;
-    var version = '1.24';
+    var version = '1.25';
 
     // Initialise
     initialise(context);
@@ -53,7 +53,7 @@ var FindAndReplace = function (context) {
         CANCELLED = false;
         NOT_READY = null;
 
-        // If the selected layer is a text layer, bring the text in automatically
+        // If the selected object is a text layer, bring the text in automatically
         if (selection && selection.count() == 1 && selection[0].class() == MSTextLayer) {
             textToFind = selection[0].stringValue().trim();
         }
@@ -105,7 +105,7 @@ var FindAndReplace = function (context) {
 
         // Text for modal
         userInterface.setMessageText("Find and Replace");
-        userInterface.setInformativeText("Finds and replaces text items in the selected layer(s) or the complete document. " + version );
+        userInterface.setInformativeText("Finds and replaces text items in the selected object(s) or the complete document. " + version );
 
         // Find text input
         userInterface.addTextLabelWithValue("Find");
@@ -117,7 +117,7 @@ var FindAndReplace = function (context) {
 
         // Scope
         userInterface.addTextLabelWithValue("Search scope");
-        var options = showScopeOptions ? ['Whole document', 'Current page', 'Selected layer' + ([selection count] > 1 ? "s" : "")] : ["Whole document","Current page"];
+        var options = showScopeOptions ? ['Whole document', 'Current page', 'Selected object' + ([selection count] > 1 ? "s" : "")] : ["Whole document","Current page"];
         userInterface.addAccessoryView(createRadioButtons(options, (showScopeOptions ? searchScope : 1)));
 
         // Case-sensitivity
@@ -291,7 +291,7 @@ var FindAndReplace = function (context) {
             break;
 
         case 2:
-            // Loop through all the selected layers
+            // Loop through all the Selected objects
             for (var i = 0; i < [selection count]; i++) {
               searchInLayer(selection[i], true);
             }
