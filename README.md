@@ -2,6 +2,12 @@
 
 ![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
 
+## V2 is in progress. (Javascript API)
+
+[Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
+
+## How to
+
 Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.
 
 Now works with symbol overrides. 🎉
