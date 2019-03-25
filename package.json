@@ -1,0 +1,43 @@
+{
+  "name": "sketch-find-and-replace-2",
+  "version": "0.1.0",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "Find-And-Replace-2",
+    "manifest": "src/manifest.json",
+    "main": "Find-and-replace-2.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "resources": [
+    "./ressources/index.js"
+  ],
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.11",
+    "@skpm/extract-loader": "^2.0.2",
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
+    "html-loader": "^0.5.5"
+  },
+  "author": "Thierry Charbonnel <thierryc@users.noreply.github.com>",
+  "dependencies": {
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "sketch-module-web-view": "^2.1.2",
+    "styled-components": "^4.1.3"
+  }
+}
