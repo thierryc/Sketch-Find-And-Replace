@@ -4,26 +4,26 @@
   "author": "Martin Steven and Thierry Charbonnel",
   "authorEmail" : "thierry.charbonnel@autreplanete.com",
   "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace/",
-  "version": "1.25",
+  "version": "2.0",
   "identifier": "cx.ap.sketch-find-and-replace",
-  "icon" : "sketch-find-and-replace.png",
   "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Find%20And%20Replace.sketchplugin/Contents/Sketch/manifest.json",
   "appcast": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/appcast.xml",
-  "compatibleVersion": 3.03,
+  "compatibleVersion": 3,
   "bundleVersion": 1,
-  "commands" : [
+  "icon": "icon.png",
+  "commands": [
     {
-      "name" : "Find and Replace",
-      "identifier" : "FindAndReplace",
-      "script" : "FindAndReplace.sketchscript",
-      "handler" : "FindAndReplace",
+      "name": "Find And Replace 2",
+      "identifier": "Find-and-replace-2",
+      "script": "./Find-and-replace-2.js",
       "shortcut" : "cmd shift f"
     }
   ],
   "menu": {
     "isRoot": true,
+    "title": "Find And Replace 2",
     "items": [
-      "FindAndReplace"
+      "Find-and-replace-2"
     ]
   }
 }
