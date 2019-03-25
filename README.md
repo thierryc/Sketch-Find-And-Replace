@@ -2,7 +2,7 @@
 
 ![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
 
-## V2 is in progress. (Javascript API)
+## V2 is ready for beta tester (Javascript API)
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
