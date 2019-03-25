@@ -1,6 +1,22 @@
 import React, { Fragment } from 'react'
 import { getTheme } from './Colors'
 import styled, { createGlobalStyle } from 'styled-components'
+import Help from './Help'
+
+import Page from './Page'
+import Row from './Row'
+import RowGroup from './RowGroup'
+import InfoRowGroup from './InfoRowGroup'
+import BtnGroup from './BtnGroup'
+import Button from './Button'
+import BtnText from './BtnText'
+import BtnInage from './BtnInage'
+import Input from './Input'
+
+import ActionBar from './ActionBar'
+import InputLabel from './InputLabel'
+import InfoString from './InfoString'
+import InfoStringIn from './InfoStringIn'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -9,117 +25,6 @@ body, html {
   font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, "Apple Color Emoji";
   overflow: hidden;
 }
-`
-const Page = styled.div`
-  overflow: hidden;
-  height: 240px;
-  padding: 14px 16px;
-  background-color: ${props => props.theme.background};
-  color: ${props => props.theme.text};
-`
-
-const RowGroup = styled.div`
-  margin-bottom: 8px;
-`
-
-const InfoRowGroup = styled.div`
-  margin-top: -2px;
-  margin-bottom: 12px;
-`
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const BtnGroup = styled.div`
-  display: flex;
-  justify-content: space-between;
-`
-
-const InputLabel = styled.label`
-  text-transform: uppercase;
-  font-size: 13px;
-  color: #a8a8a8;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  line-height: 1.3rem;
-  padding-bottom: 3px;
-  cursor: none;
-  -webkit-user-select: none;
-`
-
-const BtnText = styled.span`
-  text-transform: uppercase;
-  opacity: 0.33;
-  font-size: 13px;
-  line-height: 1.3rem;
-  font-weight: 500;
-  color: ${props => props.theme.btnText};
-  letter-spacing: 0.8px;
-  padding-left: 4px;
-  padding-right: 4px;
-  padding-bottom: 3px;
-  cursor: default;
-  -webkit-user-select: none;
-`
-
-const Input = styled.input`
-  width: 63%;
-  height: calc(2rem - 2px);
-  font-size: 15px;
-  padding: 0 8px;
-  font-weight: 400;
-  line-height: 1.1rem;
-  letter-spacing: 0.92px;
-  color: ${props => props.theme.inputText};
-  background-color: ${props => props.theme.inputBackground};
-  background-clip: padding-box;
-  border: 1px solid ${props => props.theme.stroke};
-  border-radius: 2px;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  outline: none;
-`
-
-const BtnInage = styled.div`
-  width: 38px;
-  height: 32px;
-  opacity: ${props =>
-    props.isActive
-      ? props.theme.activeIconOpacity
-      : props.theme.inactiveIconOpacity};
-  border-radius: 4px;
-  margin-left: 6px;
-  cursor: default;
-  -webkit-user-select: none;
-`
-
-const InfoString = styled.span`
-  font-size: 13px;
-  letter-spacing: 0.8px;
-  color: ${props => props.theme.text};
-`
-const InfoStringIn = styled.span`
-  color: ${props => props.theme.textInfo};
-`
-
-const Button = styled.button`
-  flex-grow: 1;
-  border: 0;
-  box-shadow: none;
-  padding: 6px 8px;
-  background-color: ${props =>
-    props.primary ? props.theme.primaryBtnBg : props.theme.btnBg};
-  border-radius: 2px;
-  font-size: 15px;
-  color: ${props =>
-    props.primary ? props.theme.primaryBtnText : props.theme.btnText};
-  letter-spacing: 0;
-  opacity: ${props =>
-    props.isActive
-      ? props.theme.activeIconOpacity
-      : props.theme.inactiveIconOpacity};
-  transition: opacity 0.15s ease-in-out;
 `
 
 export default class App extends React.Component {
@@ -135,6 +40,7 @@ export default class App extends React.Component {
       replaceString: '',
       selection: false,
       replaceStart: false,
+      helpActive: false,
     }
 
     this.timeout
@@ -154,6 +60,8 @@ export default class App extends React.Component {
     this.handleDocument = this.handleDocument.bind(this)
 
     this.replace = this.replace.bind(this)
+    this.toogleHelp = this.toogleHelp.bind(this)
+    
   }
 
   componentDidMount() {
@@ -262,7 +170,12 @@ export default class App extends React.Component {
     window.postMessage('close')
   }
 
-  displayHelp() {}
+  toogleHelp() {
+    const { helpActive } = this.state
+    this.setState({
+      helpActive: !helpActive
+    })
+  }
 
   replace() {
     this.setState({
@@ -283,29 +196,33 @@ export default class App extends React.Component {
       count,
       replaceStart,
       selection,
+      helpActive,
     } = this.state
 
     const theme = getTheme(darkMode)
 
     return (
       <Fragment>
+        <ActionBar>
+          <BtnGroup>
+            <BtnText theme={theme} onClick={this.changeMode}>
+              {darkMode ? 'Light Mode' : 'Dark Mode'}
+            </BtnText>
+            <BtnText
+              theme={theme}
+              style={{
+                cursor: 'help'
+              }}
+              onClick={this.toogleHelp}
+            >
+              ?
+            </BtnText>
+          </BtnGroup>
+        </ActionBar>
         <Page theme={theme}>
           <RowGroup>
             <Row>
               <InputLabel theme={theme}>FIND</InputLabel>
-              <BtnGroup>
-                <BtnText theme={theme} onClick={this.changeMode}>
-                  {darkMode ? 'Light Mode' : 'Dark Mode'}
-                </BtnText>
-                <BtnText
-                  theme={theme}
-                  style={{
-                    cursor: 'help'
-                  }}
-                >
-                  ?
-                </BtnText>
-              </BtnGroup>
             </Row>
             <Row>
               <Input
@@ -537,7 +454,8 @@ export default class App extends React.Component {
             </Row>
           </RowGroup>
         </Page>
-        <GlobalStyle theme />
+        <Help isActive={helpActive} theme={theme} close={this.toogleHelp}/>
+        <GlobalStyle theme={theme} />
       </Fragment>
     )
   }
