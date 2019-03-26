@@ -4,7 +4,7 @@ const LoadingIcon =  (props) => {
   const { color } = props
   return (
     <svg 
-      width="24px" 
+      width="24px"
       height="30px" 
       viewBox="0 0 24 30"
       >

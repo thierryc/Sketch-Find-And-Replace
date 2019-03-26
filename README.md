@@ -2,7 +2,10 @@
 
 ![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/assets/icon.png)
 
-## V2 is in progress. (Javascript API)
+## V2 is ready for Sketch 53, 54...
+
+
+For Sketch before 52 use the V1.
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
@@ -13,10 +16,6 @@ Finds text in selected layer(s) and all layers contained within - and replaces i
 Now works with symbol overrides. 🎉
 
 Find and Replace [Sketch Plugin source code](https://github.com/thierryc/Sketch-Find-And-Replace/) on github
-
-Ready for Sketch 48, 47, 46.
-
-New in 1.20: Find and replace in Master Symbol (selection mode only).
 
 ![Find and Replace dialog](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Screenshots/screenshot.png)
 
@@ -51,31 +50,8 @@ Whether it matches exactly as you typed or not
 
 **Case sensitive** it will match exactly as you typed it ("john" won't match "John").
 
-### Case replacement
-How it deals with capitalisation when replacing
-
-**Intelligent** by default - In intelligent mode and, in conjunction with other search options, it will analyse the current capitalisation and try to match your replacement if possible.
-
-* For example, if you find "smith" and replace with "Street" it will match the "Smith" in "John Smith" and change it to "John Street", preserving the capitalisation.
-
-* It might also match "Blacksmith", but rather than change it to "BlackStreet" it would recognise that it wasn't capitalised to begin with and change it to "Blackstreet".
-
-* If it was "John SMITH", it would recognise the all-capitals presentation of "SMITH" and change it to "John STREET" to preserve the capitalisation.
-
-**Standard** - Replaces exactly what you typed, so could change "John Smith" to "John Street", "Blacksmith" to "BlackStreet" and "John SMITH" to "John Street"
-
-### Where to match
-Where in your text layer it should match the search term
-
-**Exact match only** will match your Find text against a text layer if it is *exactly* the same (example "John Smith" will match text layers that read "John Smith"). If you have whitespace (or line breaks) at the start or end, this will *not* match and you should use "Anywhere in layer" as your option (or remove the whitespace - what's the point?!)
-
-**Anywhere in layer** will do a partial match (example "Smith" will match against "John Smith" and replace the word "Smith" only).
-
-**At start of layer** will only match at the start of the text layer ("John" will match against "John Smith", but "Smith" won't). If you have whitespace at the start, this will *not* match.
-
-**At end of layer** will only match at the end of the text layer ("Smith" will match against "John Smith", but "John" won't). If you have whitespace at the end, this will *not* match.
-
 ### Match whole words or phrases only
+
 Whether it matches whole or partial words
 
 **Yes** (default) will match whole words ("oh" will not match "John")
@@ -83,8 +59,6 @@ Whether it matches whole or partial words
 **No** will match partial words ("oh" will match "John", if you wanted to change him to "Joan" for example)
 
 ## Other features
-
-**Default find text** - If you have a text field selected, it will use that text as the default find text
 
 **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
 
