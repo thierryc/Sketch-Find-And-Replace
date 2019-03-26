@@ -2545,15 +2545,6 @@ var debounce = function debounce(fn, time) {
 
   var replaceInLayer = function replaceInLayer(layer) {
     var newStringValue = layer.text.replace(state.regex, escapeReplaceString(state.replaceString));
-    /*
-    const newStringValue = layer.text.replace(state.regex,
-      function(match){
-        // replace variables
-        return state.replaceString
-      }
-    )
-    */
-
     layer.text = newStringValue;
 
     if (layer.text != newStringValue) {

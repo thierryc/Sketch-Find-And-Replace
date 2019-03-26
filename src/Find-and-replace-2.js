@@ -122,7 +122,7 @@ export default function() {
   browserWindow.loadURL(require('../ressources/index.html'))
 
   let contents = browserWindow.webContents
-
+  
   const initRegExp = (newState) => {
     state = newState
     UI.message(`${state.findString} replace by ${state.replaceString}`)
@@ -167,14 +167,6 @@ export default function() {
 
   const replaceInLayer = (layer) => {
     const newStringValue = layer.text.replace(state.regex, escapeReplaceString(state.replaceString))
-    /*
-    const newStringValue = layer.text.replace(state.regex,
-      function(match){
-        // replace variables
-        return state.replaceString
-      }
-    )
-    */
     layer.text = newStringValue
     if (layer.text != newStringValue) {
       layers.push(layer)
