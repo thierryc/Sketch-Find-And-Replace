@@ -47,7 +47,7 @@ export default class App extends React.Component {
       darkMode: false,
       regexActive: false,
       caseSensitive: false,
-      wholeWord: false,
+      wholeWord: true,
       findMode: 2,
       findString: '',
       replaceString: '',
