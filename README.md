@@ -1,6 +1,6 @@
 # [Find and Replace](https://github.com/thierryc/Sketch-Find-And-Replace/) for Sketch
 
-![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Ressources/logo-256.png)
+![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/assetsd/icon.png)
 
 ## V2 is in progress. (Javascript API)
 
@@ -132,9 +132,11 @@ If you have any problems, or ideas, please open an issue!
 
 ### Credits and Thanks
 
-Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) - Thank you Martin.
+V1 Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) - Thank you Martin.
 
-Maintained and improved by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
+V2 Created by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
+
+V1 and V2 Maintained and improved by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
 
 Thanks to [Aby Nimbalkar - @abynim](https://github.com/abynim) - for the SketchPlugin-Remember code to save user settings.
 
@@ -143,6 +145,8 @@ Thanks to [Autre Planete - @thierryc](https://github.com/thierryc) - for writing
 Thanks to [Vincenzo Petito - @vincenzopetito](https://github.com/vincenzopetito) - for code within [Shapr](https://github.com/vincenzopetito/Shapr) showing how to focus the text field on start and tabbing between input fields found within the dialog.
 
 Thanks to [Sean Dellis - @seandellis](https://github.com/seandellis) - for his help, test sketch doc and issues review.
+
+Thanks to [@iconmaster](https://github.com/iconmaster) - for his test.
 
 ### Disclaimer
 

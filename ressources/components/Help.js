@@ -50,8 +50,9 @@ const BtnHelpContainer = styled.div`
   display: flex; /* or inline-flex */
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 2em;
 `
 
 
@@ -106,30 +107,36 @@ const Help = (props) => {
       <HelpIconDescription>All pages of a document</HelpIconDescription>
     </HelpIconsContainer>
 
+    <h3>Regex (Regular expressions)</h3>
+    <p>Get the Regex Power! ⚡️</p>
+    <p>Regular expressions are patterns used to match character combinations in strings.</p>
+    <p><a href={'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'}>MDN Regular Expressions Guide</a></p>
+    <p><a href={'https://javascript.info/regular-expressions'}>Javascript.info Regular Expressions Guide</a></p>    
+    <h4>Some Examples</h4>
+    <p>The power of search and replace with regex.</p>
+    <p>Let's use the search and replace example from above:</p>
+
+    <h4>Convert "John Smith" to "Smith John"</h4>
+    <p>Find</p>
+    <pre>(\w+)\s+(\w+)</pre>
+    <p>Replace with</p>
+    <pre>$2 $1</pre>
+    <p>Result: Smith John.</p>
+
+    <h4>Replace all double spaces</h4>
+    <p>Find</p>
+    <pre>{'\s{2,}'}</pre>
+    <p>Replace with</p>
+    <pre>(one space)</pre>
+
+    <p>and more...</p>
+
     <h3>Say Hello</h3>
     <p>I’m always happy to be involved into interesting projects.</p>
     <p><a href={'mailto:hello@anotherplanet.io'}>hello@anotherplanet.io</a></p>
     <p><a href={'https://twitter.com/Autre_planete?ref=sketch'}>twitter: @Autre_planete</a></p>
     <p><a href={'https://github.com/thierryc?ref=sketch'}>Github: @thierryc</a></p>
-
-    <h3>Regex (Regular expressions)</h3>
-    <p>Regex is for power user.</p>
-    <p>Regular expressions are patterns used to match character combinations in strings.</p>
-    <p><a href={'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'}>MDN Regular Expressions Guide</a></p>
-    <p><a href={'https://javascript.info/regular-expressions'}>Javascript.info Regular Expressions Guide</a></p>    
-    <h4>Some Examples</h4>
-    <p>Email address:</p>
-    <pre>/^.+@.+$/</pre>
-    <p>Hex Color Value:</p>
-    <pre>/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/</pre>
-    <h4>Regex Search and Replace</h4>
-    <p>The power of search and replace with regex.</p>
-    <p>Let's use the search and replace example from above:</p>
-    <p>Search:</p> 
-    <pre>test\.([^\.]+)\.com</pre>
-    <p>Replace: </p>
-    <pre>www.$1.com</pre>
-
+    
     <BtnHelpContainer><Button onClick={close} theme={theme} primary theme={theme} isActive={true}>
       Close Help
     </Button></BtnHelpContainer>
