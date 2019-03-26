@@ -9,10 +9,8 @@ window.settings = {}
 window.updateData = function(json) {
   if (typeof window.SetSettings == 'function') {
     window.SetSettings(json)
-    console.log('window.SetSettings(json);')
   } else {
     setTimeout(() => window.updateData(json), 500)
-    console.log('setTimeout')
   }
 }
 

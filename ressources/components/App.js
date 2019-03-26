@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 import { getTheme } from './Colors'
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import Help from './Help'
+import Loading from './Loading'
 
 import Page from './Page'
 import Row from './Row'
@@ -156,7 +157,6 @@ export default class App extends React.Component {
   }
 
   findInputHandleOnChange(event) {
-    console.log('findInputHandleOnChange')
     this.setState({
       findString: event.target.value,
       replaceString: this.replaceInput.value
@@ -353,6 +353,7 @@ export default class App extends React.Component {
           </RowGroup>
         </Page>
         <Help isActive={helpActive} theme={theme} close={this.toogleHelp}/>
+        <Loading isActive={replaceStart} theme={theme}/>
         <GlobalStyle theme={theme} />
       </Fragment>
     )
