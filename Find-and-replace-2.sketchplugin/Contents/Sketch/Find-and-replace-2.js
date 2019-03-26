@@ -2624,6 +2624,10 @@ var debounce = function debounce(fn, time) {
           // log('ShapePath')
           break;
 
+        case 'Shape':
+          // log('Shape')
+          break;
+
         case 'SymbolMaster':
           // log('SymbolMaster')
           break;
@@ -2664,15 +2668,27 @@ var debounce = function debounce(fn, time) {
           // log(override.value)
           break;
 
+        case 'ShapePath':
+          // log('-ShapePath')
+          // log(override.value)
+          break;
+
+        case 'Shape':
+          // log('-Shape')
+          // log(override.value)
+          break;
+
         case 'Image':
           // log('-Image')
           break;
 
-        default:
-          // log('--- Default: ' + layer.type)
-          if (layer.layers) {
-            parseLayers(layer.layers);
-          }
+        default: // log('#####--- Default override type: ' + override.affectedLayer.type)
+
+        /* 
+        if (override.layers) {
+          parseLayers(override.layers)
+        }
+        */
 
       }
     });
