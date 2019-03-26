@@ -237,6 +237,10 @@ export default function() {
       case 'ShapePath':
         // log('ShapePath')
         break
+
+      case 'Shape':
+        // log('Shape')
+        break
       
       case 'SymbolMaster':
         // log('SymbolMaster')
@@ -275,16 +279,28 @@ export default function() {
         // log('-SymbolInstance')
         // log(override.value)
         break
-  
+      
+      case 'ShapePath':
+        // log('-ShapePath')
+        // log(override.value)
+        break
+      
+      case 'Shape':
+        // log('-Shape')
+        // log(override.value)
+        break
+
       case 'Image':
         // log('-Image')
         break
         
       default:
-        // log('--- Default: ' + layer.type)
-        if (layer.layers) {
-          parseLayers(layer.layers)
+        // log('#####--- Default override type: ' + override.affectedLayer.type)
+        /* 
+        if (override.layers) {
+          parseLayers(override.layers)
         }
+        */
       }
     })
   }
