@@ -4,10 +4,9 @@
 
 ## V2 is ready for Sketch 53, 54...
 
+[Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
 For Sketch before 52 use the V1.
-
-[Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
 ## How to
 
