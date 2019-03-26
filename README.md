@@ -1,6 +1,6 @@
 # [Find and Replace](https://github.com/thierryc/Sketch-Find-And-Replace/) for Sketch
 
-![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/assetsd/icon.png)
+![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/assets/icon.png)
 
 ## V2 is in progress. (Javascript API)
 
