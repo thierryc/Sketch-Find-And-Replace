@@ -74,7 +74,7 @@ const Help = (props) => {
 
     <HelpIconsContainer>
       <HelpIcon><RegexIcon theme={theme} isActive={true}/></HelpIcon>
-      <HelpIconDescription>Regex (Regular expressions)</HelpIconDescription>
+      <HelpIconDescription>Regex (Regular expressions)*</HelpIconDescription>
     </HelpIconsContainer>
 
     <HelpIconsContainer>
@@ -86,6 +86,8 @@ const Help = (props) => {
       <HelpIcon><WholeWordIcon theme={theme} isActive={true}/></HelpIcon>
       <HelpIconDescription>Whole Word</HelpIconDescription>
     </HelpIconsContainer>
+
+    <p>* Tips: Turn Regex off if you don't know what Regex is.</p>
 
     <h3>Replace context</h3>
 
