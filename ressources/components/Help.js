@@ -8,7 +8,7 @@ const HelpPage = styled.div`
   position: absolute;
   top: ${props => props.isActive ? 0 : -268}px;
   width: 100%;
-  overflow: hidden;
+  overflow: scroll;
   height: 240px;
   padding: 14px 16px;
   background-color: ${props => props.theme.background};
@@ -28,7 +28,12 @@ const Help = (props) => {
     theme={theme}
     >
     <InputLabel theme={theme}>Help</InputLabel> 
-    <p>Soon</p>
+    <h2>Sketch Find and Replace v2.</h2>
+    <p>By Thierry Charbonnel</p>
+    <p><a href={'mailto:thierry@anotherplanet.io'}>thierry@anotherplanet.io</a></p>
+    <h3>Regex (Regular expressions)</h3>
+    <p>Regular expressions are patterns used to match character combinations in strings.</p>
+
     <Button onClick={close} theme={theme}>
       Close Help
     </Button>

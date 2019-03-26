@@ -25,6 +25,11 @@ body, html {
   font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, "Apple Color Emoji";
   overflow: hidden;
 }
+
+a, a:active, a:visited {
+  color: #0079FF;
+}
+
 `
 
 export default class App extends React.Component {
@@ -205,16 +210,19 @@ export default class App extends React.Component {
       <Fragment>
         <ActionBar>
           <BtnGroup>
-            <BtnText theme={theme} onClick={this.changeMode}>
+            <BtnText 
+            style={{
+              cursor: 'pointer'
+            }}
+            theme={theme} onClick={this.changeMode}>
               {darkMode ? 'Light Mode' : 'Dark Mode'}
             </BtnText>
             <BtnText
-              theme={theme}
-              style={{
-                cursor: 'help'
-              }}
-              onClick={this.toogleHelp}
-            >
+            theme={theme}
+            style={{
+               cursor: 'help'
+            }}
+            onClick={this.toogleHelp}>
               ?
             </BtnText>
           </BtnGroup>

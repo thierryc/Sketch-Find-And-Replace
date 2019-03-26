@@ -28170,7 +28170,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n\nbody, html {\n  background: ", ";\n  font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, \"Apple Color Emoji\";\n  overflow: hidden;\n}\n"]);
+  var data = _taggedTemplateLiteral(["\n\nbody, html {\n  background: ", ";\n  font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, \"Apple Color Emoji\";\n  overflow: hidden;\n}\n\na, a:active, a:visited {\n  color: #0079FF;\n}\n\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -28399,6 +28399,9 @@ function (_React$Component) {
           helpActive = _this$state.helpActive;
       var theme = Object(_Colors__WEBPACK_IMPORTED_MODULE_1__["getTheme"])(darkMode);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionBar__WEBPACK_IMPORTED_MODULE_13__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnGroup__WEBPACK_IMPORTED_MODULE_8__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnText__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        style: {
+          cursor: 'pointer'
+        },
         theme: theme,
         onClick: this.changeMode
       }, darkMode ? 'Light Mode' : 'Dark Mode'), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnText__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -28817,7 +28820,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InputLabel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputLabel */ "./ressources/components/InputLabel.js");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Button */ "./ressources/components/Button.js");
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  position: absolute;\n  top: ", "px;\n  width: 100%;\n  overflow: hidden;\n  height: 240px;\n  padding: 14px 16px;\n  background-color: ", ";\n  color: ", ";\n  z-index: 100;\n  transition: position 0.15s ease-in-out;\n"]);
+  var data = _taggedTemplateLiteral(["\n  position: absolute;\n  top: ", "px;\n  width: 100%;\n  overflow: scroll;\n  height: 240px;\n  padding: 14px 16px;\n  background-color: ", ";\n  color: ", ";\n  z-index: 100;\n  transition: position 0.15s ease-in-out;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -28849,7 +28852,9 @@ var Help = function Help(props) {
     theme: theme
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
     theme: theme
-  }, "Help"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Soon"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "Help"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Sketch Find and Replace v2."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By Thierry Charbonnel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: 'mailto:thierry@anotherplanet.io'
+  }, "thierry@anotherplanet.io")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Regex (Regular expressions)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Regular expressions are patterns used to match character combinations in strings."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: close,
     theme: theme
   }, "Close Help"));
