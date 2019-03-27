@@ -11,6 +11,9 @@
         <![CDATA[
           <ul>
             <li>V2 for sketch 53 New UI</li>
+            <li>Fix Symbols Override Issue</li>
+            <li>Build over the Javascript API</li>
+            <li>Full Regex support (variables)</li>
           </ul>
         ]]>
       </description>
