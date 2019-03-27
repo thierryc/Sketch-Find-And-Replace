@@ -200,6 +200,7 @@ export default function() {
   }
 
   const parseLayers = (layers) => {
+    const { findMode } = state
     // recursive function
     layers.forEach(layer => {
       
@@ -235,7 +236,10 @@ export default function() {
         break
       
       case 'SymbolMaster':
-        // log('SymbolMaster')
+        log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1))
+        if (findMode === 1 || document.selectedPage.name === 'Symbols') {
+          parseLayers(layer.layers)
+        }
         break
       
       case 'SymbolInstance':

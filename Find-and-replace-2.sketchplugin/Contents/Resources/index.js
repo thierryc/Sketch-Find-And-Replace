@@ -28136,9 +28136,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Colors */ "./ressources/components/Colors.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _Help__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Help */ "./ressources/components/Help.js");
-/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Loading */ "./ressources/components/Loading.js");
+/* harmony import */ var _Help__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Help */ "./ressources/components/Help.js");
+/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Loading */ "./ressources/components/Loading.js");
+/* harmony import */ var _GlobalStyle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GlobalStyle */ "./ressources/components/GlobalStyle.js");
 /* harmony import */ var _Page__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Page */ "./ressources/components/Page.js");
 /* harmony import */ var _Row__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Row */ "./ressources/components/Row.js");
 /* harmony import */ var _RowGroup__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RowGroup */ "./ressources/components/RowGroup.js");
@@ -28176,17 +28176,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n\nbody, html {\n  background: ", ";\n  font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, \"Apple Color Emoji\";\n  overflow: hidden;\n}\n\na, a:active, a:visited {\n  color: #0079FF;\n}\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
@@ -28211,10 +28200,6 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-
-var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_2__["createGlobalStyle"])(_templateObject(), function (props) {
-  return props.theme.background;
-});
 
 var App =
 /*#__PURE__*/
@@ -28507,14 +28492,14 @@ function (_React$Component) {
         primary: true,
         theme: theme,
         isActive: !replaceStart
-      }, "Replace")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Help__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, "Replace")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Help__WEBPACK_IMPORTED_MODULE_2__["default"], {
         isActive: helpActive,
         theme: theme,
         close: this.toogleHelp
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loading__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Loading__WEBPACK_IMPORTED_MODULE_3__["default"], {
         isActive: replaceStart,
         theme: theme
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(GlobalStyle, {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_GlobalStyle__WEBPACK_IMPORTED_MODULE_4__["default"], {
         theme: theme
       }));
     }
@@ -28699,6 +28684,36 @@ var getTheme = function getTheme(dark) {
 
 /***/ }),
 
+/***/ "./ressources/components/GlobalStyle.js":
+/*!**********************************************!*\
+  !*** ./ressources/components/GlobalStyle.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n\nbody, html {\n  background: ", ";\n  font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, \"Apple Color Emoji\";\n  overflow: hidden;\n  box-sizing: border-box;\n}\n\n*,\n*:before,\n*:after {\n  box-sizing: inherit;\n}\n\na, a:active, a:visited {\n  color: #0079FF;\n}\n\n\n@font-face {\n  font-family: emoji;\n  src: local('Apple Color Emoji'),\n  /* Emoji unicode blocks */\n  unicode-range: U+1F300-1F5FF, U+1F600-1F64F, U+1F680-1F6FF, U+2600-26FF;\n}\n\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var GlobalStyle = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["createGlobalStyle"])(_templateObject(), function (props) {
+  return props.theme.background;
+});
+/* harmony default export */ __webpack_exports__["default"] = (GlobalStyle);
+
+/***/ }),
+
 /***/ "./ressources/components/Help.js":
 /*!***************************************!*\
   !*** ./ressources/components/Help.js ***!
@@ -28822,7 +28837,11 @@ var Help = function Help(props) {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "Current page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconsContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIcon, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_9__["default"], {
     theme: theme,
     isActive: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "All pages of a document")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Regex (Regular expressions)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Get the Regex Power! \u26A1\uFE0F"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Regular expressions are patterns used to match character combinations in strings."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "All pages of a document")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By default Find and Replace don\u2019t replace string of symbols master except if you are in selection mode or on the \u201CSymbols\u201D named page."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Regex (Regular expressions)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Get the Regex Power! ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+    style: {
+      fontFamily: 'emoji'
+    }
+  }, "\u26A1\uFE0F")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Regular expressions are patterns used to match character combinations in strings."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'
   }, "MDN Regular Expressions Guide")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: 'https://javascript.info/regular-expressions'

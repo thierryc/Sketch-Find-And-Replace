@@ -107,8 +107,10 @@ const Help = (props) => {
       <HelpIconDescription>All pages of a document</HelpIconDescription>
     </HelpIconsContainer>
 
+    <p>By default Find and Replace don’t replace string of symbols master except if you are in selection mode or on the “Symbols” named page.</p>
+
     <h3>Regex (Regular expressions)</h3>
-    <p>Get the Regex Power! ⚡️</p>
+    <p>Get the Regex Power! <span style={{fontFamily: 'emoji'}}>⚡️</span></p>
     <p>Regular expressions are patterns used to match character combinations in strings.</p>
     <p><a href={'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions'}>MDN Regular Expressions Guide</a></p>
     <p><a href={'https://javascript.info/regular-expressions'}>Javascript.info Regular Expressions Guide</a></p>    

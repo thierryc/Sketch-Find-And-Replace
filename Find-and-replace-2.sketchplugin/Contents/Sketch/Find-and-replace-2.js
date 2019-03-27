@@ -2583,7 +2583,9 @@ var debounce = function debounce(fn, time) {
   };
 
   var parseLayers = function parseLayers(layers) {
-    // recursive function
+    var _state2 = state,
+        findMode = _state2.findMode; // recursive function
+
     layers.forEach(function (layer) {
       switch (layer.type) {
         case 'Artboard':
@@ -2620,7 +2622,12 @@ var debounce = function debounce(fn, time) {
           break;
 
         case 'SymbolMaster':
-          // log('SymbolMaster')
+          log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1));
+
+          if (findMode === 1 || document.selectedPage.name === 'Symbols') {
+            parseLayers(layer.layers);
+          }
+
           break;
 
         case 'SymbolInstance':
@@ -2715,8 +2722,8 @@ var debounce = function debounce(fn, time) {
   }, 100));
   contents.on('selection', debounce(function (json) {
     state = Object.assign({}, JSON.parse(json));
-    var _state2 = state,
-        findMode = _state2.findMode;
+    var _state3 = state,
+        findMode = _state3.findMode;
 
     if (document) {
       selection = document.selectedLayers;

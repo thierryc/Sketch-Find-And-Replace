@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
 import { getTheme } from './Colors'
-import { createGlobalStyle } from 'styled-components'
 import Help from './Help'
 import Loading from './Loading'
+
+import GlobalStyle from './GlobalStyle'
 
 import Page from './Page'
 import Row from './Row'
@@ -26,19 +27,6 @@ import WholeWordIcon from './svg-icons/WholeWordIcon'
 import SelectionIcon from './svg-icons/SelectionIcon'
 import PageIcon from './svg-icons/PageIcon'
 import DocumentIcon from './svg-icons/DocumentIcon'
-
-const GlobalStyle = createGlobalStyle`
-
-body, html {
-  background: ${props => props.theme.background};
-  font-family: SFUIDisplay-Regular, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif, "Apple Color Emoji";
-  overflow: hidden;
-}
-
-a, a:active, a:visited {
-  color: #0079FF;
-}
-`
 
 export default class App extends React.Component {
   constructor(props) {
