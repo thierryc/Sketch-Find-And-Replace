@@ -109,6 +109,11 @@ const Help = (props) => {
 
     <p>By default Find and Replace don’t replace string of symbols master except if you are in selection mode or on the “Symbols” named page.</p>
 
+    <h3>Know limitation</h3>
+
+    <p>Backslash not allowed in the replace input.</p>
+    <p>Exit the text editon mode before to replace string</p>
+
     <h3>Regex (Regular expressions)</h3>
     <p>Get the Regex Power! <span style={{fontFamily: 'emoji'}}>⚡️</span></p>
     <p>Regular expressions are patterns used to match character combinations in strings.</p>

@@ -2392,8 +2392,8 @@ var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
     Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
     Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
 var UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'; // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
 
+Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}));
 var defaultSettings = {
   findString: '',
   replaceString: '',
@@ -2477,7 +2477,11 @@ var debounce = function debounce(fn, time) {
     }
   }
 
-  Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state));
+  var saveSettings = function saveSettings(obj) {
+    var str = JSON.stringify(obj, null, 1);
+    Settings.setSettingForKey(UNIQUKEY, str);
+  };
+
   var windowOptions = {
     identifier: 'cx.ap.sketch-find-and-replace-2.webWiew',
     width: 460,
@@ -2622,8 +2626,7 @@ var debounce = function debounce(fn, time) {
           break;
 
         case 'SymbolMaster':
-          log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1));
-
+          // log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1))
           if (findMode === 1 || document.selectedPage.name === 'Symbols') {
             parseLayers(layer.layers);
           }
@@ -2705,7 +2708,7 @@ var debounce = function debounce(fn, time) {
     state = Object.assign({}, state, {
       darkMode: mode
     });
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state));
+    saveSettings(state);
     UI.message("Set darkMode to ".concat(mode));
   });
   contents.on('find', debounce(function (json) {
@@ -2717,7 +2720,7 @@ var debounce = function debounce(fn, time) {
   contents.on('replace', debounce(function (json) {
     var newState = Object.assign({}, JSON.parse(json));
     initRegExp(newState);
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state));
+    saveSettings(state);
     browserWindow.close();
   }, 100));
   contents.on('selection', debounce(function (json) {
@@ -2745,7 +2748,7 @@ var debounce = function debounce(fn, time) {
       }
     }
 
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state));
+    saveSettings(state);
     updateSateWebview(false);
   }, 100));
   /*

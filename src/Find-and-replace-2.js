@@ -17,7 +17,7 @@ const { UI, Settings, Document } = sketch
 const UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'
 
 // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
+Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
 
 const defaultSettings = {
   findString: '',
@@ -70,8 +70,8 @@ export default function() {
 
   let state = {}
   if (
-    typeof savedSettings === 'string' &&
-    typeof JSON.parse(savedSettings) === 'object'
+    typeof savedSettings === 'string' 
+    && typeof JSON.parse(savedSettings) === 'object'
   ) {
     state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
   } else {
@@ -98,7 +98,11 @@ export default function() {
     }
   }
 
-  Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state))
+  const saveSettings = (obj) => {
+    const str = JSON.stringify(obj, null, 1)
+    Settings.setSettingForKey(UNIQUKEY, str)
+  }
+
 
   const windowOptions = {
     identifier: 'cx.ap.sketch-find-and-replace-2.webWiew',
@@ -142,6 +146,7 @@ export default function() {
     const { findMode } = state
     // log('--------------------------------')
     // log('findMode: ' + findMode)
+    
     switch(findMode){
     case 1:
       if (document && document.selectedLayers.length > 0) {
@@ -236,7 +241,7 @@ export default function() {
         break
       
       case 'SymbolMaster':
-        log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1))
+        // log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1))
         if (findMode === 1 || document.selectedPage.name === 'Symbols') {
           parseLayers(layer.layers)
         }
@@ -315,7 +320,7 @@ export default function() {
 
   contents.on('setDarkMode', mode => {
     state = Object.assign({}, state, { darkMode: mode })
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state))
+    saveSettings(state)
     UI.message(`Set darkMode to ${mode}`)
   })
 
@@ -329,7 +334,7 @@ export default function() {
   contents.on('replace', debounce(json => {
     const newState = Object.assign({}, JSON.parse(json))
     initRegExp(newState)
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state))
+    saveSettings(state)
     browserWindow.close()
   }, 100))
 
@@ -348,7 +353,7 @@ export default function() {
         state = Object.assign({}, state, { findMode: 2, selection: false })
       }
     }
-    Settings.setSettingForKey(UNIQUKEY, JSON.stringify(state))
+    saveSettings(state)
     updateSateWebview(false)
   }, 100))
 
