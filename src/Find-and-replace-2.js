@@ -17,7 +17,7 @@ const { UI, Settings, Document } = sketch
 const UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'
 
 // to delete saved settings uncoment the next line
-Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
+// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
 
 const defaultSettings = {
   findString: '',
@@ -146,7 +146,7 @@ export default function() {
     const { findMode } = state
     // log('--------------------------------')
     // log('findMode: ' + findMode)
-    
+
     switch(findMode){
     case 1:
       if (document && document.selectedLayers.length > 0) {
