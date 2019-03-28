@@ -28224,7 +28224,6 @@ function (_React$Component) {
       replaceStart: false,
       helpActive: false
     };
-    _this.timeout;
     _this.changeMode = _this.changeMode.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.findInputHandleKeyPress = _this.findInputHandleKeyPress.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.replaceInputHandleKeyPress = _this.replaceInputHandleKeyPress.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -28339,7 +28338,7 @@ function (_React$Component) {
     value: function findInputHandleOnChange(event) {
       this.setState({
         findString: event.target.value,
-        replaceString: this.replaceInput.value
+        replaceString: this.replaceInput.value.split('\\').join('')
       }); // window.postMessage('find', JSON.stringify(this.state))
     }
   }, {
@@ -28354,7 +28353,7 @@ function (_React$Component) {
     value: function replaceInputHandleOnChange(event) {
       this.setState({
         findString: this.findIntput.value,
-        replaceString: event.target.value
+        replaceString: event.target.value.split('\\').join('')
       }); //window.postMessage('find', JSON.stringify(this.state))
     }
   }, {
@@ -28391,7 +28390,6 @@ function (_React$Component) {
           findString = _this$state.findString,
           replaceString = _this$state.replaceString,
           findMode = _this$state.findMode,
-          count = _this$state.count,
           replaceStart = _this$state.replaceStart,
           selection = _this$state.selection,
           helpActive = _this$state.helpActive;
@@ -28484,7 +28482,7 @@ function (_React$Component) {
         theme: theme
       }, "Options:", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InfoStringIn__WEBPACK_IMPORTED_MODULE_17__["default"], {
         theme: theme
-      }, regexActive ? ' Regex, ' : ' ', caseSensitive ? 'Case Sensitive, ' : 'Case Insensitive, ', wholeWord ? 'Whole Word, ' : '', "in the", findMode === 1 && ' Selection', findMode === 2 && ' Page', findMode === 3 && ' Document', "."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RowGroup__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      }, regexActive ? ' Regex, ' : ' ', caseSensitive ? 'Case Sensitive, ' : 'Case Insensitive, ', wholeWord ? 'Whole Word, ' : '', "in the", findMode === 1 && ' Selection', findMode === 2 && ' Page', findMode === 3 && ' Document'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RowGroup__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_10__["default"], {
         onClick: this.closeWindow,
         theme: theme
       }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_10__["default"], {
@@ -28837,7 +28835,7 @@ var Help = function Help(props) {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "Current page")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconsContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIcon, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_9__["default"], {
     theme: theme,
     isActive: true
-  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "All pages of a document")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By default Find and Replace don\u2019t replace string of symbols master except if you are in selection mode or on the \u201CSymbols\u201D named page."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Regex (Regular expressions)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Get the Regex Power! ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconDescription, null, "All pages of a document")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By default Find and Replace don\u2019t replace string of symbols master except if you are in selection mode or on the \u201CSymbols\u201D named page."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Know limitation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Backslash not allowed in the replace input."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Exit the text editon mode before to replace string"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Regex (Regular expressions)"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Get the Regex Power! ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
     style: {
       fontFamily: 'emoji'
     }

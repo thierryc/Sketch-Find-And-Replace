@@ -44,8 +44,6 @@ export default class App extends React.Component {
       helpActive: false,
     }
 
-    this.timeout
-
     this.changeMode = this.changeMode.bind(this)
     this.findInputHandleKeyPress = this.findInputHandleKeyPress.bind(this)
     this.replaceInputHandleKeyPress = this.replaceInputHandleKeyPress.bind(this)
@@ -147,7 +145,7 @@ export default class App extends React.Component {
   findInputHandleOnChange(event) {
     this.setState({
       findString: event.target.value,
-      replaceString: this.replaceInput.value
+      replaceString: this.replaceInput.value.split('\\').join('')
     })
     // window.postMessage('find', JSON.stringify(this.state))
   }
@@ -161,10 +159,10 @@ export default class App extends React.Component {
   replaceInputHandleOnChange(event) {
     this.setState({
       findString: this.findIntput.value,
-      replaceString: event.target.value
+      replaceString: event.target.value.split('\\').join(''),
     })
     //window.postMessage('find', JSON.stringify(this.state))
-  }
+  } 
 
   closeWindow() {
     window.postMessage('close')
@@ -193,7 +191,6 @@ export default class App extends React.Component {
       findString,
       replaceString,
       findMode,
-      count,
       replaceStart,
       selection,
       helpActive,
@@ -324,7 +321,6 @@ export default class App extends React.Component {
                 {findMode === 1 && ' Selection'}
                 {findMode === 2 && ' Page'}
                 {findMode === 3 && ' Document'}
-                .
               </InfoStringIn>
             </InfoString>
           </InfoRowGroup>
