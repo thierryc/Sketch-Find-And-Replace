@@ -58,7 +58,10 @@ const debounce = (fn, time) => {
 
 
 export default function() {
-  const theme = UI.getTheme()
+  let theme = '';
+  if (UI && UI.getTheme) {
+    theme = UI.getTheme()
+  }
   if (theme === 'dark') {
     defaultSettings.darkMode = true
   } else {

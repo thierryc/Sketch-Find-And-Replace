@@ -2392,8 +2392,8 @@ var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
     Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
     Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
 var UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'; // to delete saved settings uncoment the next line
+// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
 
-Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}));
 var defaultSettings = {
   findString: '',
   replaceString: '',
@@ -2434,7 +2434,11 @@ var debounce = function debounce(fn, time) {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var theme = UI.getTheme();
+  var theme = '';
+
+  if (UI && UI.getTheme) {
+    theme = UI.getTheme();
+  }
 
   if (theme === 'dark') {
     defaultSettings.darkMode = true;
