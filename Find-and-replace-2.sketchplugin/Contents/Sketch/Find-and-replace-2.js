@@ -2531,7 +2531,7 @@ var debounce = function debounce(fn, time) {
         break;
 
       case 3:
-        selection = document.pages; // log(document.pages)
+        selection = document.pages; //log(JSON.stringify(document.selectedPage,null,1))
 
         break;
 
@@ -2585,20 +2585,21 @@ var debounce = function debounce(fn, time) {
     });
   };
 
-  var layerTextMatch = function layerTextMatch(layer) {
+  var layerTextMatch = function layerTextMatch() {
     //state.findString
     return true;
   };
 
   var parseLayers = function parseLayers(layers) {
     var _state2 = state,
-        findMode = _state2.findMode; // recursive function
+        findMode = _state2.findMode; // log(JSON.stringify(layers, null, 1))
+    // recursive function
 
     layers.forEach(function (layer) {
       switch (layer.type) {
         case 'Artboard':
           // log('Artboard')
-          if (layer.layers) {
+          if (layer.layers && layer.layers.length > 0) {
             parseLayers(layer.layers);
           }
 
@@ -2669,8 +2670,7 @@ var debounce = function debounce(fn, time) {
           break;
 
         case 'SymbolInstance':
-          // log('-SymbolInstance')
-          // log(override.value)
+          //log('-SymbolInstance')
           break;
 
         case 'ShapePath':

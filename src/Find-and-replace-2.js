@@ -58,7 +58,7 @@ const debounce = (fn, time) => {
 
 
 export default function() {
-  let theme = '';
+  let theme = ''
   if (UI && UI.getTheme) {
     theme = UI.getTheme()
   }
@@ -158,7 +158,7 @@ export default function() {
       break
     case 3:
       selection = document.pages
-      // log(document.pages)
+      //log(JSON.stringify(document.selectedPage,null,1))
       break
     default:
       selection = document.selectedPage.layers
@@ -202,20 +202,21 @@ export default function() {
     state = Object.assign({}, state, { init: false })
   }
 
-  const layerTextMatch = (layer) => {
+  const layerTextMatch = () => {
     //state.findString
     return true
   }
 
   const parseLayers = (layers) => {
     const { findMode } = state
+    // log(JSON.stringify(layers, null, 1))
     // recursive function
     layers.forEach(layer => {
       
       switch(layer.type){
       case 'Artboard':
         // log('Artboard')
-        if (layer.layers) {
+        if (layer.layers && layer.layers.length > 0) {
           parseLayers(layer.layers)
         }
         break
@@ -280,8 +281,7 @@ export default function() {
         break
       
       case 'SymbolInstance':
-        // log('-SymbolInstance')
-        // log(override.value)
+        //log('-SymbolInstance')
         break
       
       case 'ShapePath':

@@ -28152,12 +28152,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InputLabel__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./InputLabel */ "./ressources/components/InputLabel.js");
 /* harmony import */ var _InfoString__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./InfoString */ "./ressources/components/InfoString.js");
 /* harmony import */ var _InfoStringIn__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./InfoStringIn */ "./ressources/components/InfoStringIn.js");
-/* harmony import */ var _svg_icons_RegexIcon__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./svg-icons/RegexIcon */ "./ressources/components/svg-icons/RegexIcon.js");
-/* harmony import */ var _svg_icons_CaseSensitiveIcon__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./svg-icons/CaseSensitiveIcon */ "./ressources/components/svg-icons/CaseSensitiveIcon.js");
-/* harmony import */ var _svg_icons_WholeWordIcon__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./svg-icons/WholeWordIcon */ "./ressources/components/svg-icons/WholeWordIcon.js");
-/* harmony import */ var _svg_icons_SelectionIcon__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./svg-icons/SelectionIcon */ "./ressources/components/svg-icons/SelectionIcon.js");
-/* harmony import */ var _svg_icons_PageIcon__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./svg-icons/PageIcon */ "./ressources/components/svg-icons/PageIcon.js");
-/* harmony import */ var _svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./svg-icons/DocumentIcon */ "./ressources/components/svg-icons/DocumentIcon.js");
+/* harmony import */ var _VersionBadge__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./VersionBadge */ "./ressources/components/VersionBadge.js");
+/* harmony import */ var _svg_icons_RegexIcon__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./svg-icons/RegexIcon */ "./ressources/components/svg-icons/RegexIcon.js");
+/* harmony import */ var _svg_icons_CaseSensitiveIcon__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./svg-icons/CaseSensitiveIcon */ "./ressources/components/svg-icons/CaseSensitiveIcon.js");
+/* harmony import */ var _svg_icons_WholeWordIcon__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./svg-icons/WholeWordIcon */ "./ressources/components/svg-icons/WholeWordIcon.js");
+/* harmony import */ var _svg_icons_SelectionIcon__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./svg-icons/SelectionIcon */ "./ressources/components/svg-icons/SelectionIcon.js");
+/* harmony import */ var _svg_icons_PageIcon__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./svg-icons/PageIcon */ "./ressources/components/svg-icons/PageIcon.js");
+/* harmony import */ var _svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./svg-icons/DocumentIcon */ "./ressources/components/svg-icons/DocumentIcon.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28175,6 +28176,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 
 
 
@@ -28222,7 +28224,8 @@ function (_React$Component) {
       replaceString: '',
       selection: false,
       replaceStart: false,
-      helpActive: false
+      helpActive: false,
+      version: '2.0.7'
     };
     _this.changeMode = _this.changeMode.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.findInputHandleKeyPress = _this.findInputHandleKeyPress.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -28392,7 +28395,8 @@ function (_React$Component) {
           findMode = _this$state.findMode,
           replaceStart = _this$state.replaceStart,
           selection = _this$state.selection,
-          helpActive = _this$state.helpActive;
+          helpActive = _this$state.helpActive,
+          version = _this$state.version;
       var theme = Object(_Colors__WEBPACK_IMPORTED_MODULE_1__["getTheme"])(darkMode);
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionBar__WEBPACK_IMPORTED_MODULE_14__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnGroup__WEBPACK_IMPORTED_MODULE_9__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnText__WEBPACK_IMPORTED_MODULE_11__["default"], {
         style: {
@@ -28410,7 +28414,7 @@ function (_React$Component) {
         theme: theme
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RowGroup__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputLabel__WEBPACK_IMPORTED_MODULE_15__["default"], {
         theme: theme
-      }, "FIND")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Input__WEBPACK_IMPORTED_MODULE_13__["default"], {
+      }, "FIND ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_VersionBadge__WEBPACK_IMPORTED_MODULE_18__["default"], null, version))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Input__WEBPACK_IMPORTED_MODULE_13__["default"], {
         theme: theme,
         value: findString,
         onKeyPress: this.findInputHandleKeyPress,
@@ -28426,21 +28430,21 @@ function (_React$Component) {
         onClick: this.handleRegex,
         theme: theme,
         isActive: regexActive
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_RegexIcon__WEBPACK_IMPORTED_MODULE_18__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_RegexIcon__WEBPACK_IMPORTED_MODULE_19__["default"], {
         theme: theme,
         isActive: regexActive
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnInage__WEBPACK_IMPORTED_MODULE_12__["default"], {
         onClick: this.handleCaseSensitive,
         theme: theme,
         isActive: caseSensitive
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_CaseSensitiveIcon__WEBPACK_IMPORTED_MODULE_19__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_CaseSensitiveIcon__WEBPACK_IMPORTED_MODULE_20__["default"], {
         theme: theme,
         isActive: caseSensitive
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnInage__WEBPACK_IMPORTED_MODULE_12__["default"], {
         onClick: this.handleWholeWord,
         theme: theme,
         isActive: wholeWord
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_WholeWordIcon__WEBPACK_IMPORTED_MODULE_20__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_WholeWordIcon__WEBPACK_IMPORTED_MODULE_21__["default"], {
         theme: theme,
         isActive: wholeWord
       }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RowGroup__WEBPACK_IMPORTED_MODULE_7__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Row__WEBPACK_IMPORTED_MODULE_6__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputLabel__WEBPACK_IMPORTED_MODULE_15__["default"], {
@@ -28461,21 +28465,21 @@ function (_React$Component) {
         onClick: this.handleSelection,
         theme: theme,
         isActive: findMode === 1
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_SelectionIcon__WEBPACK_IMPORTED_MODULE_21__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_SelectionIcon__WEBPACK_IMPORTED_MODULE_22__["default"], {
         theme: theme,
         isActive: findMode === 1
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnInage__WEBPACK_IMPORTED_MODULE_12__["default"], {
         onClick: this.handlePage,
         theme: theme,
         isActive: findMode === 2
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_PageIcon__WEBPACK_IMPORTED_MODULE_22__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_PageIcon__WEBPACK_IMPORTED_MODULE_23__["default"], {
         theme: theme,
         isActive: findMode === 2
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_BtnInage__WEBPACK_IMPORTED_MODULE_12__["default"], {
         onClick: this.handleDocument,
         theme: theme,
         isActive: findMode === 3
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_23__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_DocumentIcon__WEBPACK_IMPORTED_MODULE_24__["default"], {
         theme: theme,
         isActive: findMode === 3
       }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InfoRowGroup__WEBPACK_IMPORTED_MODULE_8__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InfoString__WEBPACK_IMPORTED_MODULE_16__["default"], {
@@ -29159,6 +29163,34 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var RowGroup = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject());
 /* harmony default export */ __webpack_exports__["default"] = (RowGroup);
+
+/***/ }),
+
+/***/ "./ressources/components/VersionBadge.js":
+/*!***********************************************!*\
+  !*** ./ressources/components/VersionBadge.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  text-transform: uppercase;\n  font-size: 9px;\n  color: #a8a8a8;\n  font-weight: 500;\n  letter-spacing: 0.8px;\n  line-height: 1.3rem;\n  padding-bottom: 3px;\n  cursor: none;\n  -webkit-user-select: none;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+
+var VersionBadge = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject());
+/* harmony default export */ __webpack_exports__["default"] = (VersionBadge);
 
 /***/ }),
 
