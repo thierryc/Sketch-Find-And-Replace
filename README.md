@@ -6,7 +6,7 @@
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
-For Sketch before 52 use the V1.
+For Sketch 52 and previous use the V1.
 
 ## How to
 
