@@ -14,10 +14,14 @@ import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote'
 
 const { UI, Settings, Document } = sketch
 
-const UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'
+const PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.pref'
+const SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.state'
+
+// load state
+const savedSate = Settings.settingForKey(SATEUNIQUKEY)
 
 // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
+// Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
 
 const defaultSettings = {
   findString: '',
@@ -69,17 +73,25 @@ export default function() {
   }
 
   // load state
-  const savedSettings = Settings.settingForKey(UNIQUKEY)
+  const savedSate = Settings.settingForKey(SATEUNIQUKEY)
+  let state = Object.assign({}, defaultSettings)
 
-  let state = {}
   if (
-    typeof savedSettings === 'string' 
-    && typeof JSON.parse(savedSettings) === 'object'
+    typeof savedSate === 'string'
+    && savedSate == 'Loaded'
   ) {
-    state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
-  } else {
-    state = Object.assign({}, defaultSettings)
+    Settings.setSettingForKey(SATEUNIQUKEY, '')
+    // load pref
+    const savedSettings = Settings.settingForKey(PREFUNIQUKEY)
+    if (
+      typeof savedSettings === 'string' 
+      && typeof JSON.parse(savedSettings) === 'object'
+    ) {
+      state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
+    } 
   }
+
+  Settings.setSettingForKey(SATEUNIQUKEY, 'Loaded')
 
   let layers = []
   let overrides = []
@@ -103,7 +115,7 @@ export default function() {
 
   const saveSettings = (obj) => {
     const str = JSON.stringify(obj, null, 1)
-    Settings.setSettingForKey(UNIQUKEY, str)
+    Settings.setSettingForKey(PREFUNIQUKEY, str)
   }
 
 

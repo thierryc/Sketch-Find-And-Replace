@@ -29,8 +29,6 @@ import SelectionIcon from './svg-icons/SelectionIcon'
 import PageIcon from './svg-icons/PageIcon'
 import DocumentIcon from './svg-icons/DocumentIcon'
 
-
-
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -45,7 +43,7 @@ export default class App extends React.Component {
       selection: false,
       replaceStart: false,
       helpActive: false,
-      version: '2.0.7',
+      version: '2.0.8',
     }
 
     this.changeMode = this.changeMode.bind(this)

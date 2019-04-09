@@ -28225,7 +28225,7 @@ function (_React$Component) {
       selection: false,
       replaceStart: false,
       helpActive: false,
-      version: '2.0.7'
+      version: '2.0.8'
     };
     _this.changeMode = _this.changeMode.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.findInputHandleKeyPress = _this.findInputHandleKeyPress.bind(_assertThisInitialized(_assertThisInitialized(_this)));
