@@ -2391,8 +2391,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
     Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
     Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
-var UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'; // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
+var PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.pref';
+var SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.state'; // load state
+
+var savedSate = Settings.settingForKey(SATEUNIQUKEY); // to delete saved settings uncoment the next line
+// Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
 
 var defaultSettings = {
   findString: '',
@@ -2447,15 +2450,20 @@ var debounce = function debounce(fn, time) {
   } // load state
 
 
-  var savedSettings = Settings.settingForKey(UNIQUKEY);
-  var state = {};
+  var savedSate = Settings.settingForKey(SATEUNIQUKEY);
+  var state = Object.assign({}, defaultSettings);
 
-  if (typeof savedSettings === 'string' && _typeof(JSON.parse(savedSettings)) === 'object') {
-    state = Object.assign({}, defaultSettings, JSON.parse(savedSettings));
-  } else {
-    state = Object.assign({}, defaultSettings);
+  if (typeof savedSate === 'string' && savedSate == 'Loaded') {
+    Settings.setSettingForKey(SATEUNIQUKEY, ''); // load pref
+
+    var savedSettings = Settings.settingForKey(PREFUNIQUKEY);
+
+    if (typeof savedSettings === 'string' && _typeof(JSON.parse(savedSettings)) === 'object') {
+      state = Object.assign({}, defaultSettings, JSON.parse(savedSettings));
+    }
   }
 
+  Settings.setSettingForKey(SATEUNIQUKEY, 'Loaded');
   var layers = [];
   var overrides = [];
   var document = Document.getSelectedDocument();
@@ -2483,7 +2491,7 @@ var debounce = function debounce(fn, time) {
 
   var saveSettings = function saveSettings(obj) {
     var str = JSON.stringify(obj, null, 1);
-    Settings.setSettingForKey(UNIQUKEY, str);
+    Settings.setSettingForKey(PREFUNIQUKEY, str);
   };
 
   var windowOptions = {
@@ -2531,7 +2539,7 @@ var debounce = function debounce(fn, time) {
         break;
 
       case 3:
-        selection = document.pages; // log(document.pages)
+        selection = document.pages; //log(JSON.stringify(document.selectedPage,null,1))
 
         break;
 
@@ -2585,20 +2593,21 @@ var debounce = function debounce(fn, time) {
     });
   };
 
-  var layerTextMatch = function layerTextMatch(layer) {
+  var layerTextMatch = function layerTextMatch() {
     //state.findString
     return true;
   };
 
   var parseLayers = function parseLayers(layers) {
     var _state2 = state,
-        findMode = _state2.findMode; // recursive function
+        findMode = _state2.findMode; // log(JSON.stringify(layers, null, 1))
+    // recursive function
 
     layers.forEach(function (layer) {
       switch (layer.type) {
         case 'Artboard':
           // log('Artboard')
-          if (layer.layers) {
+          if (layer.layers && layer.layers.length > 0) {
             parseLayers(layer.layers);
           }
 
@@ -2669,8 +2678,7 @@ var debounce = function debounce(fn, time) {
           break;
 
         case 'SymbolInstance':
-          // log('-SymbolInstance')
-          // log(override.value)
+          //log('-SymbolInstance')
           break;
 
         case 'ShapePath':

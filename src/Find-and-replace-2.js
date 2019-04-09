@@ -14,10 +14,14 @@ import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote'
 
 const { UI, Settings, Document } = sketch
 
-const UNIQUKEY = 'cx.ap.sketch-find-and-replace-2'
+const PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.pref'
+const SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.state'
+
+// load state
+const savedSate = Settings.settingForKey(SATEUNIQUKEY)
 
 // to delete saved settings uncoment the next line
-// Settings.setSettingForKey(UNIQUKEY, JSON.stringify({}))
+// Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
 
 const defaultSettings = {
   findString: '',
@@ -58,7 +62,7 @@ const debounce = (fn, time) => {
 
 
 export default function() {
-  let theme = '';
+  let theme = ''
   if (UI && UI.getTheme) {
     theme = UI.getTheme()
   }
@@ -69,17 +73,25 @@ export default function() {
   }
 
   // load state
-  const savedSettings = Settings.settingForKey(UNIQUKEY)
+  const savedSate = Settings.settingForKey(SATEUNIQUKEY)
+  let state = Object.assign({}, defaultSettings)
 
-  let state = {}
   if (
-    typeof savedSettings === 'string' 
-    && typeof JSON.parse(savedSettings) === 'object'
+    typeof savedSate === 'string'
+    && savedSate == 'Loaded'
   ) {
-    state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
-  } else {
-    state = Object.assign({}, defaultSettings)
+    Settings.setSettingForKey(SATEUNIQUKEY, '')
+    // load pref
+    const savedSettings = Settings.settingForKey(PREFUNIQUKEY)
+    if (
+      typeof savedSettings === 'string' 
+      && typeof JSON.parse(savedSettings) === 'object'
+    ) {
+      state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
+    } 
   }
+
+  Settings.setSettingForKey(SATEUNIQUKEY, 'Loaded')
 
   let layers = []
   let overrides = []
@@ -103,7 +115,7 @@ export default function() {
 
   const saveSettings = (obj) => {
     const str = JSON.stringify(obj, null, 1)
-    Settings.setSettingForKey(UNIQUKEY, str)
+    Settings.setSettingForKey(PREFUNIQUKEY, str)
   }
 
 
@@ -158,7 +170,7 @@ export default function() {
       break
     case 3:
       selection = document.pages
-      // log(document.pages)
+      //log(JSON.stringify(document.selectedPage,null,1))
       break
     default:
       selection = document.selectedPage.layers
@@ -202,20 +214,21 @@ export default function() {
     state = Object.assign({}, state, { init: false })
   }
 
-  const layerTextMatch = (layer) => {
+  const layerTextMatch = () => {
     //state.findString
     return true
   }
 
   const parseLayers = (layers) => {
     const { findMode } = state
+    // log(JSON.stringify(layers, null, 1))
     // recursive function
     layers.forEach(layer => {
       
       switch(layer.type){
       case 'Artboard':
         // log('Artboard')
-        if (layer.layers) {
+        if (layer.layers && layer.layers.length > 0) {
           parseLayers(layer.layers)
         }
         break
@@ -280,8 +293,7 @@ export default function() {
         break
       
       case 'SymbolInstance':
-        // log('-SymbolInstance')
-        // log(override.value)
+        //log('-SymbolInstance')
         break
       
       case 'ShapePath':

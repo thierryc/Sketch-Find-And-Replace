@@ -19,6 +19,7 @@ import ActionBar from './ActionBar'
 import InputLabel from './InputLabel'
 import InfoString from './InfoString'
 import InfoStringIn from './InfoStringIn'
+import VersionBadge from './VersionBadge'
 
 import RegexIcon from './svg-icons/RegexIcon'
 import CaseSensitiveIcon from './svg-icons/CaseSensitiveIcon'
@@ -42,6 +43,7 @@ export default class App extends React.Component {
       selection: false,
       replaceStart: false,
       helpActive: false,
+      version: '2.0.8',
     }
 
     this.changeMode = this.changeMode.bind(this)
@@ -194,6 +196,7 @@ export default class App extends React.Component {
       replaceStart,
       selection,
       helpActive,
+      version,
     } = this.state
 
     const theme = getTheme(darkMode)
@@ -222,7 +225,7 @@ export default class App extends React.Component {
         <Page theme={theme}>
           <RowGroup>
             <Row>
-              <InputLabel theme={theme}>FIND</InputLabel>
+              <InputLabel theme={theme}>FIND <VersionBadge>{version}</VersionBadge></InputLabel>
             </Row>
             <Row>
               <Input
