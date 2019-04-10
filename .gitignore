@@ -1,8 +1,9 @@
 _test/
 
 # build artefacts
-plugin.sketchplugin/Contents/Sketch
-plugin.sketchplugin/Contents/Resources/_webpack_resources
+Find-and-replace.sketchplugin
+Find-and-replace.sketchplugin/Contents/Sketch
+Find-and-replace.sketchplugin/Contents/Resources/_webpack_resources
 
 # npm
 node_modules
