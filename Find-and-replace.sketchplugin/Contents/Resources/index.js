@@ -29396,7 +29396,7 @@ var Help = function Help(props) {
     theme: theme
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_InputLabel__WEBPACK_IMPORTED_MODULE_2__["default"], {
     theme: theme
-  }, "Help"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Sketch Find and Replace v2.4.0"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+  }, "Help"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Sketch Find and Replace"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "By ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     href: 'mailto:hello@anotherplanet.io'
   }, "Thierry Charbonnel"), " - UX / UI and Code Designer"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Options to find"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIconsContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(HelpIcon, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_RegexIcon__WEBPACK_IMPORTED_MODULE_4__["default"], {
     theme: theme,
