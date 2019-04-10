@@ -2,6 +2,9 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
     <item>
+      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.4.3/Find-and-replace.sketchplugin.zip" sparkle:version="2.4.3"/>
+    </item>
+    <item>
       <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.4.2/Find-and-replace.sketchplugin.zip" sparkle:version="2.4.2"/>
     </item>
     <item>
