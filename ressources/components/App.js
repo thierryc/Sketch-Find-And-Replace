@@ -43,7 +43,7 @@ export default class App extends React.Component {
       selection: false,
       replaceStart: false,
       helpActive: false,
-      version: '2.0.8',
+      version: '2.0.10',
     }
 
     this.changeMode = this.changeMode.bind(this)
