@@ -1,5 +1,5 @@
 {
-  "name": "sketch-find-and-replace-2",
+  "name": "sketch-find-and-replace",
   "version": "2.0.11",
   "engines": {
     "sketch": ">=3.0"
@@ -13,9 +13,9 @@
     "url": "https://github.com/thierryc/Sketch-Find-And-Replace/issues"
   },
   "skpm": {
-    "name": "Find-And-Replace-2",
+    "name": "Find-And-Replace",
     "manifest": "src/manifest.json",
-    "main": "Find-and-replace-2.sketchplugin",
+    "main": "Find-and-replace.sketchplugin",
     "assets": [
       "assets/**/*"
     ]

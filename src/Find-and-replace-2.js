@@ -14,8 +14,8 @@ import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote'
 
 const { UI, Settings, Document } = sketch
 
-const PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.pref'
-const SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace-2.state'
+const PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace.pref'
+const SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'
 
 // load state
 const savedSate = Settings.settingForKey(SATEUNIQUKEY)
@@ -120,7 +120,7 @@ export default function() {
 
 
   const windowOptions = {
-    identifier: 'cx.ap.sketch-find-and-replace-2.webWiew',
+    identifier: 'cx.ap.sketch-find-and-replace.webWiew',
     width: 460,
     height: 240,
     resizable: false,

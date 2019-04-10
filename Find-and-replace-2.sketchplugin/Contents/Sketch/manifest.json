@@ -13,17 +13,17 @@
   "icon": "icon.png",
   "commands": [
     {
-      "name": "Find And Replace 2",
-      "identifier": "Find-and-replace-2",
-      "script": "Find-and-replace-2.js",
+      "name": "Find And Replace",
+      "identifier": "Find-and-replace",
+      "script": "Find-and-replace.js",
       "shortcut": "cmd shift f"
     }
   ],
   "menu": {
     "isRoot": true,
-    "title": "Find And Replace 2",
+    "title": "Find And Replace",
     "items": [
-      "Find-and-replace-2"
+      "Find-and-replace"
     ]
   },
   "disableCocoaScriptPreprocessor": true
