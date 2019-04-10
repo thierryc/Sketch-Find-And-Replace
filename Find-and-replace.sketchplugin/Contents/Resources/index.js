@@ -29354,7 +29354,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  position: absolute;\n  top: ", "px;\n  width: 100%;\n  overflow: scroll;\n  height: 218px;\n  padding: 14px 16px 16px 16px;\n  background-color: ", ";\n  color: ", ";\n  z-index: 100;\n  transition: top 0.15s ease-in-out;\n  margin-bottom: 32px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n"]);
+  var data = _taggedTemplateLiteral(["\n  position: absolute;\n  top: ", "px;\n  width: 100%;\n  overflow: scroll;\n  height: 218px;\n  padding: 14px 16px 16px 16px;\n  background-color: ", ";\n  color: ", ";\n  z-index: 100;\n  transition: top 0.15s ease-in-out;\n  margin-bottom: 32px;\n  box-sizing: border-box;\n  -moz-box-sizing: border-box;\n  -webkit-box-sizing: border-box;\n  font-size: small;\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -29434,7 +29434,7 @@ var Help = function Help(props) {
     style: {
       opacity: 0.1
     },
-    src: "https://www.google-analytics.com/collect?v=1&tid=UA-37385154-1&cid=555&aip=1&t=dev&ec=plugin&ea=help&dp=%2FFindAndReplace&dt=FindAndReplace"
+    src: "https://www.google-analytics.com/collect?v=1&tid=UA-37385154-1&cid=555&aip=1&t=event&ec=plugin&ea=help&dp=%2FFindAndReplace&dt=FindAndReplace"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(BtnHelpContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onClick: close,
     theme: theme,

@@ -27,6 +27,7 @@ const HelpPage = styled.div`
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  font-size: small;
 `
 
 const HelpIconsContainer = styled.div`
