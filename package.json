@@ -4,6 +4,14 @@
   "engines": {
     "sketch": ">=3.0"
   },
+  "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thierryc/Sketch-Find-And-Replace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thierryc/Sketch-Find-And-Replace/issues"
+  },
   "skpm": {
     "name": "Find-And-Replace-2",
     "manifest": "src/manifest.json",
@@ -19,6 +27,7 @@
     "build": "skpm-build",
     "watch": "skpm-build --watch",
     "start": "skpm-build --watch --run",
+    "publish": "skpm publish",
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
