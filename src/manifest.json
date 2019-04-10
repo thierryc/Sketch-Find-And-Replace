@@ -6,7 +6,7 @@
   "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace/",
   "version": "2.0",
   "identifier": "cx.ap.sketch-find-and-replace",
-  "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/Find-and-replace.sketchplugin/Contents/Sketch/manifest.json",
+  "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/manifest.json",
   "appcast": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/.appcast.xml",
   "compatibleVersion": 3,
   "bundleVersion": 1,
