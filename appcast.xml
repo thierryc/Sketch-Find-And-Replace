@@ -6,6 +6,18 @@
     <description>Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.</description>
     <language>en</language>
     <item>
+      <title>2.0.9</title>
+      <description>
+        <![CDATA[
+          <ul>
+            <li>Version 2.0.9 for Sketch 53 and more</li>
+          </ul>
+        ]]>
+      </description>
+      <pubDate>Mon Apr 9 06:12:45 EDT 2019</pubDate>
+      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/archive/2.0.9.zip" type="application/octet-stream" sparkle:version="2.0.9"/>
+    </item>
+    <item>
       <title>2.0.8</title>
       <description>
         <![CDATA[
