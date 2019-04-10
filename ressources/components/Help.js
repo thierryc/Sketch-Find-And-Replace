@@ -147,10 +147,6 @@ const Help = (props) => {
     <BtnHelpContainer><Button onClick={close} theme={theme} primary theme={theme} isActive={true}>
       Close Help
     </Button></BtnHelpContainer>
-
-
-
-
     
   </HelpPage>
 }
