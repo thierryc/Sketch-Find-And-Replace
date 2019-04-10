@@ -4,7 +4,7 @@
   "author": "Thierry Charbonnel",
   "authorEmail" : "thierry.charbonnel@autreplanete.com",
   "homepage": "https://github.com/thierryc/Sketch-Find-And-Replace/",
-  "version": "2.0",
+  "version": "2.4.7",
   "identifier": "cx.ap.sketch-find-and-replace",
   "updateURL": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/src/manifest.json",
   "appcast": "https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/.appcast.xml",
