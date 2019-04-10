@@ -68,7 +68,7 @@ const Help = (props) => {
     >
     <InputLabel theme={theme}>Help</InputLabel>
     <h2>Sketch Find and Replace</h2>
-    <p>By <a href={'mailto:hello@anotherplanet.io'}>Thierry Charbonnel</a> - UX / UI and Code Designer</p>
+    <p>By <a href={'mailto:hello@anotherplanet.io'}>Thierry Charbonnel</a> - UX / UI and Code Designer </p>
     
     <h3>Options to find</h3>
 
@@ -142,6 +142,7 @@ const Help = (props) => {
     <p><a href={'mailto:hello@anotherplanet.io'}>hello@anotherplanet.io</a></p>
     <p><a href={'https://twitter.com/Autre_planete?ref=sketch'}>twitter: @Autre_planete</a></p>
     <p><a href={'https://github.com/thierryc?ref=sketch'}>Github: @thierryc</a></p>
+    <img style={{ opacity: 0.1 }}src="https://www.google-analytics.com/collect?v=1&tid=UA-37385154-1&cid=555&aip=1&t=dev&ec=plugin&ea=help&dp=%2FFindAndReplace&dt=FindAndReplace"/>
     
     <BtnHelpContainer><Button onClick={close} theme={theme} primary theme={theme} isActive={true}>
       Close Help
