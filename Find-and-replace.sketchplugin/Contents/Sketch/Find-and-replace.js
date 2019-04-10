@@ -1,81 +1,2883 @@
-var that=this;function __skpm_run(e,t){that.context=t;var n=function(e){var t={};function n(i){if(t[i])return t[i].exports;var o=t[i]={i:i,l:!1,exports:{}};return e[i].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,i){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:i})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(i,o,function(t){return e[t]}.bind(null,o));return i},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s="./src/Find-and-replace.js")}({"./node_modules/@skpm/timers/immediate.js":
+var that = this;
+function __skpm_run (key, context) {
+  that.context = context;
+
+var exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/Find-and-replace.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/@skpm/timers/immediate.js":
 /*!************************************************!*\
   !*** ./node_modules/@skpm/timers/immediate.js ***!
   \************************************************/
-/*! no static exports found */function(e,t,n){var i=n(/*! ./timeout */"./node_modules/@skpm/timers/timeout.js");e.exports={setImmediate:function(e,t,n,o,r,s,a,l,c,u,d){return i.setTimeout(e,0,t,n,o,r,s,a,l,c,u,d)},clearImmediate:function(e){return i.clearTimeout(e)}}},"./node_modules/@skpm/timers/test-if-fiber.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals coscript, sketch */
+var timeout = __webpack_require__(/*! ./timeout */ "./node_modules/@skpm/timers/timeout.js")
+
+function setImmediate(func, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+  return timeout.setTimeout(func, 0, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+}
+
+function clearImmediate(id) {
+  return timeout.clearTimeout(id)
+}
+
+module.exports = {
+  setImmediate: setImmediate,
+  clearImmediate: clearImmediate
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/timers/test-if-fiber.js":
 /*!****************************************************!*\
   !*** ./node_modules/@skpm/timers/test-if-fiber.js ***!
   \****************************************************/
-/*! no static exports found */function(e,t){e.exports=function(){return"undefined"!=typeof coscript&&coscript.createFiber}},"./node_modules/@skpm/timers/timeout.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function () {
+  return typeof coscript !== 'undefined' && coscript.createFiber
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@skpm/timers/timeout.js":
 /*!**********************************************!*\
   !*** ./node_modules/@skpm/timers/timeout.js ***!
   \**********************************************/
-/*! no static exports found */function(e,t,n){var i,o,r=[];if(n(/*! ./test-if-fiber */"./node_modules/@skpm/timers/test-if-fiber.js")()){r=[];i=function(e,t,n,i,o,s,a,l,c,u,d,f){var m=r.length;return r.push(coscript.scheduleWithInterval_jsFunction((t||0)/1e3,function(){e(n,i,o,s,a,l,c,u,d,f)})),m},o=function(e){var t=r[e];t&&(t.cancel(),r[e]=void 0)}}else i=function(e,t,n,i,s,a,l,c,u,d,f,m){coscript.shouldKeepAround=!0;var p=r.length;return r.push(!0),coscript.scheduleWithInterval_jsFunction((t||0)/1e3,function(){r[p]&&e(n,i,s,a,l,c,u,d,f,m),o(p),r.every(function(e){return!e})&&(coscript.shouldKeepAround=!1)}),p},o=function(e){r[e]=!1};e.exports={setTimeout:i,clearTimeout:o}},"./node_modules/cocoascript-class/lib/index.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals coscript, sketch */
+var fiberAvailable = __webpack_require__(/*! ./test-if-fiber */ "./node_modules/@skpm/timers/test-if-fiber.js")
+
+var setTimeout
+var clearTimeout
+
+var fibers = []
+
+if (fiberAvailable()) {
+  var fibers = []
+
+  setTimeout = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    // fibers takes care of keeping coscript around
+    var id = fibers.length
+    fibers.push(coscript.scheduleWithInterval_jsFunction(
+      (delay || 0) / 1000,
+      function () {
+        func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+      }
+    ))
+    return id
+  }
+
+  clearTimeout = function (id) {
+    var timeout = fibers[id]
+    if (timeout) {
+      timeout.cancel() // fibers takes care of keeping coscript around
+      fibers[id] = undefined // garbage collect the fiber
+    }
+  }
+} else {
+  setTimeout = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    coscript.shouldKeepAround = true
+    var id = fibers.length
+    fibers.push(true)
+    coscript.scheduleWithInterval_jsFunction(
+      (delay || 0) / 1000,
+      function () {
+        if (fibers[id]) { // if not cleared
+          func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+        }
+        clearTimeout(id)
+        if (fibers.every(function (_id) { return !_id })) { // if everything is cleared
+          coscript.shouldKeepAround = false
+        }
+      }
+    )
+    return id
+  }
+
+  clearTimeout = function (id) {
+    fibers[id] = false
+  }
+}
+
+module.exports = {
+  setTimeout: setTimeout,
+  clearTimeout: clearTimeout
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/cocoascript-class/lib/index.js":
 /*!*****************************************************!*\
   !*** ./node_modules/cocoascript-class/lib/index.js ***!
   \*****************************************************/
-/*! no static exports found */function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SuperCall=void 0,t.default=function(e){const t=e.superclass||NSObject,n=(e.className||e.classname||"ObjCClass")+NSUUID.UUID().UUIDString(),r=new Set(["className","classname","superclass"]);var s=MOClassDescription.allocateDescriptionForClassWithName_superclass_(n,t);const a=[];for(var l in e){const t=e[l];if("function"==typeof t&&"init"!==l){var c=NSSelectorFromString(l);s.addInstanceMethodWithSelector_function_(c,t)}else r.has(l)||(a.push(l),s.addInstanceVariableWithName_typeEncoding(l,"@"))}return s.addInstanceMethodWithSelector_function_(NSSelectorFromString("init"),function(){const t=o.call(this);return a.map(n=>{Object.defineProperty(t,n,{get:()=>(function(e,t){const n=MOPointer.new();return(0,i.object_getInstanceVariable)(e,t,n),n.value().retain().autorelease()})(t,n),set(e){(0,i.object_setInstanceVariable)(t,n,e)}}),t[n]=e[n]}),"function"==typeof e.init&&e.init.call(this),t}),s.registerClass()};var i=n(/*! ./runtime.js */"./node_modules/cocoascript-class/lib/runtime.js");t.SuperCall=i.SuperCall;const o=(0,i.SuperCall)(NSStringFromSelector("init"),[],{type:"@"})},"./node_modules/cocoascript-class/lib/runtime.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SuperCall = undefined;
+exports.default = ObjCClass;
+
+var _runtime = __webpack_require__(/*! ./runtime.js */ "./node_modules/cocoascript-class/lib/runtime.js");
+
+exports.SuperCall = _runtime.SuperCall;
+
+// super when returnType is id and args are void
+// id objc_msgSendSuper(struct objc_super *super, SEL op, void)
+
+const SuperInit = (0, _runtime.SuperCall)(NSStringFromSelector("init"), [], { type: "@" });
+
+// Returns a real ObjC class. No need to use new.
+function ObjCClass(defn) {
+  const superclass = defn.superclass || NSObject;
+  const className = (defn.className || defn.classname || "ObjCClass") + NSUUID.UUID().UUIDString();
+  const reserved = new Set(['className', 'classname', 'superclass']);
+  var cls = MOClassDescription.allocateDescriptionForClassWithName_superclass_(className, superclass);
+  // Add each handler to the class description
+  const ivars = [];
+  for (var key in defn) {
+    const v = defn[key];
+    if (typeof v == 'function' && key !== 'init') {
+      var selector = NSSelectorFromString(key);
+      cls.addInstanceMethodWithSelector_function_(selector, v);
+    } else if (!reserved.has(key)) {
+      ivars.push(key);
+      cls.addInstanceVariableWithName_typeEncoding(key, "@");
+    }
+  }
+
+  cls.addInstanceMethodWithSelector_function_(NSSelectorFromString('init'), function () {
+    const self = SuperInit.call(this);
+    ivars.map(name => {
+      Object.defineProperty(self, name, {
+        get() {
+          return getIvar(self, name);
+        },
+        set(v) {
+          (0, _runtime.object_setInstanceVariable)(self, name, v);
+        }
+      });
+      self[name] = defn[name];
+    });
+    // If there is a passsed-in init funciton, call it now.
+    if (typeof defn.init == 'function') defn.init.call(this);
+    return self;
+  });
+
+  return cls.registerClass();
+};
+
+function getIvar(obj, name) {
+  const retPtr = MOPointer.new();
+  (0, _runtime.object_getInstanceVariable)(obj, name, retPtr);
+  return retPtr.value().retain().autorelease();
+}
+
+/***/ }),
+
+/***/ "./node_modules/cocoascript-class/lib/runtime.js":
 /*!*******************************************************!*\
   !*** ./node_modules/cocoascript-class/lib/runtime.js ***!
   \*******************************************************/
-/*! no static exports found */function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SuperCall=function(e,t,n){const o=r("objc_msgSendSuper",[{type:"^"+i},{type:":"},...t],n);return function(...t){const n=function(e,t){return function e(t){if("object"!=typeof t||0==Object.keys(t).length)return t;const n=Object.keys(t)[0];const i=t[n];const o=MOStruct.structureWithName_memberNames_runtime(n,Object.keys(i),Mocha.sharedRuntime());Object.keys(i).map(t=>{o[t]=e(i[t])});return o}({objc_super:{receiver:e,super_class:t}})}(this,this.superclass()),i=MOPointer.alloc().initWithValue_(n);return o(i,e,...t)}},t.CFunc=r;const i='{objc_super="receiver"@"super_class"#}';function o(e,t){const n=NSMutableDictionary.dictionary();n.o=e,Object.keys(t).map(e=>n.setValue_forKeyPath(t[e],"o."+e))}function r(e,t,n){function i(e){if(!e)return null;const t=MOBridgeSupportArgument.alloc().init();return o(t,{type64:e.type}),t}const r=MOBridgeSupportFunction.alloc().init();return o(r,{name:e,arguments:t.map(i),returnValue:i(n)}),r}t.object_getInstanceVariable=r("object_getInstanceVariable",[{type:"@"},{type:"*"},{type:"^@"}],{type:"^{objc_ivar=}"}),t.object_setInstanceVariable=r("object_setInstanceVariable",[{type:"@"},{type:"*"},{type:"@"}],{type:"^{objc_ivar=}"});!function(e,t){const n=MOBridgeSupportController.sharedController().valueForKey("symbols");if(!n)throw Error("Something has changed within bridge support so we can't add our definitions");if(null!==n[e])return;const i=MOBridgeSupportStruct.alloc().init();o(i,{name:e,type:t.type}),n[e]=i}("objc_super",{type:i})},"./node_modules/promise-polyfill/lib/index.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.SuperCall = SuperCall;
+exports.CFunc = CFunc;
+const objc_super_typeEncoding = '{objc_super="receiver"@"super_class"#}';
+
+// You can store this to call your function. this must be bound to the current instance.
+function SuperCall(selector, argTypes, returnType) {
+  const func = CFunc("objc_msgSendSuper", [{ type: '^' + objc_super_typeEncoding }, { type: ":" }, ...argTypes], returnType);
+  return function (...args) {
+    const struct = make_objc_super(this, this.superclass());
+    const structPtr = MOPointer.alloc().initWithValue_(struct);
+    return func(structPtr, selector, ...args);
+  };
+}
+
+// Recursively create a MOStruct
+function makeStruct(def) {
+  if (typeof def !== 'object' || Object.keys(def).length == 0) {
+    return def;
+  }
+  const name = Object.keys(def)[0];
+  const values = def[name];
+
+  const structure = MOStruct.structureWithName_memberNames_runtime(name, Object.keys(values), Mocha.sharedRuntime());
+
+  Object.keys(values).map(member => {
+    structure[member] = makeStruct(values[member]);
+  });
+
+  return structure;
+}
+
+function make_objc_super(self, cls) {
+  return makeStruct({
+    objc_super: {
+      receiver: self,
+      super_class: cls
+    }
+  });
+}
+
+// Due to particularities of the JS bridge, we can't call into MOBridgeSupport objects directly
+// But, we can ask key value coding to do the dirty work for us ;)
+function setKeys(o, d) {
+  const funcDict = NSMutableDictionary.dictionary();
+  funcDict.o = o;
+  Object.keys(d).map(k => funcDict.setValue_forKeyPath(d[k], "o." + k));
+}
+
+// Use any C function, not just ones with BridgeSupport
+function CFunc(name, args, retVal) {
+  function makeArgument(a) {
+    if (!a) return null;
+    const arg = MOBridgeSupportArgument.alloc().init();
+    setKeys(arg, {
+      type64: a.type
+    });
+    return arg;
+  }
+  const func = MOBridgeSupportFunction.alloc().init();
+  setKeys(func, {
+    name: name,
+    arguments: args.map(makeArgument),
+    returnValue: makeArgument(retVal)
+  });
+  return func;
+}
+
+/*
+@encode(char*) = "*"
+@encode(id) = "@"
+@encode(Class) = "#"
+@encode(void*) = "^v"
+@encode(CGRect) = "{CGRect={CGPoint=dd}{CGSize=dd}}"
+@encode(SEL) = ":"
+*/
+
+function addStructToBridgeSupport(key, structDef) {
+  // OK, so this is probably the nastiest hack in this file.
+  // We go modify MOBridgeSupportController behind its back and use kvc to add our own definition
+  // There isn't another API for this though. So the only other way would be to make a real bridgesupport file.
+  const symbols = MOBridgeSupportController.sharedController().valueForKey('symbols');
+  if (!symbols) throw Error("Something has changed within bridge support so we can't add our definitions");
+  // If someone already added this definition, don't re-register it.
+  if (symbols[key] !== null) return;
+  const def = MOBridgeSupportStruct.alloc().init();
+  setKeys(def, {
+    name: key,
+    type: structDef.type
+  });
+  symbols[key] = def;
+};
+
+// This assumes the ivar is an object type. Return value is pretty useless.
+const object_getInstanceVariable = exports.object_getInstanceVariable = CFunc("object_getInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "^@" }], { type: "^{objc_ivar=}" });
+// Again, ivar is of object type
+const object_setInstanceVariable = exports.object_setInstanceVariable = CFunc("object_setInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "@" }], { type: "^{objc_ivar=}" });
+
+// We need Mocha to understand what an objc_super is so we can use it as a function argument
+addStructToBridgeSupport('objc_super', { type: objc_super_typeEncoding });
+
+/***/ }),
+
+/***/ "./node_modules/promise-polyfill/lib/index.js":
 /*!****************************************************!*\
   !*** ./node_modules/promise-polyfill/lib/index.js ***!
   \****************************************************/
-/*! no static exports found */function(e,t,n){"use strict";(function(t,n){var i=t;function o(){}function r(e){if(!(this instanceof r))throw new TypeError("Promises must be constructed via new");if("function"!=typeof e)throw new TypeError("not a function");this._state=0,this._handled=!1,this._value=void 0,this._deferreds=[],u(e,this)}function s(e,t){for(;3===e._state;)e=e._value;0!==e._state?(e._handled=!0,r._immediateFn(function(){var n=1===e._state?t.onFulfilled:t.onRejected;if(null!==n){var i;try{i=n(e._value)}catch(e){return void l(t.promise,e)}a(t.promise,i)}else(1===e._state?a:l)(t.promise,e._value)})):e._deferreds.push(t)}function a(e,t){try{if(t===e)throw new TypeError("A promise cannot be resolved with itself.");if(t&&("object"==typeof t||"function"==typeof t)){var n=t.then;if(t instanceof r)return e._state=3,e._value=t,void c(e);if("function"==typeof n)return void u(function(e,t){return function(){e.apply(t,arguments)}}(n,t),e)}e._state=1,e._value=t,c(e)}catch(t){l(e,t)}}function l(e,t){e._state=2,e._value=t,c(e)}function c(e){2===e._state&&0===e._deferreds.length&&r._immediateFn(function(){e._handled||r._unhandledRejectionFn(e._value)});for(var t=0,n=e._deferreds.length;t<n;t++)s(e,e._deferreds[t]);e._deferreds=null}function u(e,t){var n=!1;try{e(function(e){n||(n=!0,a(t,e))},function(e){n||(n=!0,l(t,e))})}catch(e){if(n)return;n=!0,l(t,e)}}r.prototype.catch=function(e){return this.then(null,e)},r.prototype.then=function(e,t){var n=new this.constructor(o);return s(this,new function(e,t,n){this.onFulfilled="function"==typeof e?e:null,this.onRejected="function"==typeof t?t:null,this.promise=n}(e,t,n)),n},r.prototype.finally=function(e){var t=this.constructor;return this.then(function(n){return t.resolve(e()).then(function(){return n})},function(n){return t.resolve(e()).then(function(){return t.reject(n)})})},r.all=function(e){return new r(function(t,n){if(!e||void 0===e.length)throw new TypeError("Promise.all accepts an array");var i=Array.prototype.slice.call(e);if(0===i.length)return t([]);var o=i.length;function r(e,s){try{if(s&&("object"==typeof s||"function"==typeof s)){var a=s.then;if("function"==typeof a)return void a.call(s,function(t){r(e,t)},n)}i[e]=s,0==--o&&t(i)}catch(e){n(e)}}for(var s=0;s<i.length;s++)r(s,i[s])})},r.resolve=function(e){return e&&"object"==typeof e&&e.constructor===r?e:new r(function(t){t(e)})},r.reject=function(e){return new r(function(t,n){n(e)})},r.race=function(e){return new r(function(t,n){for(var i=0,o=e.length;i<o;i++)e[i].then(t,n)})},r._immediateFn="function"==typeof n&&function(e){n(e)}||function(e){i(e,0)},r._unhandledRejectionFn=function(e){"undefined"!=typeof console&&console&&console.warn("Possible Unhandled Promise Rejection:",e)},e.exports=r}).call(this,n(/*! ./node_modules/@skpm/timers/timeout.js */"./node_modules/@skpm/timers/timeout.js").setTimeout,n(/*! ./node_modules/@skpm/timers/immediate.js */"./node_modules/@skpm/timers/immediate.js").setImmediate)},"./node_modules/sketch-module-web-view/lib/browser-api.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(setTimeout, setImmediate) {
+
+/**
+ * @this {Promise}
+ */
+function finallyConstructor(callback) {
+  var constructor = this.constructor;
+  return this.then(
+    function(value) {
+      return constructor.resolve(callback()).then(function() {
+        return value;
+      });
+    },
+    function(reason) {
+      return constructor.resolve(callback()).then(function() {
+        return constructor.reject(reason);
+      });
+    }
+  );
+}
+
+// Store setTimeout reference so promise-polyfill will be unaffected by
+// other code modifying setTimeout (like sinon.useFakeTimers())
+var setTimeoutFunc = setTimeout;
+
+function noop() {}
+
+// Polyfill for Function.prototype.bind
+function bind(fn, thisArg) {
+  return function() {
+    fn.apply(thisArg, arguments);
+  };
+}
+
+/**
+ * @constructor
+ * @param {Function} fn
+ */
+function Promise(fn) {
+  if (!(this instanceof Promise))
+    throw new TypeError('Promises must be constructed via new');
+  if (typeof fn !== 'function') throw new TypeError('not a function');
+  /** @type {!number} */
+  this._state = 0;
+  /** @type {!boolean} */
+  this._handled = false;
+  /** @type {Promise|undefined} */
+  this._value = undefined;
+  /** @type {!Array<!Function>} */
+  this._deferreds = [];
+
+  doResolve(fn, this);
+}
+
+function handle(self, deferred) {
+  while (self._state === 3) {
+    self = self._value;
+  }
+  if (self._state === 0) {
+    self._deferreds.push(deferred);
+    return;
+  }
+  self._handled = true;
+  Promise._immediateFn(function() {
+    var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+    if (cb === null) {
+      (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+      return;
+    }
+    var ret;
+    try {
+      ret = cb(self._value);
+    } catch (e) {
+      reject(deferred.promise, e);
+      return;
+    }
+    resolve(deferred.promise, ret);
+  });
+}
+
+function resolve(self, newValue) {
+  try {
+    // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+    if (newValue === self)
+      throw new TypeError('A promise cannot be resolved with itself.');
+    if (
+      newValue &&
+      (typeof newValue === 'object' || typeof newValue === 'function')
+    ) {
+      var then = newValue.then;
+      if (newValue instanceof Promise) {
+        self._state = 3;
+        self._value = newValue;
+        finale(self);
+        return;
+      } else if (typeof then === 'function') {
+        doResolve(bind(then, newValue), self);
+        return;
+      }
+    }
+    self._state = 1;
+    self._value = newValue;
+    finale(self);
+  } catch (e) {
+    reject(self, e);
+  }
+}
+
+function reject(self, newValue) {
+  self._state = 2;
+  self._value = newValue;
+  finale(self);
+}
+
+function finale(self) {
+  if (self._state === 2 && self._deferreds.length === 0) {
+    Promise._immediateFn(function() {
+      if (!self._handled) {
+        Promise._unhandledRejectionFn(self._value);
+      }
+    });
+  }
+
+  for (var i = 0, len = self._deferreds.length; i < len; i++) {
+    handle(self, self._deferreds[i]);
+  }
+  self._deferreds = null;
+}
+
+/**
+ * @constructor
+ */
+function Handler(onFulfilled, onRejected, promise) {
+  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+  this.promise = promise;
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, self) {
+  var done = false;
+  try {
+    fn(
+      function(value) {
+        if (done) return;
+        done = true;
+        resolve(self, value);
+      },
+      function(reason) {
+        if (done) return;
+        done = true;
+        reject(self, reason);
+      }
+    );
+  } catch (ex) {
+    if (done) return;
+    done = true;
+    reject(self, ex);
+  }
+}
+
+Promise.prototype['catch'] = function(onRejected) {
+  return this.then(null, onRejected);
+};
+
+Promise.prototype.then = function(onFulfilled, onRejected) {
+  // @ts-ignore
+  var prom = new this.constructor(noop);
+
+  handle(this, new Handler(onFulfilled, onRejected, prom));
+  return prom;
+};
+
+Promise.prototype['finally'] = finallyConstructor;
+
+Promise.all = function(arr) {
+  return new Promise(function(resolve, reject) {
+    if (!arr || typeof arr.length === 'undefined')
+      throw new TypeError('Promise.all accepts an array');
+    var args = Array.prototype.slice.call(arr);
+    if (args.length === 0) return resolve([]);
+    var remaining = args.length;
+
+    function res(i, val) {
+      try {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then;
+          if (typeof then === 'function') {
+            then.call(
+              val,
+              function(val) {
+                res(i, val);
+              },
+              reject
+            );
+            return;
+          }
+        }
+        args[i] = val;
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex);
+      }
+    }
+
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i]);
+    }
+  });
+};
+
+Promise.resolve = function(value) {
+  if (value && typeof value === 'object' && value.constructor === Promise) {
+    return value;
+  }
+
+  return new Promise(function(resolve) {
+    resolve(value);
+  });
+};
+
+Promise.reject = function(value) {
+  return new Promise(function(resolve, reject) {
+    reject(value);
+  });
+};
+
+Promise.race = function(values) {
+  return new Promise(function(resolve, reject) {
+    for (var i = 0, len = values.length; i < len; i++) {
+      values[i].then(resolve, reject);
+    }
+  });
+};
+
+// Use polyfill for setImmediate for performance gains
+Promise._immediateFn =
+  (typeof setImmediate === 'function' &&
+    function(fn) {
+      setImmediate(fn);
+    }) ||
+  function(fn) {
+    setTimeoutFunc(fn, 0);
+  };
+
+Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
+  if (typeof console !== 'undefined' && console) {
+    console.warn('Possible Unhandled Promise Rejection:', err); // eslint-disable-line no-console
+  }
+};
+
+module.exports = Promise;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/immediate.js */ "./node_modules/@skpm/timers/immediate.js")["setImmediate"]))
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/browser-api.js":
 /*!****************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/browser-api.js ***!
   \****************************************************************/
-/*! no static exports found */function(e,t){var n=["NSColor","NSCachedWhiteColor","NSColorSpaceColor","NSDynamicSystemColor","NSCachedColorSpaceColor"];e.exports=function(e,t,i){function o(n){e.isVisible()||(n?(NSApplication.sharedApplication().activateIgnoringOtherApps(!0),t.makeKeyAndOrderFront(null)):t.orderBack(null))}e._panel=t,e._webview=i,e._destroyed=!1,e.destroy=function(){return t.close()},e.close=function(){if(t.delegate().utils.parentWindow){var n=!0;return e.emit("close",{get defaultPrevented(){return!n},preventDefault:function(){n=!1}}),void(n&&t.delegate().utils.parentWindow.endSheet(t))}e.isClosable()&&t.performClose(null)},e.focus=o.bind(this,!0),e.blur=o.bind(this,!1),e.isFocused=function(){return t.isKeyWindow()},e.isDestroyed=function(){return e._destroyed},e.show=function(){return NSApp.activateIgnoringOtherApps(!0),t.delegate().utils.parentWindow?t.delegate().utils.parentWindow.beginSheet_completionHandler(t,__mocha__.createBlock_function("v16@?0q8",function(){e.emit("closed")})):t.makeKeyAndOrderFront(null)},e.showInactive=function(){return t.orderFrontRegardless()},e.hide=function(){return t.orderOut(null)},e.isVisible=function(){return t.isVisible()},e.isModal=function(){return!1},e.maximize=function(){e.isMaximized()||t.zoom(null)},e.unmaximize=function(){e.isMaximized()&&t.zoom(null)},e.isMaximized=function(){if(0!=(t.styleMask()&NSResizableWindowMask))return t.isZoomed();var e=NSScreen.mainScreen().visibleFrame(),n=t.frame();return e.origin.x==n.origin.x&&e.origin.y==n.origin.y&&e.size.width==n.size.width&&e.size.height==n.size.height},e.minimize=function(){return t.miniaturize(null)},e.restore=function(){return t.deminiaturize(null)},e.isMinimized=function(){return t.isMiniaturized()},e.setFullScreen=function(n){n!==e.isFullscreen()&&t.toggleFullScreen(null)},e.isFullscreen=function(){return t.styleMask()&NSFullScreenWindowMask},e.setAspectRatio=function(e){e>0?t.setAspectRatio(NSMakeSize(e,1)):t.setResizeIncrements(NSMakeSize(1,1))},e.setBounds=function(n,i){if(!e.isFullscreen()){var o=n.size,r=NSMakeRect(n.origin.x,0,o.width,o.height),s=NSScreen.screens().firstObject();r.origin.y=NSHeight(s.frame())-o.height-n.origin.y,t.setFrame_display_animate(r,!0,i)}},e.getBounds=function(){return t.frame()},e.setContentBounds=function(){},e.getContentBounds=function(){},e.setSize=function(t,n,i){var o=e.getBounds();return o.size.height=n,o.size.width=t,e.setBounds(o,i)},e.getSize=function(){var t=e.getBounds();return[t.size.width,t.size.height]},e.setContentSize=function(t,n,i){var o=e.getContentBounds();return o.size.height=n,o.size.width=t,e.setContentBounds(o,i)},e.getContentSize=function(){var t=e.getContentBounds();return[t.size.width,t.size.height]},e.setMinimumSize=function(e,n){const i={width:e,height:n};t.setContentMinSize(i)},e.getMinimumSize=function(){const e=t.contentMinSize();return[e.width,e.height]},e.setMaximumSize=function(e,n){const i={width:e,height:n};t.setContentMaxSize(i)},e.getMaximumSize=function(){const e=t.contentMaxSize();return[e.width,e.height]},e.setResizable=function(t){return e._setStyleMask(t,NSResizableWindowMask)},e.isResizable=function(){return t.styleMask()&NSResizableWindowMask},e.setMovable=function(e){return t.setMovable(e)},e.isMovable=function(){return t.isMovable()},e.setMinimizable=function(t){return e._setStyleMask(t,NSMiniaturizableWindowMask)},e.isMinimizable=function(){return t.styleMask()&NSMiniaturizableWindowMask},e.setMaximizable=function(e){t.standardWindowButton(NSWindowZoomButton)&&t.standardWindowButton(NSWindowZoomButton).setEnabled(e)},e.isMaximizable=function(){return t.standardWindowButton(NSWindowZoomButton)&&t.standardWindowButton(NSWindowZoomButton).isEnabled()},e.setFullScreenable=function(t){e._setCollectionBehavior(t,NSWindowCollectionBehaviorFullScreenPrimary),e._setCollectionBehavior(!t,NSWindowCollectionBehaviorFullScreenAuxiliary)},e.isFullScreenable=function(){return t.collectionBehavior()&NSWindowCollectionBehaviorFullScreenPrimary},e.setClosable=function(t){e._setStyleMask(t,NSClosableWindowMask)},e.isClosable=function(){return t.styleMask()&NSClosableWindowMask},e.setAlwaysOnTop=function(e,n,i){var o=NSNormalWindowLevel,r=CGWindowLevelForKey(kCGMaximumWindowLevelKey),s=CGWindowLevelForKey(kCGMinimumWindowLevelKey);e&&(o="normal"===n?NSNormalWindowLevel:"torn-off-menu"===n?NSTornOffMenuWindowLevel:"modal-panel"===n?NSModalPanelWindowLevel:"main-menu"===n?NSMainMenuWindowLevel:"status"===n?NSStatusWindowLevel:"pop-up-menu"===n?NSPopUpMenuWindowLevel:"screen-saver"===n?NSScreenSaverWindowLevel:"dock"===n?NSDockWindowLevel:NSFloatingWindowLevel);var a=o+(i||0);if(!(a>=s&&a<=r))throw new Error("relativeLevel must be between "+s+" and "+r);t.setLevel(a)},e.isAlwaysOnTop=function(){return t.level()!==NSNormalWindowLevel},e.moveTop=function(){return t.orderFrontRegardless()},e.center=function(){t.center()},e.setPosition=function(t,n,i){var o=e.getBounds(),r=NSScreen.screens().firstObject().frame();return o.origin.x=t,o.origin.y=Math.round(NSHeight(r)-n),e.setBounds(o,i)},e.getPosition=function(){var t=e.getBounds(),n=NSScreen.screens().firstObject().frame();return[t.origin.x,Math.round(NSHeight(n)-t.origin.y)]},e.setTitle=function(e){t.setTitle(e)},e.getTitle=function(){return String(t.title())};var r=0;e.flashFrame=function(e){e?r=NSApp.requestUserAttention(NSInformationalRequest):(NSApp.cancelUserAttentionRequest(r),r=0)},e.getNativeWindowHandle=function(){return t},e.getNativeWebViewHandle=function(){return i},e.loadURL=function(e){if(/^(?!https?|file).*\.html?$/.test(e)&&"undefined"!=typeof __command&&__command.pluginBundle()&&(e="file://"+__command.pluginBundle().urlForResourceNamed(e).path()),/^file:\/\/.*\.html?$/.test(e))return void i.loadFileURL_allowingReadAccessToURL(NSURL.fileURLWithPath(e),NSURL.fileURLWithPath("file:///"));const t=NSURL.URLWithString(e),n=NSURLRequest.requestWithURL(t);i.loadRequest(n)},e.reload=function(){i.reload()},e.setHasShadow=function(e){return t.setHasShadow(e)},e.hasShadow=function(){return t.hasShadow()},e.setOpacity=function(e){return t.setAlphaValue(e)},e.getOpacity=function(){return t.alphaValue()},e.setVisibleOnAllWorkspaces=function(t){return e._setCollectionBehavior(t,NSWindowCollectionBehaviorCanJoinAllSpaces)},e.isVisibleOnAllWorkspaces=function(){return t.collectionBehavior()&NSWindowCollectionBehaviorCanJoinAllSpaces},e.setIgnoreMouseEvents=function(e){return t.setIgnoresMouseEvents(e)},e.setContentProtection=function(e){t.setSharingType(e?NSWindowSharingNone:NSWindowSharingReadOnly)},e.setAutoHideCursor=function(e){t.setDisableAutoHideCursor(e)},e.setVibrancy=function(n){var i=e._vibrantView;if(!n){if(null==i)return;return i.removeFromSuperview(),void t.setVibrantView(null)}if(null==i){var o=t.contentView();i=NSVisualEffectView.alloc().initWithFrame(o.bounds()),e._vibrantView=i,i.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),i.setBlendingMode(NSVisualEffectBlendingModeBehindWindow),i.setState(NSVisualEffectStateActive),i.setFrame(o.bounds()),o.addSubview_positioned_relativeTo(i,NSWindowBelow,null)}var r=NSVisualEffectMaterialLight;"appearance-based"===n?r=NSVisualEffectMaterialAppearanceBased:"light"===n?r=NSVisualEffectMaterialLight:"dark"===n?r=NSVisualEffectMaterialDark:"titlebar"===n?r=NSVisualEffectMaterialTitlebar:"selection"===n?r=NSVisualEffectMaterialSelection:"menu"===n?r=NSVisualEffectMaterialMenu:"popover"===n?r=NSVisualEffectMaterialPopover:"sidebar"===n?r=NSVisualEffectMaterialSidebar:"medium-light"===n?r=NSVisualEffectMaterialMediumLight:"ultra-dark"===n&&(r=NSVisualEffectMaterialUltraDark),i.setMaterial(r)},e._setBackgroundColor=function(e){var o=function(e){if(!e||"#"!==e[0]){if(e&&e.class&&-1!==n.indexOf(String(e.class())))return e;throw new Error("Incorrect color formating. It should be an hex color: #RRGGBBAA")}var t,i=e.substr(1);if(3===i.length?i+="F":6===i.length&&(i+="FF"),4===i.length)for(var o=0;o<4;o+=1)t+=i[o],t+=i[o];else{if(8!==i.length)return NSColor.whiteColor();t=i}var r=parseInt(t.slice(0,2),16),s=parseInt(t.slice(2,4),16),a=parseInt(t.slice(4,6),16),l=parseInt(t.slice(6,8),16);return NSColor.colorWithSRGBRed_green_blue_alpha(r,s,a,l)}(e);i.isOpaque=!1,i.setBackgroundColor(NSColor.clearColor()),t.backgroundColor=o},e._invalidate=function(){t.flushWindow(),t.contentView().setNeedsDisplay(!0)},e._setStyleMask=function(n,i){var o=e.isMaximizable();n?t.setStyleMask(t.styleMask()|i):t.setStyleMask(t.styleMask()&~i),e.setMaximizable(o)},e._setCollectionBehavior=function(n,i){var o=e.isMaximizable();n?t.setCollectionBehavior(t.collectionBehavior()|i):t.setCollectionBehavior(t.collectionBehavior()&~i),e.setMaximizable(o)},e._showWindowButton=function(e){var n=t.standardWindowButton(e);n.superview().addSubview_positioned_relative(n,NSWindowAbove,null)}}},"./node_modules/sketch-module-web-view/lib/constants.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var COLOR_CLASSES = [
+  'NSColor',
+  'NSCachedWhiteColor',
+  'NSColorSpaceColor',
+  'NSDynamicSystemColor',
+  'NSCachedColorSpaceColor',
+]
+function parseHexColor(color) {
+  // Check the string for incorrect formatting.
+  if (!color || color[0] !== '#') {
+    if (
+      color &&
+      color.class &&
+      COLOR_CLASSES.indexOf(String(color.class())) !== -1
+    ) {
+      return color
+    }
+    throw new Error(
+      'Incorrect color formating. It should be an hex color: #RRGGBBAA'
+    )
+  }
+
+  // append FF if alpha channel is not specified.
+  var source = color.substr(1)
+  if (source.length === 3) {
+    source += 'F'
+  } else if (source.length === 6) {
+    source += 'FF'
+  }
+  // Convert the string from #FFF format to #FFFFFF format.
+  var hex
+  if (source.length === 4) {
+    for (var i = 0; i < 4; i += 1) {
+      hex += source[i]
+      hex += source[i]
+    }
+  } else if (source.length === 8) {
+    hex = source
+  } else {
+    return NSColor.whiteColor()
+  }
+
+  var r = parseInt(hex.slice(0, 2), 16)
+  var g = parseInt(hex.slice(2, 4), 16)
+  var b = parseInt(hex.slice(4, 6), 16)
+  var a = parseInt(hex.slice(6, 8), 16)
+
+  return NSColor.colorWithSRGBRed_green_blue_alpha(r, g, b, a)
+}
+
+module.exports = function(browserWindow, panel, webview) {
+  // keep reference to the subviews
+  browserWindow._panel = panel
+  browserWindow._webview = webview
+  browserWindow._destroyed = false
+
+  browserWindow.destroy = function() {
+    return panel.close()
+  }
+
+  browserWindow.close = function() {
+    if (panel.delegate().utils.parentWindow) {
+      var shouldClose = true
+      browserWindow.emit('close', {
+        get defaultPrevented() {
+          return !shouldClose
+        },
+        preventDefault: function() {
+          shouldClose = false
+        },
+      })
+      if (shouldClose) {
+        panel.delegate().utils.parentWindow.endSheet(panel)
+      }
+      return
+    }
+
+    if (!browserWindow.isClosable()) {
+      return
+    }
+
+    panel.performClose(null)
+  }
+
+  function focus(focused) {
+    if (browserWindow.isVisible()) {
+      return
+    }
+    if (focused) {
+      NSApplication.sharedApplication().activateIgnoringOtherApps(true)
+      panel.makeKeyAndOrderFront(null)
+    } else {
+      panel.orderBack(null)
+    }
+  }
+
+  browserWindow.focus = focus.bind(this, true)
+  browserWindow.blur = focus.bind(this, false)
+
+  browserWindow.isFocused = function() {
+    return panel.isKeyWindow()
+  }
+
+  browserWindow.isDestroyed = function() {
+    return browserWindow._destroyed
+  }
+
+  browserWindow.show = function() {
+    // This method is supposed to put focus on window, however if the app does not
+    // have focus then "makeKeyAndOrderFront" will only show the window.
+    NSApp.activateIgnoringOtherApps(true)
+
+    if (panel.delegate().utils.parentWindow) {
+      return panel.delegate().utils.parentWindow.beginSheet_completionHandler(
+        panel,
+        __mocha__.createBlock_function('v16@?0q8', function() {
+          browserWindow.emit('closed')
+        })
+      )
+    }
+
+    return panel.makeKeyAndOrderFront(null)
+  }
+
+  browserWindow.showInactive = function() {
+    return panel.orderFrontRegardless()
+  }
+
+  browserWindow.hide = function() {
+    return panel.orderOut(null)
+  }
+
+  browserWindow.isVisible = function() {
+    return panel.isVisible()
+  }
+
+  browserWindow.isModal = function() {
+    return false
+  }
+
+  browserWindow.maximize = function() {
+    if (!browserWindow.isMaximized()) {
+      panel.zoom(null)
+    }
+  }
+  browserWindow.unmaximize = function() {
+    if (browserWindow.isMaximized()) {
+      panel.zoom(null)
+    }
+  }
+
+  browserWindow.isMaximized = function() {
+    if ((panel.styleMask() & NSResizableWindowMask) !== 0) {
+      return panel.isZoomed()
+    }
+    var rectScreen = NSScreen.mainScreen().visibleFrame()
+    var rectWindow = panel.frame()
+    return (
+      rectScreen.origin.x == rectWindow.origin.x &&
+      rectScreen.origin.y == rectWindow.origin.y &&
+      rectScreen.size.width == rectWindow.size.width &&
+      rectScreen.size.height == rectWindow.size.height
+    )
+  }
+
+  browserWindow.minimize = function() {
+    return panel.miniaturize(null)
+  }
+
+  browserWindow.restore = function() {
+    return panel.deminiaturize(null)
+  }
+
+  browserWindow.isMinimized = function() {
+    return panel.isMiniaturized()
+  }
+
+  browserWindow.setFullScreen = function(fullscreen) {
+    if (fullscreen !== browserWindow.isFullscreen()) {
+      panel.toggleFullScreen(null)
+    }
+  }
+
+  browserWindow.isFullscreen = function() {
+    return panel.styleMask() & NSFullScreenWindowMask
+  }
+
+  browserWindow.setAspectRatio = function(aspectRatio /* , extraSize */) {
+    // Reset the behaviour to default if aspect_ratio is set to 0 or less.
+    if (aspectRatio > 0.0) {
+      panel.setAspectRatio(NSMakeSize(aspectRatio, 1.0))
+    } else {
+      panel.setResizeIncrements(NSMakeSize(1.0, 1.0))
+    }
+  }
+
+  browserWindow.setBounds = function(bounds, animate) {
+    // Do nothing if in fullscreen mode.
+    if (browserWindow.isFullscreen()) {
+      return
+    }
+
+    // TODO: Check size constraints since setFrame does not check it.
+    var size = bounds.size
+    // size.SetToMax(GetMinimumSize());
+    // gfx::Size max_size = GetMaximumSize();
+    // if (!max_size.IsEmpty())
+    //   size.SetToMin(max_size);
+
+    var cocoaBounds = NSMakeRect(bounds.origin.x, 0, size.width, size.height)
+    // Flip coordinates based on the primary screen.
+    var screen = NSScreen.screens().firstObject()
+    cocoaBounds.origin.y =
+      NSHeight(screen.frame()) - size.height - bounds.origin.y
+
+    panel.setFrame_display_animate(cocoaBounds, true, animate)
+  }
+
+  browserWindow.getBounds = function() {
+    return panel.frame()
+  }
+
+  browserWindow.setContentBounds = function(/* bounds, animate */) {
+    // TODO:
+  }
+
+  browserWindow.getContentBounds = function() {
+    // TODO:
+  }
+
+  browserWindow.setSize = function(width, height, animate) {
+    var bounds = browserWindow.getBounds()
+    bounds.size.height = height
+    bounds.size.width = width
+
+    // TODO: handle resizing around center
+
+    return browserWindow.setBounds(bounds, animate)
+  }
+
+  browserWindow.getSize = function() {
+    var bounds = browserWindow.getBounds()
+    return [bounds.size.width, bounds.size.height]
+  }
+
+  browserWindow.setContentSize = function(width, height, animate) {
+    var bounds = browserWindow.getContentBounds()
+    bounds.size.height = height
+    bounds.size.width = width
+
+    // TODO: handle resizing around center
+
+    return browserWindow.setContentBounds(bounds, animate)
+  }
+
+  browserWindow.getContentSize = function() {
+    var bounds = browserWindow.getContentBounds()
+    return [bounds.size.width, bounds.size.height]
+  }
+
+  browserWindow.setMinimumSize = function(width, height) {
+    const minSize = { width: width, height: height }
+    panel.setContentMinSize(minSize)
+  }
+
+  browserWindow.getMinimumSize = function() {
+    const size = panel.contentMinSize()
+    return [size.width, size.height]
+  }
+
+  browserWindow.setMaximumSize = function(width, height) {
+    const minSize = { width: width, height: height }
+    panel.setContentMaxSize(minSize)
+  }
+
+  browserWindow.getMaximumSize = function() {
+    const size = panel.contentMaxSize()
+    return [size.width, size.height]
+  }
+
+  browserWindow.setResizable = function(resizable) {
+    return browserWindow._setStyleMask(resizable, NSResizableWindowMask)
+  }
+
+  browserWindow.isResizable = function() {
+    return panel.styleMask() & NSResizableWindowMask
+  }
+
+  browserWindow.setMovable = function(movable) {
+    return panel.setMovable(movable)
+  }
+  browserWindow.isMovable = function() {
+    return panel.isMovable()
+  }
+
+  browserWindow.setMinimizable = function(minimizable) {
+    return browserWindow._setStyleMask(minimizable, NSMiniaturizableWindowMask)
+  }
+
+  browserWindow.isMinimizable = function() {
+    return panel.styleMask() & NSMiniaturizableWindowMask
+  }
+
+  browserWindow.setMaximizable = function(maximizable) {
+    if (panel.standardWindowButton(NSWindowZoomButton)) {
+      panel.standardWindowButton(NSWindowZoomButton).setEnabled(maximizable)
+    }
+  }
+
+  browserWindow.isMaximizable = function() {
+    return (
+      panel.standardWindowButton(NSWindowZoomButton) &&
+      panel.standardWindowButton(NSWindowZoomButton).isEnabled()
+    )
+  }
+
+  browserWindow.setFullScreenable = function(fullscreenable) {
+    browserWindow._setCollectionBehavior(
+      fullscreenable,
+      NSWindowCollectionBehaviorFullScreenPrimary
+    )
+    // On EL Capitan this flag is required to hide fullscreen button.
+    browserWindow._setCollectionBehavior(
+      !fullscreenable,
+      NSWindowCollectionBehaviorFullScreenAuxiliary
+    )
+  }
+
+  browserWindow.isFullScreenable = function() {
+    var collectionBehavior = panel.collectionBehavior()
+    return collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary
+  }
+
+  browserWindow.setClosable = function(closable) {
+    browserWindow._setStyleMask(closable, NSClosableWindowMask)
+  }
+
+  browserWindow.isClosable = function() {
+    return panel.styleMask() & NSClosableWindowMask
+  }
+
+  browserWindow.setAlwaysOnTop = function(top, level, relativeLevel) {
+    var windowLevel = NSNormalWindowLevel
+    var maxWindowLevel = CGWindowLevelForKey(kCGMaximumWindowLevelKey)
+    var minWindowLevel = CGWindowLevelForKey(kCGMinimumWindowLevelKey)
+
+    if (top) {
+      if (level === 'normal') {
+        windowLevel = NSNormalWindowLevel
+      } else if (level === 'torn-off-menu') {
+        windowLevel = NSTornOffMenuWindowLevel
+      } else if (level === 'modal-panel') {
+        windowLevel = NSModalPanelWindowLevel
+      } else if (level === 'main-menu') {
+        windowLevel = NSMainMenuWindowLevel
+      } else if (level === 'status') {
+        windowLevel = NSStatusWindowLevel
+      } else if (level === 'pop-up-menu') {
+        windowLevel = NSPopUpMenuWindowLevel
+      } else if (level === 'screen-saver') {
+        windowLevel = NSScreenSaverWindowLevel
+      } else if (level === 'dock') {
+        // Deprecated by macOS, but kept for backwards compatibility
+        windowLevel = NSDockWindowLevel
+      } else {
+        windowLevel = NSFloatingWindowLevel
+      }
+    }
+
+    var newLevel = windowLevel + (relativeLevel || 0)
+    if (newLevel >= minWindowLevel && newLevel <= maxWindowLevel) {
+      panel.setLevel(newLevel)
+    } else {
+      throw new Error(
+        'relativeLevel must be between ' +
+          minWindowLevel +
+          ' and ' +
+          maxWindowLevel
+      )
+    }
+  }
+
+  browserWindow.isAlwaysOnTop = function() {
+    return panel.level() !== NSNormalWindowLevel
+  }
+
+  browserWindow.moveTop = function() {
+    return panel.orderFrontRegardless()
+  }
+
+  browserWindow.center = function() {
+    panel.center()
+  }
+
+  browserWindow.setPosition = function(x, y, animate) {
+    var bounds = browserWindow.getBounds()
+    var mainScreenRect = NSScreen.screens()
+      .firstObject()
+      .frame()
+    bounds.origin.x = x
+    bounds.origin.y = Math.round(NSHeight(mainScreenRect) - y)
+
+    return browserWindow.setBounds(bounds, animate)
+  }
+
+  browserWindow.getPosition = function() {
+    var bounds = browserWindow.getBounds()
+    var mainScreenRect = NSScreen.screens()
+      .firstObject()
+      .frame()
+    return [
+      bounds.origin.x,
+      Math.round(NSHeight(mainScreenRect) - bounds.origin.y),
+    ]
+  }
+
+  browserWindow.setTitle = function(title) {
+    panel.setTitle(title)
+  }
+
+  browserWindow.getTitle = function() {
+    return String(panel.title())
+  }
+
+  var attentionRequestId = 0
+  browserWindow.flashFrame = function(flash) {
+    if (flash) {
+      attentionRequestId = NSApp.requestUserAttention(NSInformationalRequest)
+    } else {
+      NSApp.cancelUserAttentionRequest(attentionRequestId)
+      attentionRequestId = 0
+    }
+  }
+
+  browserWindow.getNativeWindowHandle = function() {
+    return panel
+  }
+
+  browserWindow.getNativeWebViewHandle = function() {
+    return webview
+  }
+
+  browserWindow.loadURL = function(url) {
+    // When frameLocation is a file, prefix it with the Sketch Resources path
+    if (/^(?!https?|file).*\.html?$/.test(url)) {
+      if (typeof __command !== 'undefined' && __command.pluginBundle()) {
+        url =
+          'file://' +
+          __command
+            .pluginBundle()
+            .urlForResourceNamed(url)
+            .path()
+      }
+    }
+
+    if (/^file:\/\/.*\.html?$/.test(url)) {
+      webview.loadFileURL_allowingReadAccessToURL(
+        NSURL.fileURLWithPath(url),
+        NSURL.fileURLWithPath('file:///')
+      )
+      return
+    }
+
+    const properURL = NSURL.URLWithString(url)
+    const urlRequest = NSURLRequest.requestWithURL(properURL)
+
+    webview.loadRequest(urlRequest)
+  }
+
+  browserWindow.reload = function() {
+    webview.reload()
+  }
+
+  browserWindow.setHasShadow = function(hasShadow) {
+    return panel.setHasShadow(hasShadow)
+  }
+
+  browserWindow.hasShadow = function() {
+    return panel.hasShadow()
+  }
+
+  browserWindow.setOpacity = function(opacity) {
+    return panel.setAlphaValue(opacity)
+  }
+
+  browserWindow.getOpacity = function() {
+    return panel.alphaValue()
+  }
+
+  browserWindow.setVisibleOnAllWorkspaces = function(visible) {
+    return browserWindow._setCollectionBehavior(
+      visible,
+      NSWindowCollectionBehaviorCanJoinAllSpaces
+    )
+  }
+
+  browserWindow.isVisibleOnAllWorkspaces = function() {
+    var collectionBehavior = panel.collectionBehavior()
+    return collectionBehavior & NSWindowCollectionBehaviorCanJoinAllSpaces
+  }
+
+  browserWindow.setIgnoreMouseEvents = function(ignore) {
+    return panel.setIgnoresMouseEvents(ignore)
+  }
+
+  browserWindow.setContentProtection = function(enable) {
+    panel.setSharingType(enable ? NSWindowSharingNone : NSWindowSharingReadOnly)
+  }
+
+  browserWindow.setAutoHideCursor = function(autoHide) {
+    panel.setDisableAutoHideCursor(autoHide)
+  }
+
+  browserWindow.setVibrancy = function(type) {
+    var effectView = browserWindow._vibrantView
+
+    if (!type) {
+      if (effectView == null) {
+        return
+      }
+
+      effectView.removeFromSuperview()
+      panel.setVibrantView(null)
+      return
+    }
+
+    if (effectView == null) {
+      var contentView = panel.contentView()
+      effectView = NSVisualEffectView.alloc().initWithFrame(
+        contentView.bounds()
+      )
+      browserWindow._vibrantView = effectView
+
+      effectView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+      effectView.setBlendingMode(NSVisualEffectBlendingModeBehindWindow)
+      effectView.setState(NSVisualEffectStateActive)
+      effectView.setFrame(contentView.bounds())
+      contentView.addSubview_positioned_relativeTo(
+        effectView,
+        NSWindowBelow,
+        null
+      )
+    }
+
+    var vibrancyType = NSVisualEffectMaterialLight
+
+    if (type === 'appearance-based') {
+      vibrancyType = NSVisualEffectMaterialAppearanceBased
+    } else if (type === 'light') {
+      vibrancyType = NSVisualEffectMaterialLight
+    } else if (type === 'dark') {
+      vibrancyType = NSVisualEffectMaterialDark
+    } else if (type === 'titlebar') {
+      vibrancyType = NSVisualEffectMaterialTitlebar
+    } else if (type === 'selection') {
+      vibrancyType = NSVisualEffectMaterialSelection
+    } else if (type === 'menu') {
+      vibrancyType = NSVisualEffectMaterialMenu
+    } else if (type === 'popover') {
+      vibrancyType = NSVisualEffectMaterialPopover
+    } else if (type === 'sidebar') {
+      vibrancyType = NSVisualEffectMaterialSidebar
+    } else if (type === 'medium-light') {
+      vibrancyType = NSVisualEffectMaterialMediumLight
+    } else if (type === 'ultra-dark') {
+      vibrancyType = NSVisualEffectMaterialUltraDark
+    }
+
+    effectView.setMaterial(vibrancyType)
+  }
+
+  browserWindow._setBackgroundColor = function(colorName) {
+    var color = parseHexColor(colorName)
+    webview.isOpaque = false
+    webview.setBackgroundColor(NSColor.clearColor())
+    panel.backgroundColor = color
+  }
+
+  browserWindow._invalidate = function() {
+    panel.flushWindow()
+    panel.contentView().setNeedsDisplay(true)
+  }
+
+  browserWindow._setStyleMask = function(on, flag) {
+    var wasMaximizable = browserWindow.isMaximizable()
+    if (on) {
+      panel.setStyleMask(panel.styleMask() | flag)
+    } else {
+      panel.setStyleMask(panel.styleMask() & ~flag)
+    }
+    // Change style mask will make the zoom button revert to default, probably
+    // a bug of Cocoa or macOS.
+    browserWindow.setMaximizable(wasMaximizable)
+  }
+
+  browserWindow._setCollectionBehavior = function(on, flag) {
+    var wasMaximizable = browserWindow.isMaximizable()
+    if (on) {
+      panel.setCollectionBehavior(panel.collectionBehavior() | flag)
+    } else {
+      panel.setCollectionBehavior(panel.collectionBehavior() & ~flag)
+    }
+    // Change collectionBehavior will make the zoom button revert to default,
+    // probably a bug of Cocoa or macOS.
+    browserWindow.setMaximizable(wasMaximizable)
+  }
+
+  browserWindow._showWindowButton = function(button) {
+    var view = panel.standardWindowButton(button)
+    view.superview().addSubview_positioned_relative(view, NSWindowAbove, null)
+  }
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/constants.js":
 /*!**************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/constants.js ***!
   \**************************************************************/
-/*! no static exports found */function(e,t){e.exports={JS_BRIDGE:"__skpm_sketchBridge"}},"./node_modules/sketch-module-web-view/lib/dispatch-first-click.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  JS_BRIDGE: '__skpm_sketchBridge',
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js":
 /*!*************************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/dispatch-first-click.js ***!
   \*************************************************************************/
-/*! no static exports found */function(e,t){e.exports=function(e,t){var n=e.convertPoint_fromView(t.locationInWindow(),null);return"var el = document.elementFromPoint("+n.x+", "+(e.frame().size.height-n.y)+'); if (el && ["text", "textarea", "date", "datetime-local", "email", "number", "month", "password", "search", "tel", "time", "url", "week" ].indexOf(el.type) >= 0 && el.focus) {el.focus();} else if (el) {el.dispatchEvent(new Event("click", {bubbles: true}))}'}},"./node_modules/sketch-module-web-view/lib/fitSubview.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var tagsToFocus =
+  '["text", "textarea", "date", "datetime-local", "email", "number", "month", "password", "search", "tel", "time", "url", "week" ]'
+
+module.exports = function(webView, event) {
+  var point = webView.convertPoint_fromView(event.locationInWindow(), null)
+  var x = point.x
+  var y = webView.frame().size.height - point.y // the coord start from the bottom instead of the top
+  return (
+    'var el = document.elementFromPoint(' + // get the DOM element that match the event
+    x +
+    ', ' +
+    y +
+    '); ' +
+    'if (el && ' + // some tags need to be focused instead of clicked
+    tagsToFocus +
+    '.indexOf(el.type) >= 0 && ' +
+    'el.focus' +
+    ') {' +
+    'el.focus();' + // so focus them
+    '} else if (el) {' +
+    'el.dispatchEvent(new Event("click", {bubbles: true}))' + // click the others
+    '}'
+  )
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/fitSubview.js":
 /*!***************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/fitSubview.js ***!
   \***************************************************************/
-/*! no static exports found */function(e,t){function n(e,t,n,i){n.addConstraint(NSLayoutConstraint.constraintWithItem_attribute_relatedBy_toItem_attribute_multiplier_constant(t,e,NSLayoutRelationEqual,n,e,1,i))}e.exports=function(e,t,i){i=i||[],e.setTranslatesAutoresizingMaskIntoConstraints(!1),n(NSLayoutAttributeLeft,e,t,i[0]||0),n(NSLayoutAttributeTop,e,t,i[1]||0),n(NSLayoutAttributeRight,e,t,i[2]||0),n(NSLayoutAttributeBottom,e,t,i[3]||0)}},"./node_modules/sketch-module-web-view/lib/index.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function addEdgeConstraint(edge, subview, view, constant) {
+  view.addConstraint(
+    NSLayoutConstraint.constraintWithItem_attribute_relatedBy_toItem_attribute_multiplier_constant(
+      subview,
+      edge,
+      NSLayoutRelationEqual,
+      view,
+      edge,
+      1,
+      constant
+    )
+  )
+}
+module.exports = function fitSubviewToView(subview, view, constants) {
+  constants = constants || []
+  subview.setTranslatesAutoresizingMaskIntoConstraints(false)
+
+  addEdgeConstraint(NSLayoutAttributeLeft, subview, view, constants[0] || 0)
+  addEdgeConstraint(NSLayoutAttributeTop, subview, view, constants[1] || 0)
+  addEdgeConstraint(NSLayoutAttributeRight, subview, view, constants[2] || 0)
+  addEdgeConstraint(NSLayoutAttributeBottom, subview, view, constants[3] || 0)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/index.js":
 /*!**********************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/index.js ***!
   \**********************************************************/
-/*! no static exports found */function(e,t,n){var i=n(/*! events */"events"),o=n(/*! ./browser-api */"./node_modules/sketch-module-web-view/lib/browser-api.js"),r=n(/*! ./webview-api */"./node_modules/sketch-module-web-view/lib/webview-api.js"),s=n(/*! ./fitSubview */"./node_modules/sketch-module-web-view/lib/fitSubview.js"),a=n(/*! ./dispatch-first-click */"./node_modules/sketch-module-web-view/lib/dispatch-first-click.js"),l=n(/*! ./inject-client-messaging */"./node_modules/sketch-module-web-view/lib/inject-client-messaging.js"),c=n(/*! ./set-delegates */"./node_modules/sketch-module-web-view/lib/set-delegates.js");function u(e){var t=(e=e||{}).identifier||NSUUID.UUID().UUIDString(),n=NSThread.mainThread().threadDictionary(),d=u.fromId(t);if(d)return d;var f=new i;if(f.id=t,e.modal&&!e.parent)throw new Error("A modal needs to have a parent.");var m=coscript.createFiber(),p=e.width||800,h=e.height||600,w=NSScreen.screens().firstObject().frame(),b=NSMakeRect(void 0!==e.x?e.x:Math.round((NSWidth(w)-p)/2),void 0!==e.y?e.y:Math.round((NSHeight(w)-h)/2),p,h);e.titleBarStyle&&"default"!==e.titleBarStyle&&(e.frame=!1);var S="textured"!==e.windowType,v=NSTitledWindowMask;!1!==e.minimizable&&(v|=NSMiniaturizableWindowMask),!1!==e.closable&&(v|=NSClosableWindowMask),!1!==e.resizable&&(v|=NSResizableWindowMask),S&&!e.transparent&&!1!==e.frame||(v|=NSTexturedBackgroundWindowMask);var g=NSPanel.alloc().initWithContentRect_styleMask_backing_defer(b,v,NSBackingStoreBuffered,!0),y=WKWebViewConfiguration.alloc().init(),_=WKWebView.alloc().initWithFrame_configuration(CGRectMake(0,0,e.width||800,e.height||600),y);if(l(_),_.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),o(f,g,_),r(f,g,_),c(f,g,_,e),"desktop"===e.windowType&&(g.setLevel(kCGDesktopWindowLevel-1),g.setCollectionBehavior(NSWindowCollectionBehaviorCanJoinAllSpaces|NSWindowCollectionBehaviorStationary|NSWindowCollectionBehaviorIgnoresCycle)),void 0===e.minWidth&&void 0===e.minHeight||f.setMinimumSize(e.minWidth||0,e.minHeight||0),void 0===e.maxWidth&&void 0===e.maxHeight||f.setMaximumSize(e.maxWidth||1e4,e.maxHeight||1e4),e.transparent||!1===e.frame){g.titlebarAppearsTransparent=!0,g.titleVisibility=NSWindowTitleHidden,g.setOpaque(0),g.isMovableByWindowBackground=!0;var N=NSToolbar.alloc().initWithIdentifier("titlebarStylingToolbar");N.setShowsBaselineSeparator(!1),g.setToolbar(N)}if("hiddenInset"===e.titleBarStyle){var k=NSToolbar.alloc().initWithIdentifier("titlebarStylingToolbar");k.setShowsBaselineSeparator(!1),g.setToolbar(k)}!1!==e.frame&&e.useContentSize||f.setSize(p,h),e.center&&f.center(),e.alwaysOnTop&&f.setAlwaysOnTop(!0),e.fullscreen&&f.setFullScreen(!0),f.setFullScreenable(!!e.fullscreenable);const M=e.title||("undefined"!=typeof __command&&__command.pluginBundle()?__command.pluginBundle().name():void 0);M&&f.setTitle(M);var W=e.backgroundColor;e.transparent&&(W=NSColor.clearColor()),!W&&!1===e.frame&&e.vibrancy&&(W=NSColor.clearColor()),f._setBackgroundColor(W||NSColor.windowBackgroundColor()),!1===e.hasShadow&&f.setHasShadow(!1),void 0!==e.opacity&&f.setOpacity(e.opacity),e.webPreferences=e.webPreferences||{},_.configuration().preferences().setValue_forKey(!1!==e.webPreferences.devTools,"developerExtrasEnabled"),_.configuration().preferences().setValue_forKey(!1!==e.webPreferences.devTools,"javaScriptEnabled"),_.configuration().preferences().setValue_forKey(!!e.webPreferences.plugins,"plugInsEnabled"),_.configuration().preferences().setValue_forKey(e.webPreferences.minimumFontSize||0,"minimumFontSize"),e.webPreferences.zoomFactor&&_.setMagnification(e.webPreferences.zoomFactor);var C=g.contentView();return!1!==e.frame?(_.setFrame(C.bounds()),C.addSubview(_)):(C.setAutoresizingMask(NSViewWidthSizable|NSViewHeightSizable),s(C,C.superview()),_.setFrame(C.bounds()),C.addSubview(_),g.standardWindowButton(NSWindowFullScreenButton)&&g.standardWindowButton(NSWindowFullScreenButton).setHidden(!0),e.titleBarStyle&&"default"!==e.titleBarStyle||(g.standardWindowButton(NSWindowZoomButton).setHidden(!0),g.standardWindowButton(NSWindowMiniaturizeButton).setHidden(!0),g.standardWindowButton(NSWindowCloseButton).setHidden(!0),g.standardWindowButton(NSWindowZoomButton).setEnabled(!1))),e.vibrancy&&f.setVibrancy(e.vibrancy),f.setMaximizable(!1!==e.maximizable),e.acceptsFirstMouse&&f.on("focus",function(e){e.type()===NSEventTypeLeftMouseDown&&f.webContents.executeJavaScript(a(_,e)).catch(()=>{})}),!1!==e.show&&f.show(),f.on("closed",function(){f._destroyed=!0,n.removeObjectForKey(t),m.cleanup()}),n[t]=g,m.onCleanup(function(){f._destroyed||f.destroy()}),f}u.fromId=function(e){var t=NSThread.mainThread().threadDictionary();if(t[e])return u.fromPanel(t[e],e)},u.fromPanel=function(e,t){var n=new i;if(n.id=t,!e||!e.contentView)throw new Error("needs to pass an NSPanel");var s=e.contentView().subviews()[0];if(!s)throw new Error("The NSPanel needs to have a webview");return o(n,e,s),r(n,e,s),n},e.exports=u},"./node_modules/sketch-module-web-view/lib/inject-client-messaging.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* let's try to match the API from Electron's Browser window
+(https://github.com/electron/electron/blob/master/docs/api/browser-window.md) */
+var EventEmitter = __webpack_require__(/*! events */ "events")
+var buildBrowserAPI = __webpack_require__(/*! ./browser-api */ "./node_modules/sketch-module-web-view/lib/browser-api.js")
+var buildWebAPI = __webpack_require__(/*! ./webview-api */ "./node_modules/sketch-module-web-view/lib/webview-api.js")
+var fitSubviewToView = __webpack_require__(/*! ./fitSubview */ "./node_modules/sketch-module-web-view/lib/fitSubview.js")
+var dispatchFirstClick = __webpack_require__(/*! ./dispatch-first-click */ "./node_modules/sketch-module-web-view/lib/dispatch-first-click.js")
+var injectClientMessaging = __webpack_require__(/*! ./inject-client-messaging */ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js")
+var setDelegates = __webpack_require__(/*! ./set-delegates */ "./node_modules/sketch-module-web-view/lib/set-delegates.js")
+
+function BrowserWindow(options) {
+  options = options || {}
+
+  var identifier = options.identifier || NSUUID.UUID().UUIDString()
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+
+  var existingBrowserWindow = BrowserWindow.fromId(identifier)
+
+  // if we already have a window opened, reuse it
+  if (existingBrowserWindow) {
+    return existingBrowserWindow
+  }
+
+  var browserWindow = new EventEmitter()
+  browserWindow.id = identifier
+
+  if (options.modal && !options.parent) {
+    throw new Error('A modal needs to have a parent.')
+  }
+
+  // Long-running script
+  var fiber = coscript.createFiber()
+
+  // Window size
+  var width = options.width || 800
+  var height = options.height || 600
+  var mainScreenRect = NSScreen.screens()
+    .firstObject()
+    .frame()
+  var cocoaBounds = NSMakeRect(
+    typeof options.x !== 'undefined'
+      ? options.x
+      : Math.round((NSWidth(mainScreenRect) - width) / 2),
+    typeof options.y !== 'undefined'
+      ? options.y
+      : Math.round((NSHeight(mainScreenRect) - height) / 2),
+    width,
+    height
+  )
+
+  if (options.titleBarStyle && options.titleBarStyle !== 'default') {
+    options.frame = false
+  }
+
+  var useStandardWindow = options.windowType !== 'textured'
+  var styleMask = NSTitledWindowMask
+
+  // this is commented out because the toolbar doesn't appear otherwise :thinking-face:
+  // if (!useStandardWindow || options.frame === false) {
+  //   styleMask = NSFullSizeContentViewWindowMask
+  // }
+  if (options.minimizable !== false) {
+    styleMask |= NSMiniaturizableWindowMask
+  }
+  if (options.closable !== false) {
+    styleMask |= NSClosableWindowMask
+  }
+  if (options.resizable !== false) {
+    styleMask |= NSResizableWindowMask
+  }
+  if (!useStandardWindow || options.transparent || options.frame === false) {
+    styleMask |= NSTexturedBackgroundWindowMask
+  }
+
+  var panel = NSPanel.alloc().initWithContentRect_styleMask_backing_defer(
+    cocoaBounds,
+    styleMask,
+    NSBackingStoreBuffered,
+    true
+  )
+
+  var wkwebviewConfig = WKWebViewConfiguration.alloc().init()
+  var webView = WKWebView.alloc().initWithFrame_configuration(
+    CGRectMake(0, 0, options.width || 800, options.height || 600),
+    wkwebviewConfig
+  )
+  injectClientMessaging(webView)
+  webView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+
+  buildBrowserAPI(browserWindow, panel, webView)
+  buildWebAPI(browserWindow, panel, webView)
+  setDelegates(browserWindow, panel, webView, options)
+
+  if (options.windowType === 'desktop') {
+    panel.setLevel(kCGDesktopWindowLevel - 1)
+    // panel.setCanBecomeKeyWindow(false)
+    panel.setCollectionBehavior(
+      NSWindowCollectionBehaviorCanJoinAllSpaces |
+        NSWindowCollectionBehaviorStationary |
+        NSWindowCollectionBehaviorIgnoresCycle
+    )
+  }
+
+  if (
+    typeof options.minWidth !== 'undefined' ||
+    typeof options.minHeight !== 'undefined'
+  ) {
+    browserWindow.setMinimumSize(options.minWidth || 0, options.minHeight || 0)
+  }
+
+  if (
+    typeof options.maxWidth !== 'undefined' ||
+    typeof options.maxHeight !== 'undefined'
+  ) {
+    browserWindow.setMaximumSize(
+      options.maxWidth || 10000,
+      options.maxHeight || 10000
+    )
+  }
+
+  // if (options.focusable === false) {
+  //   panel.setCanBecomeKeyWindow(false)
+  // }
+
+  if (options.transparent || options.frame === false) {
+    panel.titlebarAppearsTransparent = true
+    panel.titleVisibility = NSWindowTitleHidden
+    panel.setOpaque(0)
+    panel.isMovableByWindowBackground = true
+    var toolbar2 = NSToolbar.alloc().initWithIdentifier(
+      'titlebarStylingToolbar'
+    )
+    toolbar2.setShowsBaselineSeparator(false)
+    panel.setToolbar(toolbar2)
+  }
+
+  if (options.titleBarStyle === 'hiddenInset') {
+    var toolbar = NSToolbar.alloc().initWithIdentifier('titlebarStylingToolbar')
+    toolbar.setShowsBaselineSeparator(false)
+    panel.setToolbar(toolbar)
+  }
+
+  if (options.frame === false || !options.useContentSize) {
+    browserWindow.setSize(width, height)
+  }
+
+  if (options.center) {
+    browserWindow.center()
+  }
+
+  if (options.alwaysOnTop) {
+    browserWindow.setAlwaysOnTop(true)
+  }
+
+  if (options.fullscreen) {
+    browserWindow.setFullScreen(true)
+  }
+  browserWindow.setFullScreenable(!!options.fullscreenable)
+
+  const title =
+    options.title ||
+    (typeof __command !== 'undefined' && __command.pluginBundle()
+      ? __command.pluginBundle().name()
+      : undefined)
+  if (title) {
+    browserWindow.setTitle(title)
+  }
+
+  var backgroundColor = options.backgroundColor
+  if (options.transparent) {
+    backgroundColor = NSColor.clearColor()
+  }
+  if (!backgroundColor && options.frame === false && options.vibrancy) {
+    backgroundColor = NSColor.clearColor()
+  }
+
+  browserWindow._setBackgroundColor(
+    backgroundColor || NSColor.windowBackgroundColor()
+  )
+
+  if (options.hasShadow === false) {
+    browserWindow.setHasShadow(false)
+  }
+
+  if (typeof options.opacity !== 'undefined') {
+    browserWindow.setOpacity(options.opacity)
+  }
+
+  options.webPreferences = options.webPreferences || {}
+
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.devTools !== false,
+      'developerExtrasEnabled'
+    )
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.devTools !== false,
+      'javaScriptEnabled'
+    )
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(!!options.webPreferences.plugins, 'plugInsEnabled')
+  webView
+    .configuration()
+    .preferences()
+    .setValue_forKey(
+      options.webPreferences.minimumFontSize || 0,
+      'minimumFontSize'
+    )
+
+  if (options.webPreferences.zoomFactor) {
+    webView.setMagnification(options.webPreferences.zoomFactor)
+  }
+
+  var contentView = panel.contentView()
+
+  if (options.frame !== false) {
+    webView.setFrame(contentView.bounds())
+    contentView.addSubview(webView)
+  } else {
+    // In OSX 10.10, adding subviews to the root view for the NSView hierarchy
+    // produces warnings. To eliminate the warnings, we resize the contentView
+    // to fill the window, and add subviews to that.
+    // http://crbug.com/380412
+    contentView.setAutoresizingMask(NSViewWidthSizable | NSViewHeightSizable)
+    fitSubviewToView(contentView, contentView.superview())
+
+    webView.setFrame(contentView.bounds())
+    contentView.addSubview(webView)
+
+    // The fullscreen button should always be hidden for frameless window.
+    if (panel.standardWindowButton(NSWindowFullScreenButton)) {
+      panel.standardWindowButton(NSWindowFullScreenButton).setHidden(true)
+    }
+
+    if (!options.titleBarStyle || options.titleBarStyle === 'default') {
+      // Hide the window buttons.
+      panel.standardWindowButton(NSWindowZoomButton).setHidden(true)
+      panel.standardWindowButton(NSWindowMiniaturizeButton).setHidden(true)
+      panel.standardWindowButton(NSWindowCloseButton).setHidden(true)
+
+      // Some third-party macOS utilities check the zoom button's enabled state to
+      // determine whether to show custom UI on hover, so we disable it here to
+      // prevent them from doing so in a frameless app window.
+      panel.standardWindowButton(NSWindowZoomButton).setEnabled(false)
+    }
+  }
+
+  if (options.vibrancy) {
+    browserWindow.setVibrancy(options.vibrancy)
+  }
+
+  // Set maximizable state last to ensure zoom button does not get reset
+  // by calls to other APIs.
+  browserWindow.setMaximizable(options.maximizable !== false)
+
+  if (options.acceptsFirstMouse) {
+    browserWindow.on('focus', function(event) {
+      if (event.type() === NSEventTypeLeftMouseDown) {
+        browserWindow.webContents
+          .executeJavaScript(dispatchFirstClick(webView, event))
+          .catch(() => {})
+      }
+    })
+  }
+
+  if (options.show !== false) {
+    browserWindow.show()
+  }
+
+  browserWindow.on('closed', function() {
+    browserWindow._destroyed = true
+    threadDictionary.removeObjectForKey(identifier)
+    fiber.cleanup()
+  })
+
+  threadDictionary[identifier] = panel
+
+  fiber.onCleanup(function() {
+    if (!browserWindow._destroyed) {
+      browserWindow.destroy()
+    }
+  })
+
+  return browserWindow
+}
+
+BrowserWindow.fromId = function(identifier) {
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+
+  if (threadDictionary[identifier]) {
+    return BrowserWindow.fromPanel(threadDictionary[identifier], identifier)
+  }
+
+  return undefined
+}
+
+BrowserWindow.fromPanel = function(panel, identifier) {
+  var browserWindow = new EventEmitter()
+  browserWindow.id = identifier
+
+  if (!panel || !panel.contentView) {
+    throw new Error('needs to pass an NSPanel')
+  }
+
+  var webView = panel.contentView().subviews()[0]
+
+  if (!webView) {
+    throw new Error('The NSPanel needs to have a webview')
+  }
+
+  buildBrowserAPI(browserWindow, panel, webView)
+  buildWebAPI(browserWindow, panel, webView)
+
+  return browserWindow
+}
+
+module.exports = BrowserWindow
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/inject-client-messaging.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/inject-client-messaging.js ***!
   \****************************************************************************/
-/*! no static exports found */function(e,t,n){var i=n(/*! ./constants */"./node_modules/sketch-module-web-view/lib/constants.js");e.exports=function(e){var t="window.originalPostMessage = window.postMessage;window.postMessage = function(actionName) {if (!actionName) {throw new Error('missing action name')}window.webkit.messageHandlers."+i.JS_BRIDGE+".postMessage(JSON.stringify([].slice.call(arguments)));}",n=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);e.configuration().userContentController().addUserScript(n)}},"./node_modules/sketch-module-web-view/lib/parseWebArguments.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+module.exports = function(webView) {
+  var source =
+    'window.originalPostMessage = window.postMessage;' +
+    'window.postMessage = function(actionName) {' +
+    'if (!actionName) {' +
+    "throw new Error('missing action name')" +
+    '}' +
+    'window.webkit.messageHandlers.' +
+    CONSTANTS.JS_BRIDGE +
+    '.postMessage(' +
+    'JSON.stringify([].slice.call(arguments))' +
+    ');' +
+    '}'
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    source,
+    0,
+    true
+  )
+  webView
+    .configuration()
+    .userContentController()
+    .addUserScript(script)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js":
 /*!**********************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/parseWebArguments.js ***!
   \**********************************************************************/
-/*! no static exports found */function(e,t){e.exports=function(e){var t=null;try{t=JSON.parse(e[0])}catch(e){}return t&&t.constructor&&t.constructor===Array&&0!=t.length?t:null}},"./node_modules/sketch-module-web-view/lib/set-delegates.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(webArguments) {
+  var args = null
+  try {
+    args = JSON.parse(webArguments[0])
+  } catch (e) {
+    // malformed arguments
+  }
+
+  if (
+    !args ||
+    !args.constructor ||
+    args.constructor !== Array ||
+    args.length == 0
+  ) {
+    return null
+  }
+
+  return args
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/set-delegates.js":
 /*!******************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/set-delegates.js ***!
   \******************************************************************/
-/*! no static exports found */function(e,t,n){var i,o,r,s=n(/*! cocoascript-class */"./node_modules/cocoascript-class/lib/index.js").default,a=n(/*! ./parseWebArguments */"./node_modules/sketch-module-web-view/lib/parseWebArguments.js"),l=n(/*! ./constants */"./node_modules/sketch-module-web-view/lib/constants.js");e.exports=function(e,t,n,c){i||(i=s({classname:"WindowDelegateClass",utils:null,panel:null,"windowDidResize:":function(){this.utils.emit("resize")},"windowDidMiniaturize:":function(){this.utils.emit("minimize")},"windowDidDeminiaturize:":function(){this.utils.emit("restore")},"windowDidEnterFullScreen:":function(){this.utils.emit("enter-full-screen")},"windowDidExitFullScreen:":function(){this.utils.emit("leave-full-screen")},"windowDidMove:":function(){this.utils.emit("move"),this.utils.emit("moved")},"windowShouldClose:":function(){var e=!0;return this.utils.emit("close",{get defaultPrevented(){return!e},preventDefault:function(){e=!1}}),e},"windowWillClose:":function(){this.utils.emit("closed")},"windowDidBecomeKey:":function(){this.utils.emit("focus",this.panel.currentEvent())},"windowDidResignKey:":function(){this.utils.emit("blur")}})),o||(o=s({classname:"NavigationDelegateClass",state:NSMutableDictionary.dictionaryWithDictionary({wasReady:0}),utils:null,"webView:didCommitNavigation:":function(e){this.utils.emit("will-navigate",{},String(String(e.url())))},"webView:didStartProvisionalNavigation:":function(){this.utils.emit("did-start-navigation"),this.utils.emit("did-start-loading")},"webView:didReceiveServerRedirectForProvisionalNavigation:":function(){this.utils.emit("did-get-redirect-request")},"webView:didFailProvisionalNavigation:withError:":function(e,t,n){this.utils.emit("did-fail-load",n)},"webView:didFinishNavigation:":function(){0==this.state.wasReady&&(this.utils.emitBrowserEvent("ready-to-show"),this.state.setObject_forKey(1,"wasReady")),this.utils.emit("did-navigate"),this.utils.emit("did-frame-navigate"),this.utils.emit("did-stop-loading"),this.utils.emit("did-finish-load"),this.utils.emit("did-frame-finish-load")},"webViewWebContentProcessDidTerminate:":function(){this.utils.emit("dom-ready")}})),r||(r=s({classname:"WebScriptHandlerClass",utils:null,"userContentController:didReceiveScriptMessage:":function(e,t){var n=JSON.parse(String(t.body())),i=this.utils.parseWebArguments([JSON.stringify(n)]);i&&this.utils.emit.apply(this,i)}}));var u=o.new();u.utils=NSDictionary.dictionaryWithDictionary({setTitle:e.setTitle.bind(e),emitBrowserEvent:e.emit.bind(e),emit:e.webContents.emit.bind(e.webContents)}),u.state=NSMutableDictionary.dictionaryWithDictionary({wasReady:0}),n.setNavigationDelegate(u);var d=r.new();d.utils=NSDictionary.dictionaryWithDictionary({emit:e.webContents.emit.bind(e.webContents),parseWebArguments:a}),n.configuration().userContentController().addScriptMessageHandler_name(d,l.JS_BRIDGE);var f,m=i.new(),p={emit:e.emit.bind(e)};c.modal&&("Document"===c.parent.type?(f=c.parent.sketchObject)&&"MSDocumentData"===String(f.class())&&(f=f.delegate()):f=c.parent,f&&"MSDocumentData"===String(f.class())&&(f=f.delegate()),p.parentWindow=f.windowForSheet());m.utils=NSDictionary.dictionaryWithDictionary(p),m.panel=t,t.setDelegate(m)}},"./node_modules/sketch-module-web-view/lib/webview-api.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ObjCClass = __webpack_require__(/*! cocoascript-class */ "./node_modules/cocoascript-class/lib/index.js").default
+var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js")
+var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+
+// We create one ObjC class for ourselves here
+var WindowDelegateClass
+var NavigationDelegateClass
+var WebScriptHandlerClass
+
+// TODO: events
+// - 'page-favicon-updated'
+// - 'new-window'
+// - 'did-navigate-in-page'
+// - 'will-prevent-unload'
+// - 'crashed'
+// - 'unresponsive'
+// - 'responsive'
+// - 'destroyed'
+// - 'before-input-event'
+// - 'certificate-error'
+// - 'found-in-page'
+// - 'media-started-playing'
+// - 'media-paused'
+// - 'did-change-theme-color'
+// - 'update-target-url'
+// - 'cursor-changed'
+// - 'context-menu'
+// - 'select-bluetooth-device'
+// - 'paint'
+// - 'console-message'
+
+module.exports = function(browserWindow, panel, webview, options) {
+  if (!WindowDelegateClass) {
+    WindowDelegateClass = ObjCClass({
+      classname: 'WindowDelegateClass',
+      utils: null,
+      panel: null,
+
+      'windowDidResize:': function() {
+        this.utils.emit('resize')
+      },
+
+      'windowDidMiniaturize:': function() {
+        this.utils.emit('minimize')
+      },
+
+      'windowDidDeminiaturize:': function() {
+        this.utils.emit('restore')
+      },
+
+      'windowDidEnterFullScreen:': function() {
+        this.utils.emit('enter-full-screen')
+      },
+
+      'windowDidExitFullScreen:': function() {
+        this.utils.emit('leave-full-screen')
+      },
+
+      'windowDidMove:': function() {
+        this.utils.emit('move')
+        this.utils.emit('moved')
+      },
+
+      'windowShouldClose:': function() {
+        var shouldClose = true
+        this.utils.emit('close', {
+          get defaultPrevented() {
+            return !shouldClose
+          },
+          preventDefault: function() {
+            shouldClose = false
+          },
+        })
+        return shouldClose
+      },
+
+      'windowWillClose:': function() {
+        this.utils.emit('closed')
+      },
+
+      'windowDidBecomeKey:': function() {
+        this.utils.emit('focus', this.panel.currentEvent())
+      },
+
+      'windowDidResignKey:': function() {
+        this.utils.emit('blur')
+      },
+    })
+  }
+
+  if (!NavigationDelegateClass) {
+    NavigationDelegateClass = ObjCClass({
+      classname: 'NavigationDelegateClass',
+      state: NSMutableDictionary.dictionaryWithDictionary({
+        wasReady: 0,
+      }),
+      utils: null,
+
+      // // Called when the web view begins to receive web content.
+      'webView:didCommitNavigation:': function(webView) {
+        this.utils.emit('will-navigate', {}, String(String(webView.URL())))
+      },
+
+      // // Called when web content begins to load in a web view.
+      'webView:didStartProvisionalNavigation:': function() {
+        this.utils.emit('did-start-navigation')
+        this.utils.emit('did-start-loading')
+      },
+
+      // Called when a web view receives a server redirect.
+      'webView:didReceiveServerRedirectForProvisionalNavigation:': function() {
+        this.utils.emit('did-get-redirect-request')
+      },
+
+      // // Called when the web view needs to respond to an authentication challenge.
+      // 'webView:didReceiveAuthenticationChallenge:completionHandler:': function(
+      //   webView,
+      //   challenge,
+      //   completionHandler
+      // ) {
+      //   function callback(username, password) {
+      //     completionHandler(
+      //       0,
+      //       NSURLCredential.credentialWithUser_password_persistence(
+      //         username,
+      //         password,
+      //         1
+      //       )
+      //     )
+      //   }
+      //   var protectionSpace = challenge.protectionSpace()
+      //   this.utils.emit(
+      //     'login',
+      //     {},
+      //     {
+      //       method: String(protectionSpace.authenticationMethod()),
+      //       url: 'not implemented', // TODO:
+      //       referrer: 'not implemented', // TODO:
+      //     },
+      //     {
+      //       isProxy: !!protectionSpace.isProxy(),
+      //       scheme: String(protectionSpace.protocol()),
+      //       host: String(protectionSpace.host()),
+      //       port: Number(protectionSpace.port()),
+      //       realm: String(protectionSpace.realm()),
+      //     },
+      //     callback
+      //   )
+      // },
+
+      // Called when an error occurs during navigation.
+      // 'webView:didFailNavigation:withError:': function(
+      //   webView,
+      //   navigation,
+      //   error
+      // ) {},
+
+      // Called when an error occurs while the web view is loading content.
+      'webView:didFailProvisionalNavigation:withError:': function(
+        webView,
+        navigation,
+        error
+      ) {
+        this.utils.emit('did-fail-load', error)
+      },
+
+      // Called when the navigation is complete.
+      'webView:didFinishNavigation:': function() {
+        if (this.state.wasReady == 0) {
+          this.utils.emitBrowserEvent('ready-to-show')
+          this.state.setObject_forKey(1, 'wasReady')
+        }
+        this.utils.emit('did-navigate')
+        this.utils.emit('did-frame-navigate')
+        this.utils.emit('did-stop-loading')
+        this.utils.emit('did-finish-load')
+        this.utils.emit('did-frame-finish-load')
+      },
+
+      // Called when the web view’s web content process is terminated.
+      'webViewWebContentProcessDidTerminate:': function() {
+        this.utils.emit('dom-ready')
+      },
+
+      // Decides whether to allow or cancel a navigation.
+      // webView:decidePolicyForNavigationAction:decisionHandler:
+
+      // Decides whether to allow or cancel a navigation after its response is known.
+      // webView:decidePolicyForNavigationResponse:decisionHandler:
+    })
+  }
+
+  if (!WebScriptHandlerClass) {
+    WebScriptHandlerClass = ObjCClass({
+      classname: 'WebScriptHandlerClass',
+      utils: null,
+      'userContentController:didReceiveScriptMessage:': function(_, message) {
+        var webArguments = JSON.parse(String(message.body()))
+        var args = this.utils.parseWebArguments([JSON.stringify(webArguments)])
+        if (!args) {
+          return
+        }
+
+        this.utils.emit.apply(this, args)
+      },
+    })
+  }
+
+  var navigationDelegate = NavigationDelegateClass.new()
+  navigationDelegate.utils = NSDictionary.dictionaryWithDictionary({
+    setTitle: browserWindow.setTitle.bind(browserWindow),
+    emitBrowserEvent() {
+      try {
+        browserWindow.emit.apply(browserWindow, arguments)
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
+    },
+    emit() {
+      try {
+        browserWindow.webContents.emit.apply(
+          browserWindow.webContents,
+          arguments
+        )
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
+    },
+  })
+  // reset state as well
+  navigationDelegate.state = NSMutableDictionary.dictionaryWithDictionary({
+    wasReady: 0,
+  })
+
+  webview.setNavigationDelegate(navigationDelegate)
+
+  var webScriptHandler = WebScriptHandlerClass.new()
+  webScriptHandler.utils = NSDictionary.dictionaryWithDictionary({
+    emit() {
+      try {
+        browserWindow.webContents.emit.apply(
+          browserWindow.webContents,
+          arguments
+        )
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
+    },
+    parseWebArguments: parseWebArguments,
+  })
+
+  webview
+    .configuration()
+    .userContentController()
+    .addScriptMessageHandler_name(webScriptHandler, CONSTANTS.JS_BRIDGE)
+
+  var windowDelegate = WindowDelegateClass.new()
+  var utils = {
+    emit() {
+      try {
+        browserWindow.emit.apply(browserWindow, arguments)
+      } catch (err) {
+        console.error(err)
+        throw err
+      }
+    },
+  }
+  if (options.modal) {
+    // find the window of the document
+    var msdocument
+    if (options.parent.type === 'Document') {
+      msdocument = options.parent.sketchObject
+    } else {
+      msdocument = options.parent
+    }
+    if (msdocument && String(msdocument.class()) === 'MSDocumentData') {
+      // we only have an MSDocumentData instead of a MSDocument
+      // let's try to get back to the MSDocument
+      msdocument = msdocument.delegate()
+    }
+    utils.parentWindow = msdocument.windowForSheet()
+  }
+
+  windowDelegate.utils = NSDictionary.dictionaryWithDictionary(utils)
+  windowDelegate.panel = panel
+
+  panel.setDelegate(windowDelegate)
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/lib/webview-api.js":
 /*!****************************************************************!*\
   !*** ./node_modules/sketch-module-web-view/lib/webview-api.js ***!
   \****************************************************************/
-/*! no static exports found */function(e,t,n){(function(t){var i=n(/*! events */"events");e.exports=function(e,n,o){var r=new i;r.loadURL=e.loadURL,r.loadFile=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.downloadURL=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.getURL=function(){return String(o.url())},r.getTitle=function(){return String(o.title())},r.isDestroyed=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.focus=e.focus,r.isFocused=e.isFocused,r.isLoading=function(){return!!o.loading()},r.isLoadingMainFrame=function(){return!!o.loading()},r.isWaitingForResponse=function(){return!o.loading()},r.stop=function(){o.stopLoading()},r.reload=function(){o.reload()},r.reloadIgnoringCache=function(){o.reloadFromOrigin()},r.canGoBack=function(){return!!o.canGoBack()},r.canGoForward=function(){return!!o.canGoForward()},r.canGoToOffset=function(e){return!!o.backForwardList().itemAtIndex(e)},r.clearHistory=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.goBack=function(){o.goBack()},r.goForward=function(){o.goForward()},r.goToIndex=function(e){var t=o.backForwardList(),n=t.backList(),i=n.count();if(i>e)o.loadRequest(NSURLRequest.requestWithURL(n[e]));else{var r=t.forwardList();if(!(r.count()>e-i))throw new Error("Cannot go to index "+e);o.loadRequest(NSURLRequest.requestWithURL(r[e-i]))}},r.goToOffset=function(e){if(!r.canGoToOffset(e))throw new Error("Cannot go to offset "+e);o.loadRequest(NSURLRequest.requestWithURL(o.backForwardList().itemAtIndex(e)))},r.isCrashed=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.setUserAgent=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.getUserAgent=function(){const e=o.customUserAgent();return e?String(e):void 0},r.insertCSS=function(e){var t="var style = document.createElement('style'); style.innerHTML = "+e.replace(/"/,'\\"')+"; document.head.appendChild(style);",n=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(t,0,!0);o.configuration().userContentController().addUserScript(n)},r.insertJS=function(e){var t=WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(e,0,!0);o.configuration().userContentController().addUserScript(t)},r.executeJavaScript=function(e,n,i){"function"==typeof n&&(i=n,n=!1);var r=coscript.createFiber();return new t(function(t,n){o.evaluateJavaScript_completionHandler(e,__mocha__.createBlock_function('v28@?0@8c16@"NSError"20',function(e,o){var s=o&&o.class&&("NSException"===String(o.class())||"NSError"===String(o.class()));if(i){try{i(s?o:null,e)}catch(e){}t()}else s?n(o):t(e);r.cleanup()}))})},r.setIgnoreMenuShortcuts=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.setAudioMuted=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.isAudioMuted=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.setZoomFactor=function(e){o.setMagnification_centeredAtPoint(e,CGPointMake(0,0))},r.getZoomFactor=function(e){e(Number(o.magnification()))},r.setZoomLevel=function(e){r.setZoomFactor(Math.pow(1.2,e))},r.getZoomLevel=function(e){e(Math.log(Number(o.magnification()))/Math.log(1.2))},r.setVisualZoomLevelLimits=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.setLayoutZoomLevelLimits=function(){console.warn("Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)")},r.send=function(){const e="window.postMessage({isSketchMessage: true,origin: '"+String(__command.identifier())+"',args: "+JSON.stringify([].slice.call(arguments))+'}, "*")';o.evaluateJavaScript_completionHandler(e,null)},r.getNativeWebview=function(){return o},e.webContents=r}}).call(this,n(/*! ./node_modules/promise-polyfill/lib/index.js */"./node_modules/promise-polyfill/lib/index.js"))},"./node_modules/sketch-module-web-view/remote.js":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(Promise) {var EventEmitter = __webpack_require__(/*! events */ "events")
+
+// let's try to match https://github.com/electron/electron/blob/master/docs/api/web-contents.md
+module.exports = function buildAPI(browserWindow, panel, webview) {
+  var webContents = new EventEmitter()
+
+  webContents.loadURL = browserWindow.loadURL
+
+  webContents.loadFile = function(/* filePath */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.downloadURL = function(/* filePath */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.getURL = function() {
+    return String(webview.url())
+  }
+
+  webContents.getTitle = function() {
+    return String(webview.title())
+  }
+
+  webContents.isDestroyed = function() {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  webContents.focus = browserWindow.focus
+  webContents.isFocused = browserWindow.isFocused
+
+  webContents.isLoading = function() {
+    return !!webview.loading()
+  }
+
+  webContents.isLoadingMainFrame = function() {
+    // TODO:
+    return !!webview.loading()
+  }
+
+  webContents.isWaitingForResponse = function() {
+    return !webview.loading()
+  }
+
+  webContents.stop = function() {
+    webview.stopLoading()
+  }
+  webContents.reload = function() {
+    webview.reload()
+  }
+  webContents.reloadIgnoringCache = function() {
+    webview.reloadFromOrigin()
+  }
+  webContents.canGoBack = function() {
+    return !!webview.canGoBack()
+  }
+  webContents.canGoForward = function() {
+    return !!webview.canGoForward()
+  }
+  webContents.canGoToOffset = function(offset) {
+    return !!webview.backForwardList().itemAtIndex(offset)
+  }
+  webContents.clearHistory = function() {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.goBack = function() {
+    webview.goBack()
+  }
+  webContents.goForward = function() {
+    webview.goForward()
+  }
+  webContents.goToIndex = function(index) {
+    var backForwardList = webview.backForwardList()
+    var backList = backForwardList.backList()
+    var backListLength = backList.count()
+    if (backListLength > index) {
+      webview.loadRequest(NSURLRequest.requestWithURL(backList[index]))
+      return
+    }
+    var forwardList = backForwardList.forwardList()
+    if (forwardList.count() > index - backListLength) {
+      webview.loadRequest(
+        NSURLRequest.requestWithURL(forwardList[index - backListLength])
+      )
+      return
+    }
+    throw new Error('Cannot go to index ' + index)
+  }
+  webContents.goToOffset = function(offset) {
+    if (!webContents.canGoToOffset(offset)) {
+      throw new Error('Cannot go to offset ' + offset)
+    }
+    webview.loadRequest(
+      NSURLRequest.requestWithURL(webview.backForwardList().itemAtIndex(offset))
+    )
+  }
+  webContents.isCrashed = function() {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setUserAgent = function(/* userAgent */) {
+    // TODO:
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.getUserAgent = function() {
+    const userAgent = webview.customUserAgent()
+    return userAgent ? String(userAgent) : undefined
+  }
+  webContents.insertCSS = function(css) {
+    var source =
+      "var style = document.createElement('style'); style.innerHTML = " +
+      css.replace(/"/, '\\"') +
+      '; document.head.appendChild(style);'
+    var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+      source,
+      0,
+      true
+    )
+    webview
+      .configuration()
+      .userContentController()
+      .addUserScript(script)
+  }
+  webContents.insertJS = function(source) {
+    var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+      source,
+      0,
+      true
+    )
+    webview
+      .configuration()
+      .userContentController()
+      .addUserScript(script)
+  }
+  webContents.executeJavaScript = function(script, userGesture, callback) {
+    if (typeof userGesture === 'function') {
+      callback = userGesture
+      userGesture = false
+    }
+    var fiber = coscript.createFiber()
+
+    // if the webview is not ready yet, defer the execution until it is
+    if (webview.navigationDelegate().valueForKey('state').wasReady == 0) {
+      return new Promise(function(resolve) {
+        browserWindow.on('ready-to-show', function() {
+          fiber.cleanup()
+          resolve()
+        })
+      }).then(function() {
+        return webContents.executeJavaScript(script, userGesture, callback)
+      })
+    }
+
+    return new Promise(function(resolve, reject) {
+      webview.evaluateJavaScript_completionHandler(
+        script,
+        __mocha__.createBlock_function('v28@?0@8c16@"NSError"20', function(
+          result,
+          err
+        ) {
+          var isError =
+            err &&
+            err.class &&
+            (String(err.class()) === 'NSException' ||
+              String(err.class()) === 'NSError')
+          if (callback) {
+            try {
+              callback(isError ? err : null, result)
+            } catch (error) {
+              // /shrug
+            }
+            resolve()
+          } else if (isError) {
+            reject(err)
+          } else {
+            resolve(result)
+          }
+          fiber.cleanup()
+        })
+      )
+    })
+  }
+  webContents.setIgnoreMenuShortcuts = function() {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setAudioMuted = function(/* muted */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.isAudioMuted = function() {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setZoomFactor = function(factor) {
+    webview.setMagnification_centeredAtPoint(factor, CGPointMake(0, 0))
+  }
+  webContents.getZoomFactor = function(callback) {
+    callback(Number(webview.magnification()))
+  }
+  webContents.setZoomLevel = function(level) {
+    // eslint-disable-next-line no-restricted-properties
+    webContents.setZoomFactor(Math.pow(1.2, level))
+  }
+  webContents.getZoomLevel = function(callback) {
+    // eslint-disable-next-line no-restricted-properties
+    callback(Math.log(Number(webview.magnification())) / Math.log(1.2))
+  }
+  webContents.setVisualZoomLevelLimits = function(/* minimumLevel, maximumLevel */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+  webContents.setLayoutZoomLevelLimits = function(/* minimumLevel, maximumLevel */) {
+    // TODO:??
+    console.warn(
+      'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
+    )
+  }
+
+  // TODO:
+  // webContents.undo = function() {
+  //   webview.undoManager().undo()
+  // }
+  // webContents.redo = function() {
+  //   webview.undoManager().redo()
+  // }
+  // webContents.cut = webview.cut
+  // webContents.copy = webview.copy
+  // webContents.paste = webview.paste
+  // webContents.pasteAndMatchStyle = webview.pasteAsRichText
+  // webContents.delete = webview.delete
+  // webContents.replace = webview.replaceSelectionWithText
+
+  webContents.send = function() {
+    const script =
+      'window.postMessage({' +
+      'isSketchMessage: true,' +
+      "origin: '" +
+      String(__command.identifier()) +
+      "'," +
+      'args: ' +
+      JSON.stringify([].slice.call(arguments)) +
+      '}, "*")'
+    webview.evaluateJavaScript_completionHandler(script, null)
+  }
+
+  webContents.getNativeWebview = function() {
+    return webview
+  }
+
+  browserWindow.webContents = webContents
+}
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/promise-polyfill/lib/index.js */ "./node_modules/promise-polyfill/lib/index.js")))
+
+/***/ }),
+
+/***/ "./node_modules/sketch-module-web-view/remote.js":
 /*!*******************************************************!*\
   !*** ./node_modules/sketch-module-web-view/remote.js ***!
   \*******************************************************/
-/*! no static exports found */function(e,t,n){var i=n(/*! ./lib */"./node_modules/sketch-module-web-view/lib/index.js"),o=NSThread.mainThread().threadDictionary();e.exports.getWebview=i.fromId,e.exports.isWebviewPresent=function(e){return!!o[e]},e.exports.sendToWebview=function(t,n,i){var o=e.exports.getWebview(t);if(!o)throw new Error("Webview "+t+" not found");return o.webContents.executeJavaScript(n,i)}},"./ressources/index.html":
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals NSThread */
+var BrowserWindow = __webpack_require__(/*! ./lib */ "./node_modules/sketch-module-web-view/lib/index.js")
+
+var threadDictionary = NSThread.mainThread().threadDictionary()
+
+module.exports.getWebview = BrowserWindow.fromId
+
+module.exports.isWebviewPresent = function isWebviewPresent(identifier) {
+  return !!threadDictionary[identifier]
+}
+
+module.exports.sendToWebview = function sendToWebview(
+  identifier,
+  evalString,
+  callback
+) {
+  if (!module.exports.isWebviewPresent(identifier)) {
+    return undefined
+  }
+
+  // in case there is no callback, lightweight path
+  if (!callback) {
+    var panel = threadDictionary[identifier]
+    var webview = panel.contentView().subviews()[0]
+    if (!webview || !webview.evaluateJavaScript_completionHandler) {
+      throw new Error('Webview ' + identifier + ' not found')
+    }
+
+    webview.evaluateJavaScript_completionHandler(evalString, null)
+    return undefined
+  }
+
+  var browserView = module.exports.getWebview(identifier)
+
+  if (!browserView) {
+    throw new Error('Webview ' + identifier + ' not found')
+  }
+
+  return browserView.webContents.executeJavaScript(evalString, callback)
+}
+
+
+/***/ }),
+
+/***/ "./ressources/index.html":
 /*!*******************************!*\
   !*** ./ressources/index.html ***!
   \*******************************/
-/*! no static exports found */function(e,n){e.exports="file://"+t.plugin.urlForResourceNamed("_webpack_resources/538736b5d852e007b865ea1c74631af5.html").path()},"./src/Find-and-replace.js":
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "file://" + context.plugin.urlForResourceNamed("_webpack_resources/538736b5d852e007b865ea1c74631af5.html").path();
+
+/***/ }),
+
+/***/ "./src/Find-and-replace.js":
 /*!*********************************!*\
   !*** ./src/Find-and-replace.js ***!
   \*********************************/
-/*! exports provided: default */function(e,t,n){"use strict";n.r(t),function(e,i){var o=n(/*! sketch */"sketch"),r=n.n(o),s=n(/*! sketch-module-web-view */"./node_modules/sketch-module-web-view/lib/index.js"),a=n.n(s),l=n(/*! sketch-module-web-view/remote */"./node_modules/sketch-module-web-view/remote.js");function c(e){return(c="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}var u=r.a.UI,d=r.a.Settings,f=r.a.Document,m="cx.ap.sketch-find-and-replace.state",p={findString:"",replaceString:"",document:!1,regexActive:!1,caseSensitive:!1,wholeWord:!1,count:0};function h(e){return e}var w=function(t,n){var o;return function(){var r=this,s=arguments;e(o),o=i(function(){return t.apply(r,s)},n)}};t.default=function(){var e="";u&&u.getTheme&&(e=u.getTheme()),p.darkMode="dark"===e;var t=d.settingForKey(m),i=Object.assign({},p);if("string"==typeof t&&"Loaded"==t){d.setSettingForKey(m,"");var o=d.settingForKey("cx.ap.sketch-find-and-replace.pref");"string"==typeof o&&"object"===c(JSON.parse(o))&&(i=Object.assign({},p,JSON.parse(o)))}d.setSettingForKey(m,"Loaded");var r=[],s=[],b=f.getSelectedDocument(),S=null;if(b)if((S=b.selectedLayers).length>0)u.message("Find and replace in the selection"),i=Object.assign({},i,{findMode:1,selection:!0});else{u.message("Find and replace in the current page");var v=b.selectedPage;S=v.layers,i=Object.assign({},i,{findMode:2,selection:!1})}var g=function(e){var t=JSON.stringify(e,null,1);d.setSettingForKey("cx.ap.sketch-find-and-replace.pref",t)},y={identifier:"cx.ap.sketch-find-and-replace.webWiew",width:460,height:240,resizable:!1,alwaysOnTop:!0,fullscreenable:!1,title:"Find and Replace V2",acceptFirstMouse:!0,minimizable:!1,maximizable:!1},_=new a.a(y);_.on("closed",function(){_=null}),_.loadURL(n(/*! ../ressources/index.html */"./ressources/index.html"));var N=_.webContents,k=function(e){var t=e.text.replace(i.regex,h(i.replaceString));e.text=t,e.text!=t&&r.push(e)},M=function(e){var t=e.value.replace(i.regex,h(i.replaceString));e.value=t,e.value!=t&&s.push(e)},W=function(e){e&&(i=Object.assign({},i,{init:e})),Object(l.isWebviewPresent)(y.identifier)&&Object(l.sendToWebview)(y.identifier,"updateData('".concat(JSON.stringify(i),"')")),i=Object.assign({},i,{init:!1})},C=function e(t){var n=i.findMode;t.forEach(function(t){switch(t.type){case"Artboard":t.layers&&t.layers.length>0&&e(t.layers);break;case"Group":t.layers&&e(t.layers);break;case"Text":k(t);break;case"ShapePath":case"Shape":break;case"SymbolMaster":1!==n&&"Symbols"!==b.selectedPage.name||e(t.layers);break;case"SymbolInstance":j(t.overrides);break;case"Image":break;default:t.layers&&e(t.layers)}})},j=function(e){e.forEach(function(e){switch(e.affectedLayer.type){case"Text":e.editable&&"stringValue"==e.property&&M(e)}})};N.once("did-finish-load",function(){W(!0)}),N.once("close",function(){_.close()}),N.on("message",function(e){u.message(e)}),N.on("setDarkMode",function(e){i=Object.assign({},i,{darkMode:e}),g(i),u.message("Set darkMode to ".concat(e))}),N.on("find",w(function(e){Object.assign({},JSON.parse(e)).findString,i.findString},100)),N.on("replace",w(function(e){!function(e){i=e,u.message("".concat(i.findString," replace by ").concat(i.replaceString)),r=[],s=[];var t="g".concat(1==i.caseSensitive?"":"i"),n=i.wholeWord?"(?:\\^|\\b)":"",o=i.wholeWord?"(?=\\b|\\$)":"",a=i.regexActive?"".concat(n).concat(i.findString).concat(o):"".concat(n,"(?:").concat(function(e){return e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}(i.findString),")").concat(o),l=new RegExp(a,t);switch(i.findMode){case 1:b&&b.selectedLayers.length>0&&(S=b.selectedLayers);break;case 3:S=b.pages;break;default:S=b.selectedPage.layers}i=Object.assign({},i,{regex:l}),C(S,l);var c=r.length+s.length;i=Object.assign({},i,{count:c}),W()}(Object.assign({},JSON.parse(e))),g(i),_.close()},100)),N.on("selection",w(function(e){var t=(i=Object.assign({},JSON.parse(e))).findMode;if(b)if((S=b.selectedLayers).length>0&&1==t)u.message("Find and replace in the selection"),i=Object.assign({},i,{findMode:1,selection:!0});else{u.message("Find and replace in the current page");var n=b.selectedPage;S=n.layers,i=Object.assign({},i,{findMode:2,selection:!1})}g(i),W(!1)},100))}}.call(this,n(/*! ./node_modules/@skpm/timers/timeout.js */"./node_modules/@skpm/timers/timeout.js").clearTimeout,n(/*! ./node_modules/@skpm/timers/timeout.js */"./node_modules/@skpm/timers/timeout.js").setTimeout)},events:
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(clearTimeout, setTimeout) {/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/sketch-module-web-view/lib/index.js");
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+
+
+ // documentation: https://developer.sketchapp.com/reference/api/
+// defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool YES
+// defaults write ~/Library/Preferences/com.bohemiancoding.sketch3.plist AlwaysReloadScript -bool NO
+// touch ~/Library/Logs/com.bohemiancoding.sketch3/Plugin\ Log.log
+// tail -F ~/Library/Logs/com.bohemiancoding.sketch3/Plugin\ Log.log
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+
+var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
+    Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
+    Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
+var PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace.pref';
+var SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'; // to delete saved settings uncoment the next line
+// Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
+
+var defaultSettings = {
+  findString: '',
+  replaceString: '',
+  document: false,
+  regexActive: false,
+  caseSensitive: false,
+  wholeWord: false,
+  count: 0 // Clean find input so it's suitable for use in the regex
+
+};
+
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
+function escapeReplaceString(string) {
+  return string;
+} // wholeword: (?:^|\b)(Occupation)(?=\b|\$)
+// no wholeword: (Occupation)
+// exact match ^(Occupation)$
+// start ^(Occupation)
+// end (Occupation)$
+
+
+var debounce = function debounce(fn, time) {
+  var timeout;
+  return function () {
+    var _this = this,
+        _arguments = arguments;
+
+    var functionCall = function functionCall() {
+      return fn.apply(_this, _arguments);
+    };
+
+    clearTimeout(timeout);
+    timeout = setTimeout(functionCall, time);
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var theme = '';
+
+  if (UI && UI.getTheme) {
+    theme = UI.getTheme();
+  }
+
+  if (theme === 'dark') {
+    defaultSettings.darkMode = true;
+  } else {
+    defaultSettings.darkMode = false;
+  } // load state
+
+
+  var savedSate = Settings.settingForKey(SATEUNIQUKEY);
+  var state = Object.assign({}, defaultSettings);
+
+  if (typeof savedSate === 'string' && savedSate == 'Loaded') {
+    Settings.setSettingForKey(SATEUNIQUKEY, ''); // load pref
+
+    var savedSettings = Settings.settingForKey(PREFUNIQUKEY);
+
+    if (typeof savedSettings === 'string' && _typeof(JSON.parse(savedSettings)) === 'object') {
+      state = Object.assign({}, defaultSettings, JSON.parse(savedSettings));
+    }
+  }
+
+  Settings.setSettingForKey(SATEUNIQUKEY, 'Loaded');
+  var layers = [];
+  var overrides = [];
+  var document = Document.getSelectedDocument();
+  var selection = null;
+
+  if (document) {
+    selection = document.selectedLayers;
+
+    if (selection.length > 0) {
+      UI.message('Find and replace in the selection');
+      state = Object.assign({}, state, {
+        findMode: 1,
+        selection: true
+      });
+    } else {
+      UI.message('Find and replace in the current page');
+      var page = document.selectedPage;
+      selection = page.layers;
+      state = Object.assign({}, state, {
+        findMode: 2,
+        selection: false
+      });
+    }
+  }
+
+  var saveSettings = function saveSettings(obj) {
+    var str = JSON.stringify(obj, null, 1);
+    Settings.setSettingForKey(PREFUNIQUKEY, str);
+  };
+
+  var windowOptions = {
+    identifier: 'cx.ap.sketch-find-and-replace.webWiew',
+    width: 460,
+    height: 240,
+    resizable: false,
+    alwaysOnTop: true,
+    fullscreenable: false,
+    title: 'Find and Replace V2',
+    acceptFirstMouse: true,
+    minimizable: false,
+    maximizable: false
+  };
+  var browserWindow = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1___default.a(windowOptions);
+  browserWindow.on('closed', function () {
+    browserWindow = null;
+  });
+  browserWindow.loadURL(__webpack_require__(/*! ../ressources/index.html */ "./ressources/index.html"));
+  var contents = browserWindow.webContents;
+
+  var initRegExp = function initRegExp(newState) {
+    state = newState;
+    UI.message("".concat(state.findString, " replace by ").concat(state.replaceString)); // reset layers
+
+    layers = []; // reset overrides 
+
+    overrides = []; // wholeWord
+
+    var rexExpFlag = "g".concat(state.caseSensitive == true ? '' : 'i');
+    var regExpPrefix = state.wholeWord ? '(?:\\^|\\b)' : '';
+    var regExpSufix = state.wholeWord ? '(?=\\b|\\$)' : '';
+    var regExpPattern = state.regexActive ? "".concat(regExpPrefix).concat(state.findString).concat(regExpSufix) : "".concat(regExpPrefix, "(?:").concat(escapeRegExp(state.findString), ")").concat(regExpSufix);
+    var regex = new RegExp(regExpPattern, rexExpFlag);
+    var _state = state,
+        findMode = _state.findMode; // log('--------------------------------')
+    // log('findMode: ' + findMode)
+
+    switch (findMode) {
+      case 1:
+        if (document && document.selectedLayers.length > 0) {
+          selection = document.selectedLayers;
+        }
+
+        break;
+
+      case 3:
+        selection = document.pages; //log(JSON.stringify(document.selectedPage,null,1))
+
+        break;
+
+      default:
+        selection = document.selectedPage.layers;
+    }
+
+    state = Object.assign({}, state, {
+      regex: regex
+    });
+    parseLayers(selection, regex);
+    var count = layers.length + overrides.length;
+    state = Object.assign({}, state, {
+      count: count
+    }); // send count
+
+    updateSateWebview();
+  };
+
+  var replaceInLayer = function replaceInLayer(layer) {
+    var newStringValue = layer.text.replace(state.regex, escapeReplaceString(state.replaceString));
+    layer.text = newStringValue;
+
+    if (layer.text != newStringValue) {
+      layers.push(layer);
+    }
+  };
+
+  var replaceInOverride = function replaceInOverride(override) {
+    var newStringValue = override.value.replace(state.regex, escapeReplaceString(state.replaceString));
+    override.value = newStringValue;
+
+    if (override.value != newStringValue) {
+      overrides.push(override);
+    }
+  };
+
+  var updateSateWebview = function updateSateWebview(init) {
+    if (init) {
+      state = Object.assign({}, state, {
+        init: init
+      });
+    }
+
+    if (Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__["isWebviewPresent"])(windowOptions.identifier)) {
+      Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__["sendToWebview"])(windowOptions.identifier, "updateData('".concat(JSON.stringify(state), "')"));
+    }
+
+    state = Object.assign({}, state, {
+      init: false
+    });
+  };
+
+  var layerTextMatch = function layerTextMatch() {
+    //state.findString
+    return true;
+  };
+
+  var parseLayers = function parseLayers(layers) {
+    var _state2 = state,
+        findMode = _state2.findMode; // log(JSON.stringify(layers, null, 1))
+    // recursive function
+
+    layers.forEach(function (layer) {
+      switch (layer.type) {
+        case 'Artboard':
+          // log('Artboard')
+          if (layer.layers && layer.layers.length > 0) {
+            parseLayers(layer.layers);
+          }
+
+          break;
+
+        case 'Group':
+          // log('Group')
+          if (layer.layers) {
+            parseLayers(layer.layers);
+          }
+
+          break;
+
+        case 'Text':
+          // log('Text')
+          if (layerTextMatch(layer)) {
+            replaceInLayer(layer);
+          } //layer.text = 'toto'
+
+
+          break;
+
+        case 'ShapePath':
+          // log('ShapePath')
+          break;
+
+        case 'Shape':
+          // log('Shape')
+          break;
+
+        case 'SymbolMaster':
+          // log('SymbolMaster ' + document.selectedPage.name + ' ' + (findMode === 1))
+          if (findMode === 1 || document.selectedPage.name === 'Symbols') {
+            parseLayers(layer.layers);
+          }
+
+          break;
+
+        case 'SymbolInstance':
+          // log('SymbolInstance')
+          parseOverrides(layer.overrides);
+          break;
+
+        case 'Image':
+          // log('Image')
+          break;
+
+        default:
+          // log('--- Default: ' + layer.type)
+          if (layer.layers) {
+            parseLayers(layer.layers);
+          }
+
+      }
+    });
+  };
+
+  var parseOverrides = function parseOverrides(overrides) {
+    overrides.forEach(function (override) {
+      // log('--- override ---')
+      switch (override.affectedLayer.type) {
+        case 'Text':
+          //log('-Text')
+          if (override.editable && override.property == 'stringValue') {
+            replaceInOverride(override);
+          }
+
+          break;
+
+        case 'SymbolInstance':
+          //log('-SymbolInstance')
+          break;
+
+        case 'ShapePath':
+          // log('-ShapePath')
+          // log(override.value)
+          break;
+
+        case 'Shape':
+          // log('-Shape')
+          // log(override.value)
+          break;
+
+        case 'Image':
+          // log('-Image')
+          break;
+
+        default: // log('#####--- Default override type: ' + override.affectedLayer.type)
+
+        /* 
+        if (override.layers) {
+          parseLayers(override.layers)
+        }
+        */
+
+      }
+    });
+  };
+
+  contents.once('did-finish-load', function () {
+    updateSateWebview(true);
+  });
+  contents.once('close', function () {
+    browserWindow.close();
+  });
+  contents.on('message', function (s) {
+    UI.message(s);
+  });
+  contents.on('setDarkMode', function (mode) {
+    state = Object.assign({}, state, {
+      darkMode: mode
+    });
+    saveSettings(state);
+    UI.message("Set darkMode to ".concat(mode));
+  });
+  contents.on('find', debounce(function (json) {
+    var newState = Object.assign({}, JSON.parse(json));
+
+    if (newState.findString != state.findString) {//initRegExp(newState)
+    }
+  }, 100));
+  contents.on('replace', debounce(function (json) {
+    var newState = Object.assign({}, JSON.parse(json));
+    initRegExp(newState);
+    saveSettings(state);
+    browserWindow.close();
+  }, 100));
+  contents.on('selection', debounce(function (json) {
+    state = Object.assign({}, JSON.parse(json));
+    var _state3 = state,
+        findMode = _state3.findMode;
+
+    if (document) {
+      selection = document.selectedLayers;
+
+      if (selection.length > 0 && findMode == 1) {
+        UI.message('Find and replace in the selection');
+        state = Object.assign({}, state, {
+          findMode: 1,
+          selection: true
+        });
+      } else {
+        UI.message('Find and replace in the current page');
+        var _page = document.selectedPage;
+        selection = _page.layers;
+        state = Object.assign({}, state, {
+          findMode: 2,
+          selection: false
+        });
+      }
+    }
+
+    saveSettings(state);
+    updateSateWebview(false);
+  }, 100));
+  /*
+   browserWindow.webContents
+    .executeJavaScript(`updateData(${JSON.stringify(state)})`)
+    .then(res => {
+      // do something with the result
+    });
+     browserWindow.webContents
+    .executeJavaScript(`updateData(${JSON.stringify(state)})`)
+    .then(res => {
+      // do something with the result
+    });
+     const document = sketch.getSelectedDocument();
+  if (document) {
+    const page = document.selectedPage;
+    const selection = document.selectedLayers;
+    let layers;
+    if (selection.length > 0) {
+      UI.message('Find and replace in the selection');
+      layers = selection;
+    } else {
+      UI.message('Find and replace in the current page');
+      layers = page.layers;
+    }
+  }
+  //UI.message("It's alive 🙌")
+  */
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["clearTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"]))
+
+/***/ }),
+
+/***/ "events":
 /*!*************************!*\
   !*** external "events" ***!
   \*************************/
-/*! no static exports found */function(e,t){e.exports=require("events")},sketch:
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("events");
+
+/***/ }),
+
+/***/ "sketch":
 /*!*************************!*\
   !*** external "sketch" ***!
   \*************************/
-/*! no static exports found */function(e,t){e.exports=require("sketch")}});"default"===e&&"function"==typeof n?n(t):n[e](t)}that.onRun=__skpm_run.bind(this,"default");
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("sketch");
+
+/***/ })
+
+/******/ });
+  if (key === 'default' && typeof exports === 'function') {
+    exports(context);
+  } else {
+    exports[key](context);
+  }
+}
+that['onRun'] = __skpm_run.bind(this, 'default')
+
+//# sourceMappingURL=Find-and-replace.js.map
