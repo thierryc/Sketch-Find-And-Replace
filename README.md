@@ -1,8 +1,8 @@
-# [Find and Replace](https://github.com/thierryc/Sketch-Find-And-Replace/) for Sketch
+# [Find and Replace](https://github.com/thierryc/Sketch-Find-And-Replace/) V2 for Sketch
 
-![Find and Replace for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/assets/icon.png)
 
-## V2
+![Find and Replace (text) for Sketch](https://raw.githubusercontent.com/thierryc/Sketch-Find-And-Replace/master/_crea/visual-v2.jpg)
+
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
