@@ -17,9 +17,6 @@ const { UI, Settings, Document } = sketch
 const PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace.pref'
 const SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'
 
-// load state
-const savedSate = Settings.settingForKey(SATEUNIQUKEY)
-
 // to delete saved settings uncoment the next line
 // Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
 
@@ -151,7 +148,7 @@ export default function() {
     overrides = []
     // wholeWord
     const rexExpFlag = `g${(state.caseSensitive == true) ? '': 'i'}`
-    const regExpPrefix = state.wholeWord ? '(?:\^|\\b)' : ''
+    const regExpPrefix = state.wholeWord ? '(?:\\^|\\b)' : ''
     const regExpSufix = state.wholeWord ? '(?=\\b|\\$)' : ''
     const regExpPattern = (state.regexActive) 
       ? `${regExpPrefix}${state.findString}${regExpSufix}`

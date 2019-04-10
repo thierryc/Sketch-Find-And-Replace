@@ -2392,9 +2392,7 @@ var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
     Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
     Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
 var PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace.pref';
-var SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'; // load state
-
-var savedSate = Settings.settingForKey(SATEUNIQUKEY); // to delete saved settings uncoment the next line
+var SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'; // to delete saved settings uncoment the next line
 // Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
 
 var defaultSettings = {
@@ -2522,7 +2520,7 @@ var debounce = function debounce(fn, time) {
     overrides = []; // wholeWord
 
     var rexExpFlag = "g".concat(state.caseSensitive == true ? '' : 'i');
-    var regExpPrefix = state.wholeWord ? '(?:\^|\\b)' : '';
+    var regExpPrefix = state.wholeWord ? '(?:\\^|\\b)' : '';
     var regExpSufix = state.wholeWord ? '(?=\\b|\\$)' : '';
     var regExpPattern = state.regexActive ? "".concat(regExpPrefix).concat(state.findString).concat(regExpSufix) : "".concat(regExpPrefix, "(?:").concat(escapeRegExp(state.findString), ")").concat(regExpSufix);
     var regex = new RegExp(regExpPattern, rexExpFlag);
