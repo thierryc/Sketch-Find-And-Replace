@@ -12,6 +12,8 @@ import SelectionIcon from './svg-icons/SelectionIcon'
 import PageIcon from './svg-icons/PageIcon'
 import DocumentIcon from './svg-icons/DocumentIcon'
 
+import Gtag from './Gtag'
+
 const HelpPage = styled.div`
   position: absolute;
   top: ${props => props.isActive ? 0 : 240}px;
@@ -147,6 +149,8 @@ const Help = (props) => {
     <BtnHelpContainer><Button onClick={close} theme={theme} primary theme={theme} isActive={true}>
       Close Help
     </Button></BtnHelpContainer>
+
+    <Gtag/>
     
   </HelpPage>
 }
