@@ -117,6 +117,77 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/@skpm/timers/interval.js":
+/*!***********************************************!*\
+  !*** ./node_modules/@skpm/timers/interval.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* globals coscript, sketch */
+var fiberAvailable = __webpack_require__(/*! ./test-if-fiber */ "./node_modules/@skpm/timers/test-if-fiber.js")
+
+var setInterval
+var clearInterval
+
+var fibers = []
+
+if (fiberAvailable()) {
+  setInterval = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    // fibers takes care of keeping coscript around
+    var id = fibers.length
+    fibers.push(coscript.scheduleWithRepeatingInterval_jsFunction(
+      (delay || 0) / 1000,
+      function () {
+        func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+      }
+    ))
+    return id
+  }
+
+  clearInterval = function (id) {
+    var interval = fibers[id]
+    if (interval) {
+      interval.cancel() // fibers takes care of keeping coscript around
+      fibers[id] = undefined // garbage collect the fiber
+    }
+  }
+} else {
+  setInterval = function (func, delay, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10) {
+    coscript.shouldKeepAround = true
+    var id = fibers.length
+    fibers.push(true)
+    function trigger () {
+      coscript.scheduleWithInterval_jsFunction(
+        (delay || 0) / 1000,
+        function () {
+          if (fibers[id]) { // if not cleared
+            func(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+            trigger()
+          }
+        }
+      )
+    }
+    trigger()
+    return id
+  }
+
+  clearInterval = function (id) {
+    fibers[id] = false
+    if (fibers.every(function (_id) { return !_id })) { // if everything is cleared
+      coscript.shouldKeepAround = false
+    }
+  }
+}
+
+module.exports = {
+  setInterval: setInterval,
+  clearInterval: clearInterval
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/@skpm/timers/test-if-fiber.js":
 /*!****************************************************!*\
   !*** ./node_modules/@skpm/timers/test-if-fiber.js ***!
@@ -201,191 +272,306 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/cocoascript-class/lib/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/cocoascript-class/lib/index.js ***!
-  \*****************************************************/
+/***/ "./node_modules/mocha-js-delegate/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/mocha-js-delegate/index.js ***!
+  \*************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
+/* globals MOClassDescription, NSObject, NSSelectorFromString, NSClassFromString, MOPropertyDescription */
 
+module.exports = function MochaDelegate(definition, superclass) {
+  var uniqueClassName =
+    'MochaJSDelegate_DynamicClass_' + NSUUID.UUID().UUIDString()
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SuperCall = undefined;
-exports.default = ObjCClass;
+  var delegateClassDesc = MOClassDescription.allocateDescriptionForClassWithName_superclass_(
+    uniqueClassName,
+    superclass || NSObject
+  )
 
-var _runtime = __webpack_require__(/*! ./runtime.js */ "./node_modules/cocoascript-class/lib/runtime.js");
+  // Storage
+  var handlers = {}
+  var ivars = {}
 
-exports.SuperCall = _runtime.SuperCall;
+  // Define an instance method
+  function setHandlerForSelector(selectorString, func) {
+    var handlerHasBeenSet = selectorString in handlers
+    var selector = NSSelectorFromString(selectorString)
 
-// super when returnType is id and args are void
-// id objc_msgSendSuper(struct objc_super *super, SEL op, void)
+    handlers[selectorString] = func
 
-const SuperInit = (0, _runtime.SuperCall)(NSStringFromSelector("init"), [], { type: "@" });
+    /*
+      For some reason, Mocha acts weird about arguments: https://github.com/logancollins/Mocha/issues/28
+      We have to basically create a dynamic handler with a likewise dynamic number of predefined arguments.
+    */
+    if (!handlerHasBeenSet) {
+      var args = []
+      var regex = /:/g
+      while (regex.exec(selectorString)) {
+        args.push('arg' + args.length)
+      }
 
-// Returns a real ObjC class. No need to use new.
-function ObjCClass(defn) {
-  const superclass = defn.superclass || NSObject;
-  const className = (defn.className || defn.classname || "ObjCClass") + NSUUID.UUID().UUIDString();
-  const reserved = new Set(['className', 'classname', 'superclass']);
-  var cls = MOClassDescription.allocateDescriptionForClassWithName_superclass_(className, superclass);
-  // Add each handler to the class description
-  const ivars = [];
-  for (var key in defn) {
-    const v = defn[key];
-    if (typeof v == 'function' && key !== 'init') {
-      var selector = NSSelectorFromString(key);
-      cls.addInstanceMethodWithSelector_function_(selector, v);
-    } else if (!reserved.has(key)) {
-      ivars.push(key);
-      cls.addInstanceVariableWithName_typeEncoding(key, "@");
+      // eslint-disable-next-line no-eval
+      var dynamicFunction = eval(
+        '(function (' +
+          args.join(', ') +
+          ') { return handlers[selectorString].apply(this, arguments); })'
+      )
+
+      delegateClassDesc.addInstanceMethodWithSelector_function(
+        selector,
+        dynamicFunction
+      )
     }
   }
 
-  cls.addInstanceMethodWithSelector_function_(NSSelectorFromString('init'), function () {
-    const self = SuperInit.call(this);
-    ivars.map(name => {
-      Object.defineProperty(self, name, {
-        get() {
-          return getIvar(self, name);
-        },
-        set(v) {
-          (0, _runtime.object_setInstanceVariable)(self, name, v);
+  // define a property
+  function setIvar(key, value) {
+    var ivarHasBeenSet = key in handlers
+
+    ivars[key] = value
+
+    if (!ivarHasBeenSet) {
+      delegateClassDesc.addInstanceVariableWithName_typeEncoding(key, '@')
+      var description = MOPropertyDescription.new()
+      description.name = key
+      description.typeEncoding = '@'
+      description.weak = true
+      description.ivarName = key
+      delegateClassDesc.addProperty(description)
+    }
+  }
+
+  this.getClass = function() {
+    return NSClassFromString(uniqueClassName)
+  }
+
+  this.getClassInstance = function(instanceVariables) {
+    var instance = NSClassFromString(uniqueClassName).new()
+    Object.keys(ivars).forEach(function(key) {
+      instance[key] = ivars[key]
+    })
+    Object.keys(instanceVariables || {}).forEach(function(key) {
+      instance[key] = instanceVariables[key]
+    })
+    return instance
+  }
+  // alias
+  this.new = this.getClassInstance
+
+  // Convenience
+  if (typeof definition === 'object') {
+    Object.keys(definition).forEach(
+      function(key) {
+        if (typeof definition[key] === 'function') {
+          setHandlerForSelector(key, definition[key])
+        } else {
+          setIvar(key, definition[key])
         }
-      });
-      self[name] = defn[name];
-    });
-    // If there is a passsed-in init funciton, call it now.
-    if (typeof defn.init == 'function') defn.init.call(this);
-    return self;
-  });
+      }
+    )
+  }
 
-  return cls.registerClass();
-};
-
-function getIvar(obj, name) {
-  const retPtr = MOPointer.new();
-  (0, _runtime.object_getInstanceVariable)(obj, name, retPtr);
-  return retPtr.value().retain().autorelease();
+  delegateClassDesc.registerClass()
 }
+
 
 /***/ }),
 
-/***/ "./node_modules/cocoascript-class/lib/runtime.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/cocoascript-class/lib/runtime.js ***!
-  \*******************************************************/
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+/* WEBPACK VAR INJECTION */(function(setTimeout, clearTimeout) {// shim for using process in browser
+var process = module.exports = {};
 
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SuperCall = SuperCall;
-exports.CFunc = CFunc;
-const objc_super_typeEncoding = '{objc_super="receiver"@"super_class"#}';
+var cachedSetTimeout;
+var cachedClearTimeout;
 
-// You can store this to call your function. this must be bound to the current instance.
-function SuperCall(selector, argTypes, returnType) {
-  const func = CFunc("objc_msgSendSuper", [{ type: '^' + objc_super_typeEncoding }, { type: ":" }, ...argTypes], returnType);
-  return function (...args) {
-    const struct = make_objc_super(this, this.superclass());
-    const structPtr = MOPointer.alloc().initWithValue_(struct);
-    return func(structPtr, selector, ...args);
-  };
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
 }
-
-// Recursively create a MOStruct
-function makeStruct(def) {
-  if (typeof def !== 'object' || Object.keys(def).length == 0) {
-    return def;
-  }
-  const name = Object.keys(def)[0];
-  const values = def[name];
-
-  const structure = MOStruct.structureWithName_memberNames_runtime(name, Object.keys(values), Mocha.sharedRuntime());
-
-  Object.keys(values).map(member => {
-    structure[member] = makeStruct(values[member]);
-  });
-
-  return structure;
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
 }
-
-function make_objc_super(self, cls) {
-  return makeStruct({
-    objc_super: {
-      receiver: self,
-      super_class: cls
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
     }
-  });
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
 }
 
-// Due to particularities of the JS bridge, we can't call into MOBridgeSupport objects directly
-// But, we can ask key value coding to do the dirty work for us ;)
-function setKeys(o, d) {
-  const funcDict = NSMutableDictionary.dictionary();
-  funcDict.o = o;
-  Object.keys(d).map(k => funcDict.setValue_forKeyPath(d[k], "o." + k));
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
 }
 
-// Use any C function, not just ones with BridgeSupport
-function CFunc(name, args, retVal) {
-  function makeArgument(a) {
-    if (!a) return null;
-    const arg = MOBridgeSupportArgument.alloc().init();
-    setKeys(arg, {
-      type64: a.type
-    });
-    return arg;
-  }
-  const func = MOBridgeSupportFunction.alloc().init();
-  setKeys(func, {
-    name: name,
-    arguments: args.map(makeArgument),
-    returnValue: makeArgument(retVal)
-  });
-  return func;
-}
-
-/*
-@encode(char*) = "*"
-@encode(id) = "@"
-@encode(Class) = "#"
-@encode(void*) = "^v"
-@encode(CGRect) = "{CGRect={CGPoint=dd}{CGSize=dd}}"
-@encode(SEL) = ":"
-*/
-
-function addStructToBridgeSupport(key, structDef) {
-  // OK, so this is probably the nastiest hack in this file.
-  // We go modify MOBridgeSupportController behind its back and use kvc to add our own definition
-  // There isn't another API for this though. So the only other way would be to make a real bridgesupport file.
-  const symbols = MOBridgeSupportController.sharedController().valueForKey('symbols');
-  if (!symbols) throw Error("Something has changed within bridge support so we can't add our definitions");
-  // If someone already added this definition, don't re-register it.
-  if (symbols[key] !== null) return;
-  const def = MOBridgeSupportStruct.alloc().init();
-  setKeys(def, {
-    name: key,
-    type: structDef.type
-  });
-  symbols[key] = def;
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
 };
 
-// This assumes the ivar is an object type. Return value is pretty useless.
-const object_getInstanceVariable = exports.object_getInstanceVariable = CFunc("object_getInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "^@" }], { type: "^{objc_ivar=}" });
-// Again, ivar is of object type
-const object_setInstanceVariable = exports.object_setInstanceVariable = CFunc("object_setInstanceVariable", [{ type: "@" }, { type: '*' }, { type: "@" }], { type: "^{objc_ivar=}" });
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
 
-// We need Mocha to understand what an objc_super is so we can use it as a function argument
-addStructToBridgeSupport('objc_super', { type: objc_super_typeEncoding });
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["setTimeout"], __webpack_require__(/*! ./node_modules/@skpm/timers/timeout.js */ "./node_modules/@skpm/timers/timeout.js")["clearTimeout"]))
 
 /***/ }),
 
@@ -722,7 +908,7 @@ module.exports = function(browserWindow, panel, webview) {
   }
 
   browserWindow.close = function() {
-    if (panel.delegate().utils.parentWindow) {
+    if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
       var shouldClose = true
       browserWindow.emit('close', {
         get defaultPrevented() {
@@ -746,7 +932,7 @@ module.exports = function(browserWindow, panel, webview) {
   }
 
   function focus(focused) {
-    if (browserWindow.isVisible()) {
+    if (!browserWindow.isVisible()) {
       return
     }
     if (focused) {
@@ -754,6 +940,7 @@ module.exports = function(browserWindow, panel, webview) {
       panel.makeKeyAndOrderFront(null)
     } else {
       panel.orderBack(null)
+      NSApp.mainWindow().makeKeyAndOrderFront(null)
     }
   }
 
@@ -773,7 +960,7 @@ module.exports = function(browserWindow, panel, webview) {
     // have focus then "makeKeyAndOrderFront" will only show the window.
     NSApp.activateIgnoringOtherApps(true)
 
-    if (panel.delegate().utils.parentWindow) {
+    if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
       return panel.delegate().utils.parentWindow.beginSheet_completionHandler(
         panel,
         __mocha__.createBlock_function('v16@?0q8', function() {
@@ -1118,9 +1305,14 @@ module.exports = function(browserWindow, panel, webview) {
     }
 
     if (/^file:\/\/.*\.html?$/.test(url)) {
+      // ensure URLs containing spaces are properly handled
+      url = NSString.alloc().initWithString(url)
+      url = url.stringByAddingPercentEncodingWithAllowedCharacters(
+        NSCharacterSet.URLQueryAllowedCharacterSet()
+      )
       webview.loadFileURL_allowingReadAccessToURL(
-        NSURL.fileURLWithPath(url),
-        NSURL.fileURLWithPath('file:///')
+        NSURL.URLWithString(url),
+        NSURL.URLWithString('file:///')
       )
       return
     }
@@ -1287,8 +1479,6 @@ module.exports = function(browserWindow, panel, webview) {
 module.exports = {
   JS_BRIDGE: '__skpm_sketchBridge',
   START_MOVING_WINDOW: '__skpm_startMovingWindow',
-  STOP_MOVING_WINDOW: '__skpm_stopMovingWindow',
-  MOVE_WINDOW: '__skpm_moveWindow',
   EXECUTE_JAVASCRIPT: '__skpm_executeJS',
   EXECUTE_JAVASCRIPT_SUCCESS: '__skpm_executeJS_success_',
   EXECUTE_JAVASCRIPT_ERROR: '__skpm_executeJS_error_',
@@ -1309,13 +1499,11 @@ var tagsToFocus =
 
 module.exports = function(webView, event) {
   var point = webView.convertPoint_fromView(event.locationInWindow(), null)
-  var x = point.x
-  var y = webView.frame().size.height - point.y // the coord start from the bottom instead of the top
   return (
     'var el = document.elementFromPoint(' + // get the DOM element that match the event
-    x +
+    point.x +
     ', ' +
-    y +
+    point.y +
     '); ' +
     'if (el && ' + // some tags need to be focused instead of clicked
     tagsToFocus +
@@ -1350,7 +1538,10 @@ module.exports = function(webview, browserWindow) {
     var fiber = coscript.createFiber()
 
     // if the webview is not ready yet, defer the execution until it is
-    if (webview.navigationDelegate().valueForKey('state').wasReady == 0) {
+    if (
+      webview.navigationDelegate().state &&
+      webview.navigationDelegate().state.wasReady == 0
+    ) {
       return new Promise(function(resolve, reject) {
         browserWindow.once('ready-to-show', function() {
           executeJavaScript(script, userGesture, callback)
@@ -1372,8 +1563,8 @@ module.exports = function(webview, browserWindow) {
               callback(null, res)
             }
             resolve(res)
-          } catch (_) {
-            // /shrug
+          } catch (err) {
+            reject(err)
           }
           fiber.cleanup()
         }
@@ -1388,27 +1579,33 @@ module.exports = function(webview, browserWindow) {
             } else {
               reject(err)
             }
-          } catch (_) {
-            // /shrug
+          } catch (err2) {
+            reject(err2)
           }
           fiber.cleanup()
         }
       )
 
       webview.evaluateJavaScript_completionHandler(
-        'window.' +
-          CONSTANTS.EXECUTE_JAVASCRIPT +
-          '(' +
-          requestId +
-          ', "' +
-          script.replace(/"/g, '\\"') +
-          '")',
+        module.exports.wrapScript(script, requestId),
         null
       )
     })
   }
 
   return executeJavaScript
+}
+
+module.exports.wrapScript = function(script, requestId) {
+  return (
+    'window.' +
+    CONSTANTS.EXECUTE_JAVASCRIPT +
+    '(' +
+    requestId +
+    ', ' +
+    JSON.stringify(script) +
+    ')'
+  )
 }
 
 module.exports.injectScript = function(webView) {
@@ -1656,11 +1853,17 @@ function BrowserWindow(options) {
   }
   browserWindow.setFullScreenable(!!options.fullscreenable)
 
-  const title =
-    options.title ||
-    (typeof __command !== 'undefined' && __command.pluginBundle()
-      ? __command.pluginBundle().name()
-      : undefined)
+  let title = options.title
+  if (options.frame === false) {
+    title = undefined
+  } else if (
+    typeof title === 'undefined' &&
+    typeof __command !== 'undefined' &&
+    __command.pluginBundle()
+  ) {
+    title = __command.pluginBundle().name()
+  }
+
   if (title) {
     browserWindow.setTitle(title)
   }
@@ -1759,6 +1962,13 @@ function BrowserWindow(options) {
   // by calls to other APIs.
   browserWindow.setMaximizable(options.maximizable !== false)
 
+  panel.setHidesOnDeactivate(options.hidesOnDeactivate !== false)
+
+  if (options.remembersWindowFrame) {
+    panel.setFrameAutosaveName(identifier)
+    panel.setFrameUsingName_force(panel.frameAutosaveName(), false)
+  }
+
   if (options.acceptsFirstMouse) {
     browserWindow.on('focus', function(event) {
       if (event.type() === NSEventTypeLeftMouseDown) {
@@ -1812,10 +2022,20 @@ BrowserWindow.fromPanel = function(panel, identifier) {
     throw new Error('needs to pass an NSPanel')
   }
 
-  var webView = panel.contentView().subviews()[0]
+  var webView = null
+  var subviews = panel.contentView().subviews()
+  for (var i = 0; i < subviews.length; i += 1) {
+    if (
+      !webView &&
+      !subviews[i].isKindOfClass(WKInspectorWKWebView) &&
+      subviews[i].isKindOfClass(WKWebView)
+    ) {
+      webView = subviews[i]
+    }
+  }
 
   if (!webView) {
-    throw new Error('The NSPanel needs to have a webview')
+    throw new Error('The panel needs to have a webview')
   }
 
   buildBrowserAPI(browserWindow, panel, webView)
@@ -1872,12 +2092,11 @@ module.exports = function(webView) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
+/* WEBPACK VAR INJECTION */(function(clearInterval, setInterval) {var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
 module.exports.injectScript = function(webView) {
   var source =
     '(function () {' +
-    'var animationId = null;' +
     "document.addEventListener('mousedown', onMouseDown);" +
     '' +
     'function shouldDrag(target) {' +
@@ -1891,24 +2110,7 @@ module.exports.injectScript = function(webView) {
     '  window.postMessage("' +
     CONSTANTS.START_MOVING_WINDOW +
     '");' +
-    "  document.addEventListener('mouseup', onMouseUp);" +
-    '  animationId = requestAnimationFrame(moveWindow);' +
     '};' +
-    '' +
-    'function onMouseUp(e) {' +
-    '  window.postMessage("' +
-    CONSTANTS.STOP_MOVING_WINDOW +
-    '");' +
-    "  document.removeEventListener('mouseup', onMouseUp);" +
-    '  cancelAnimationFrame(animationId);' +
-    '};' +
-    '' +
-    'function moveWindow(e) {' +
-    '  window.postMessage("' +
-    CONSTANTS.MOVE_WINDOW +
-    '");' +
-    '  animationId = requestAnimationFrame(moveWindow);' +
-    '}' +
     '})()'
   var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
     source,
@@ -1924,6 +2126,24 @@ module.exports.injectScript = function(webView) {
 module.exports.setupHandler = function(browserWindow) {
   var initialMouseLocation = null
   var initialWindowPosition = null
+  var interval = null
+
+  function moveWindow() {
+    // if the user released the button, stop moving the window
+    if (!initialWindowPosition || NSEvent.pressedMouseButtons() !== 1) {
+      clearInterval(interval)
+      initialMouseLocation = null
+      initialWindowPosition = null
+      return
+    }
+
+    var mouse = NSEvent.mouseLocation()
+    browserWindow.setPosition(
+      initialWindowPosition.x + (mouse.x - initialMouseLocation.x),
+      initialWindowPosition.y + (initialMouseLocation.y - mouse.y), // y is inverted
+      false
+    )
+  }
 
   browserWindow.webContents.on(CONSTANTS.START_MOVING_WINDOW, function() {
     initialMouseLocation = NSEvent.mouseLocation()
@@ -1932,26 +2152,12 @@ module.exports.setupHandler = function(browserWindow) {
       x: position[0],
       y: position[1],
     }
-  })
 
-  browserWindow.webContents.on(CONSTANTS.STOP_MOVING_WINDOW, function() {
-    initialMouseLocation = null
-    initialWindowPosition = null
-  })
-
-  browserWindow.webContents.on(CONSTANTS.MOVE_WINDOW, function() {
-    if (!initialWindowPosition) {
-      return
-    }
-    const mouse = NSEvent.mouseLocation()
-    browserWindow.setPosition(
-      initialWindowPosition.x + (mouse.x - initialMouseLocation.x),
-      initialWindowPosition.y + (initialMouseLocation.y - mouse.y), // y is inverted
-      false
-    )
+    interval = setInterval(moveWindow, 1000 / 60) // 60 fps
   })
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["clearInterval"], __webpack_require__(/*! ./node_modules/@skpm/timers/interval.js */ "./node_modules/@skpm/timers/interval.js")["setInterval"]))
 
 /***/ }),
 
@@ -1992,7 +2198,7 @@ module.exports = function(webArguments) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ObjCClass = __webpack_require__(/*! cocoascript-class */ "./node_modules/cocoascript-class/lib/index.js").default
+/* WEBPACK VAR INJECTION */(function(process) {var ObjCClass = __webpack_require__(/*! mocha-js-delegate */ "./node_modules/mocha-js-delegate/index.js")
 var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js")
 var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
@@ -2025,8 +2231,7 @@ var WebScriptHandlerClass
 
 module.exports = function(browserWindow, panel, webview, options) {
   if (!WindowDelegateClass) {
-    WindowDelegateClass = ObjCClass({
-      classname: 'WindowDelegateClass',
+    WindowDelegateClass = new ObjCClass({
       utils: null,
       panel: null,
 
@@ -2056,13 +2261,13 @@ module.exports = function(browserWindow, panel, webview, options) {
       },
 
       'windowShouldClose:': function() {
-        var shouldClose = true
+        var shouldClose = 1
         this.utils.emit('close', {
           get defaultPrevented() {
             return !shouldClose
           },
           preventDefault: function() {
-            shouldClose = false
+            shouldClose = 0
           },
         })
         return shouldClose
@@ -2083,11 +2288,10 @@ module.exports = function(browserWindow, panel, webview, options) {
   }
 
   if (!NavigationDelegateClass) {
-    NavigationDelegateClass = ObjCClass({
-      classname: 'NavigationDelegateClass',
-      state: NSMutableDictionary.dictionaryWithDictionary({
+    NavigationDelegateClass = new ObjCClass({
+      state: {
         wasReady: 0,
-      }),
+      },
       utils: null,
 
       // // Called when the web view begins to receive web content.
@@ -2161,7 +2365,7 @@ module.exports = function(browserWindow, panel, webview, options) {
       // Called when the navigation is complete.
       'webView:didFinishNavigation:': function() {
         if (this.state.wasReady == 0) {
-          this.state.setObject_forKey(1, 'wasReady')
+          this.state.wasReady = 1
           this.utils.emitBrowserEvent('ready-to-show')
         }
         this.utils.emit('did-navigate')
@@ -2185,8 +2389,7 @@ module.exports = function(browserWindow, panel, webview, options) {
   }
 
   if (!WebScriptHandlerClass) {
-    WebScriptHandlerClass = ObjCClass({
-      classname: 'WebScriptHandlerClass',
+    WebScriptHandlerClass = new ObjCClass({
       utils: null,
       'userContentController:didReceiveScriptMessage:': function(_, message) {
         var args = this.utils.parseWebArguments(String(message.body()))
@@ -2203,50 +2406,75 @@ module.exports = function(browserWindow, panel, webview, options) {
     })
   }
 
-  var navigationDelegate = NavigationDelegateClass.new()
-  navigationDelegate.utils = NSDictionary.dictionaryWithDictionary({
-    setTitle: browserWindow.setTitle.bind(browserWindow),
-    emitBrowserEvent() {
-      try {
-        browserWindow.emit.apply(browserWindow, arguments)
-      } catch (err) {
-        console.error(err)
-        throw err
-      }
+  var navigationDelegate = NavigationDelegateClass.new({
+    utils: {
+      setTitle: browserWindow.setTitle.bind(browserWindow),
+      emitBrowserEvent() {
+        try {
+          browserWindow.emit.apply(browserWindow, arguments)
+        } catch (err) {
+          if (
+            typeof process !== 'undefined' &&
+            process.listenerCount &&
+            process.listenerCount('uncaughtException')
+          ) {
+            process.emit('uncaughtException', err, 'uncaughtException')
+          } else {
+            console.error(err)
+            throw err
+          }
+        }
+      },
+      emit() {
+        try {
+          browserWindow.webContents.emit.apply(
+            browserWindow.webContents,
+            arguments
+          )
+        } catch (err) {
+          if (
+            typeof process !== 'undefined' &&
+            process.listenerCount &&
+            process.listenerCount('uncaughtException')
+          ) {
+            process.emit('uncaughtException', err, 'uncaughtException')
+          } else {
+            console.error(err)
+            throw err
+          }
+        }
+      },
     },
-    emit() {
-      try {
-        browserWindow.webContents.emit.apply(
-          browserWindow.webContents,
-          arguments
-        )
-      } catch (err) {
-        console.error(err)
-        throw err
-      }
+    state: {
+      wasReady: 0,
     },
-  })
-  // reset state as well
-  navigationDelegate.state = NSMutableDictionary.dictionaryWithDictionary({
-    wasReady: 0,
   })
 
   webview.setNavigationDelegate(navigationDelegate)
 
-  var webScriptHandler = WebScriptHandlerClass.new()
-  webScriptHandler.utils = NSDictionary.dictionaryWithDictionary({
-    emit() {
-      try {
-        browserWindow.webContents.emit.apply(
-          browserWindow.webContents,
-          arguments
-        )
-      } catch (err) {
-        console.error(err)
-        throw err
-      }
+  var webScriptHandler = WebScriptHandlerClass.new({
+    utils: {
+      emit() {
+        try {
+          browserWindow.webContents.emit.apply(
+            browserWindow.webContents,
+            arguments
+          )
+        } catch (err) {
+          if (
+            typeof process !== 'undefined' &&
+            process.listenerCount &&
+            process.listenerCount('uncaughtException')
+          ) {
+            process.emit('uncaughtException', err, 'uncaughtException')
+          } else {
+            console.error(err)
+            throw err
+          }
+        }
+      },
+      parseWebArguments: parseWebArguments,
     },
-    parseWebArguments: parseWebArguments,
   })
 
   webview
@@ -2254,14 +2482,21 @@ module.exports = function(browserWindow, panel, webview, options) {
     .userContentController()
     .addScriptMessageHandler_name(webScriptHandler, CONSTANTS.JS_BRIDGE)
 
-  var windowDelegate = WindowDelegateClass.new()
   var utils = {
     emit() {
       try {
         browserWindow.emit.apply(browserWindow, arguments)
       } catch (err) {
-        console.error(err)
-        throw err
+        if (
+          typeof process !== 'undefined' &&
+          process.listenerCount &&
+          process.listenerCount('uncaughtException')
+        ) {
+          process.emit('uncaughtException', err, 'uncaughtException')
+        } else {
+          console.error(err)
+          throw err
+        }
       }
     },
   }
@@ -2281,12 +2516,15 @@ module.exports = function(browserWindow, panel, webview, options) {
     utils.parentWindow = msdocument.windowForSheet()
   }
 
-  windowDelegate.utils = NSDictionary.dictionaryWithDictionary(utils)
-  windowDelegate.panel = panel
+  var windowDelegate = WindowDelegateClass.new({
+    utils: utils,
+    panel: panel,
+  })
 
   panel.setDelegate(windowDelegate)
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -2555,7 +2793,18 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
   }
 
   var panel = threadDictionary[identifier]
-  var webview = panel.contentView().subviews()[0]
+  var webview = null
+  var subviews = panel.contentView().subviews()
+  for (var i = 0; i < subviews.length; i += 1) {
+    if (
+      !webview &&
+      !subviews[i].isKindOfClass(WKInspectorWKWebView) &&
+      subviews[i].isKindOfClass(WKWebView)
+    ) {
+      webview = subviews[i]
+    }
+  }
+
   if (!webview || !webview.evaluateJavaScript_completionHandler) {
     throw new Error('Webview ' + identifier + ' not found')
   }
