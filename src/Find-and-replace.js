@@ -224,7 +224,6 @@ export default function() {
       
       switch(layer.type){
       case 'Artboard':
-        // log('Artboard')
         if (layer.layers && layer.layers.length > 0) {
           parseLayers(layer.layers)
         }
@@ -266,11 +265,9 @@ export default function() {
         break
   
       case 'Image':
-        // log('Image')
         break
         
       default:
-        // log('--- Default: ' + layer.type)
         if (layer.layers) {
           parseLayers(layer.layers)
         }

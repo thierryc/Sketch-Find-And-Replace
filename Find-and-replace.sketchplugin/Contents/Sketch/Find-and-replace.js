@@ -3068,7 +3068,6 @@ var debounce = function debounce(fn, time) {
     layers.forEach(function (layer) {
       switch (layer.type) {
         case 'Artboard':
-          // log('Artboard')
           if (layer.layers && layer.layers.length > 0) {
             parseLayers(layer.layers);
           }
@@ -3114,11 +3113,9 @@ var debounce = function debounce(fn, time) {
           break;
 
         case 'Image':
-          // log('Image')
           break;
 
         default:
-          // log('--- Default: ' + layer.type)
           if (layer.layers) {
             parseLayers(layer.layers);
           }
