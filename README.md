@@ -6,6 +6,10 @@
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
+New.
+
+shortcut : "cmd option f"
+
 ## How to
 
 **Remembers your settings** - Remembers your settings for next time you do a find/replace (doesn't remember find/replace/scope as these will change each time)
@@ -58,7 +62,7 @@ V1 Created by [Martin Steven - @mscodemonkey](https://github.com/mscodemonkey) -
 
 V2 Created by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
 
-V1 and V2 Maintained and improved by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
+V2 Maintained and improved by [Thierry Charbonnel - @thierryc](https://anotherplanet.io).
 
 Thanks to [Aby Nimbalkar - @abynim](https://github.com/abynim) - for the SketchPlugin-Remember code to save user settings.
 
