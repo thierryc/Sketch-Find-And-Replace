@@ -15,7 +15,7 @@
       "name": "Find And Replace",
       "identifier": "Find-and-replace",
       "script": "./Find-and-replace.js",
-      "shortcut" : "cmd option f"
+      "shortcut" : "cmd option shift f"
     }
   ],
   "menu": {

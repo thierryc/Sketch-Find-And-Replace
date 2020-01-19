@@ -6,9 +6,10 @@
 
 [Folow me on twitter](https://twitter.com/@Autre_planete) to be posted.
 
-New.
 
-shortcut : "cmd option f"
+##  sketch 62 and >. (version: 2.6.0)
+
+New Shortcut : "cmd option shift f"
 
 ## How to
 

@@ -1113,6 +1113,8 @@ module.exports = function(browserWindow, panel, webview) {
 
 module.exports = {
   JS_BRIDGE: '__skpm_sketchBridge',
+  JS_BRIDGE_RESULT_SUCCESS: '__skpm_sketchBridge_success',
+  JS_BRIDGE_RESULT_ERROR: '__skpm_sketchBridge_error',
   START_MOVING_WINDOW: '__skpm_startMovingWindow',
   EXECUTE_JAVASCRIPT: '__skpm_executeJS',
   EXECUTE_JAVASCRIPT_SUCCESS: '__skpm_executeJS_success_',
@@ -1140,7 +1142,11 @@ module.exports = function(webView, event) {
     ', ' +
     point.y +
     '); ' +
-    'if (el && ' + // some tags need to be focused instead of clicked
+    'if (el && el.tagName === "SELECT") {' + // select needs special handling
+    '  var event = document.createEvent("MouseEvents");' +
+    '  event.initMouseEvent("mousedown", true, true, window);' +
+    '  el.dispatchEvent(event);' +
+    '} else if (el && ' + // some tags need to be focused instead of clicked
     tagsToFocus +
     '.indexOf(el.type) >= 0 && ' +
     'el.focus' +
@@ -1625,6 +1631,14 @@ function BrowserWindow(options) {
   browserWindow.on('closed', function() {
     browserWindow._destroyed = true
     threadDictionary.removeObjectForKey(identifier)
+    var observer = threadDictionary[identifier + '.themeObserver']
+    if (observer) {
+      NSApplication.sharedApplication().removeObserver_forKeyPath(
+        observer,
+        'effectiveAppearance'
+      )
+      threadDictionary.removeObjectForKey(identifier + '.themeObserver')
+    }
     fiber.cleanup()
   })
 
@@ -1697,14 +1711,23 @@ module.exports = function(webView) {
   var source =
     'window.originalPostMessage = window.postMessage;' +
     'window.postMessage = function(actionName) {' +
-    'if (!actionName) {' +
-    "throw new Error('missing action name')" +
-    '}' +
-    'window.webkit.messageHandlers.' +
+    '  if (!actionName) {' +
+    "    throw new Error('missing action name')" +
+    '  }' +
+    '  var id = String(Math.random()).replace(".", "");' +
+    '    var args = [].slice.call(arguments);' +
+    '    args.unshift(id);' +
+    '  return new Promise(function (resolve, reject) {' +
+    '    window["' +
+    CONSTANTS.JS_BRIDGE_RESULT_SUCCESS +
+    '" + id] = resolve;' +
+    '    window["' +
+    CONSTANTS.JS_BRIDGE_RESULT_ERROR +
+    '" + id] = reject;' +
+    '    window.webkit.messageHandlers.' +
     CONSTANTS.JS_BRIDGE +
-    '.postMessage(' +
-    'JSON.stringify([].slice.call(arguments))' +
-    ');' +
+    '.postMessage(JSON.stringify(args));' +
+    '  });' +
     '}'
   var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
     source,
@@ -1832,7 +1855,7 @@ module.exports = function(webArguments) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ObjCClass = __webpack_require__(/*! mocha-js-delegate */ "./node_modules/mocha-js-delegate/index.js")
+/* WEBPACK VAR INJECTION */(function(Promise) {var ObjCClass = __webpack_require__(/*! mocha-js-delegate */ "./node_modules/mocha-js-delegate/index.js")
 var parseWebArguments = __webpack_require__(/*! ./parseWebArguments */ "./node_modules/sketch-module-web-view/lib/parseWebArguments.js")
 var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
@@ -1840,6 +1863,7 @@ var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-mo
 var WindowDelegateClass
 var NavigationDelegateClass
 var WebScriptHandlerClass
+var ThemeObserverClass
 
 // TODO: events
 // - 'page-favicon-updated'
@@ -1864,6 +1888,26 @@ var WebScriptHandlerClass
 // - 'console-message'
 
 module.exports = function(browserWindow, panel, webview, options) {
+  if (!ThemeObserverClass) {
+    ThemeObserverClass = new ObjCClass({
+      utils: null,
+
+      'observeValueForKeyPath:ofObject:change:context:': function() {
+        this.utils.executeJavaScript(
+          "document.body.classList.remove('__skpm-" +
+            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
+              ? 'light'
+              : 'dark') +
+            "'); document.body.classList.add('__skpm-" +
+            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
+              ? 'dark'
+              : 'light') +
+            "')"
+        )
+      },
+    })
+  }
+
   if (!WindowDelegateClass) {
     WindowDelegateClass = new ObjCClass({
       utils: null,
@@ -2040,6 +2084,38 @@ module.exports = function(browserWindow, panel, webview, options) {
     })
   }
 
+  var themeObserver = ThemeObserverClass.new({
+    utils: {
+      executeJavaScript(script) {
+        webview.evaluateJavaScript_completionHandler(script, null)
+      },
+    },
+  })
+
+  var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
+    "document.addEventListener('DOMContentLoaded', function() { document.body.classList.add('__skpm-" +
+      (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
+        ? 'dark'
+        : 'light') +
+      "') }, false)",
+    0,
+    true
+  )
+  webview
+    .configuration()
+    .userContentController()
+    .addUserScript(script)
+
+  NSApplication.sharedApplication().addObserver_forKeyPath_options_context(
+    themeObserver,
+    'effectiveAppearance',
+    NSKeyValueChangeNewKey,
+    null
+  )
+
+  var threadDictionary = NSThread.mainThread().threadDictionary()
+  threadDictionary[browserWindow.id + '.themeObserver'] = themeObserver
+
   var navigationDelegate = NavigationDelegateClass.new({
     utils: {
       setTitle: browserWindow.setTitle.bind(browserWindow),
@@ -2088,24 +2164,47 @@ module.exports = function(browserWindow, panel, webview, options) {
 
   var webScriptHandler = WebScriptHandlerClass.new({
     utils: {
-      emit() {
-        try {
-          browserWindow.webContents.emit.apply(
-            browserWindow.webContents,
-            arguments
+      emit(id, type) {
+        if (!type) {
+          webview.evaluateJavaScript_completionHandler(
+            CONSTANTS.JS_BRIDGE_RESULT_SUCCESS + id + '()',
+            null
           )
-        } catch (err) {
-          if (
-            typeof process !== 'undefined' &&
-            process.listenerCount &&
-            process.listenerCount('uncaughtException')
-          ) {
-            process.emit('uncaughtException', err, 'uncaughtException')
-          } else {
-            console.error(err)
-            throw err
-          }
+          return
         }
+
+        var args = []
+        for (var i = 2; i < arguments.length; i += 1) args.push(arguments[i])
+
+        var listeners = browserWindow.webContents.listeners(type)
+
+        Promise.all(
+          listeners.map(function(l) {
+            return Promise.resolve().then(function() {
+              return l.apply(l, args)
+            })
+          })
+        )
+          .then(function(res) {
+            webview.evaluateJavaScript_completionHandler(
+              CONSTANTS.JS_BRIDGE_RESULT_SUCCESS +
+                id +
+                '(' +
+                JSON.stringify(res) +
+                ')',
+              null
+            )
+          })
+          .catch(function(err) {
+            webview.evaluateJavaScript_completionHandler(
+              CONSTANTS.JS_BRIDGE_RESULT_ERROR +
+                id +
+                '(' +
+                JSON.stringify(err) +
+                ')',
+              null
+            )
+          })
       },
       parseWebArguments: parseWebArguments,
     },
@@ -2158,6 +2257,7 @@ module.exports = function(browserWindow, panel, webview, options) {
   panel.setDelegate(windowDelegate)
 }
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/promise/index.js */ "./node_modules/@skpm/promise/index.js")))
 
 /***/ }),
 
@@ -2518,8 +2618,8 @@ function escapeReplaceString(string) {
 var debounce = function debounce(fn, time) {
   var timeout;
   return function () {
-    var _this = this,
-        _arguments = arguments;
+    var _arguments = arguments,
+        _this = this;
 
     var functionCall = function functionCall() {
       return fn.apply(_this, _arguments);

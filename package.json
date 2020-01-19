@@ -32,22 +32,22 @@
     "postinstall": "npm run build && skpm-link"
   },
   "devDependencies": {
-    "@skpm/builder": "^0.7.4",
+    "@skpm/builder": "^0.7.5",
     "@skpm/extract-loader": "^2.0.2",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-standard": "^4.0.1",
     "html-loader": "^0.5.5"
   },
   "author": "Thierry Charbonnel <thierryc@users.noreply.github.com>",
   "dependencies": {
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "sketch-module-web-view": "^3.2.2",
-    "styled-components": "^4.4.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sketch-module-web-view": "^3.4.1",
+    "styled-components": "^4.4.1"
   }
 }

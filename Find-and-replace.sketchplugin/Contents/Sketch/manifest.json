@@ -15,7 +15,7 @@
       "name": "Find And Replace",
       "identifier": "Find-and-replace",
       "script": "__Find-and-replace.js",
-      "shortcut": "cmd option f"
+      "shortcut": "cmd option shift f"
     }
   ],
   "menu": {
@@ -25,6 +25,6 @@
       "Find-and-replace"
     ]
   },
-  "version": "2.5.3",
+  "version": "2.6.0",
   "disableCocoaScriptPreprocessor": true
 }
