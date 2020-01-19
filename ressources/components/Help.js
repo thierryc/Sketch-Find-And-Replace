@@ -70,9 +70,10 @@ const Help = (props) => {
     theme={theme}
     >
     <InputLabel theme={theme}>Help</InputLabel>
-    <h2>Sketch Find and Replace (version 2.6.0)</h2>
+    <h2>Sketch Find and Replace</h2>
     <p>By <a href={'mailto:hello@anotherplanet.io'}>Thierry Charbonnel</a> - UX / UI and Code Designer </p>
 
+    <h3>version 2.6.0</h3>
     <p>New Shortcut : "cmd option shift f"</p>
     
     <h3>Options to find</h3>
