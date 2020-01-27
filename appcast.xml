@@ -6,16 +6,20 @@
     <description>Finds text in selected layer(s) and all layers contained within - and replaces it with different text. Features partial, case sensitive and full-document matching.</description>
     <language>en</language>
     <item>
-      <title>2.1.0</title>
+      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.8.0/Find-and-replace.sketchplugin.zip" sparkle:version="2.8.0"/>
+    </item>
+    <item>
+      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.7.2/Find-and-replace.sketchplugin.zip" sparkle:version="2.7.2"/>
+    </item>
+    <item>
       <description>
-        <![CDATA[
-          <ul>
-            <li>Version 2.1.0 for Sketch 53 and +</li>
-          </ul>
-        ]]>
+        
+          &lt;ul&gt;
+            &lt;li&gt;New Shortcut : "cmd option shift f"&lt;/li&gt;
+          &lt;/ul&gt;
+        
       </description>
-      <pubDate>Mon Apr 10 01:00:00 EDT 2019</pubDate>
-      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.1.0/Find-and-replace.sketchplugin.zip" sparkle:version="2.1.0"/>
+      <enclosure url="https://github.com/thierryc/Sketch-Find-And-Replace/releases/download/v2.7.1/Find-and-replace.sketchplugin.zip" sparkle:version="2.7.1"/>
     </item>
     <item>
       <title>2.1.0</title>
