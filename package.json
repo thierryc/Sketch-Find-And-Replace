@@ -1,7 +1,7 @@
 {
   "name": "sketch-find-and-replace",
   "description": "find-and-replace Plugin for sketch",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "engines": {
     "sketch": ">=3.0"
   },
