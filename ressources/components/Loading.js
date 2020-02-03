@@ -30,6 +30,13 @@ const LoadingContainer = styled.div`
   align-items: center;
 `
 
+const Msg = styled.div`
+  text-align: center;
+  font-size: 12px;
+`
+
+
+
 const Loading = (props) => {
   const { 
     isActive,
@@ -42,6 +49,7 @@ const Loading = (props) => {
     <LoadingContainer>
       <LoadingIcon color={theme.activeIconColor}/>
     </LoadingContainer>
+    <Msg>Sketch Find and Replace</Msg>
   </LoadingPage>
 }
   

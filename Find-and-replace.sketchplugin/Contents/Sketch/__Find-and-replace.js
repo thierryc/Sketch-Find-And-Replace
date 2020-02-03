@@ -2734,9 +2734,6 @@ var debounce = function debounce(fn, time) {
     var regExpSufix = state.wholeWord ? '(?=\\b|\\$)' : '';
     var regExpPattern = state.regexActive ? "".concat(regExpPrefix).concat(state.findString).concat(regExpSufix) : "".concat(regExpPrefix, "(?:").concat(escapeRegExp(state.findString), ")").concat(regExpSufix);
     var regex = new RegExp(regExpPattern, rexExpFlag);
-    log(regExpPattern);
-    log(rexExpFlag);
-    log(JSON.stringify(regex, null, 4));
     var _state = state,
         findMode = _state.findMode; // log('--------------------------------')
     // log('findMode: ' + findMode)
@@ -2766,8 +2763,8 @@ var debounce = function debounce(fn, time) {
     state = Object.assign({}, state, {
       count: count
     }); // send count
+    // log(JSON.stringify(state,null,2))
 
-    log(JSON.stringify(state, null, 2));
     updateSateWebview();
   };
 

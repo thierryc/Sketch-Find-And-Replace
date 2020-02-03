@@ -37160,6 +37160,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _svg_icons_LoadingIcon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./svg-icons/LoadingIcon */ "./ressources/components/svg-icons/LoadingIcon.js");
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  text-align: center;\n  font-size: 12px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n  height: 180px;\n  display: flex; /* or inline-flex */\n  flex-direction: row;\n  flex-wrap: nowrap;\n  justify-content: center;\n  align-items: center;\n"]);
 
@@ -37193,6 +37203,7 @@ var LoadingPage = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(
   return props.theme.text;
 });
 var LoadingContainer = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject2());
+var Msg = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_templateObject3());
 
 var Loading = function Loading(props) {
   var isActive = props.isActive,
@@ -37202,7 +37213,7 @@ var Loading = function Loading(props) {
     theme: theme
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LoadingContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_svg_icons_LoadingIcon__WEBPACK_IMPORTED_MODULE_2__["default"], {
     color: theme.activeIconColor
-  })));
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Msg, null, "Sketch Find and Replace"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Loading);
