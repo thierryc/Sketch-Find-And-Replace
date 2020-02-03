@@ -1,6 +1,7 @@
 import sketch from 'sketch'
 import BrowserWindow from 'sketch-module-web-view'
 import { isWebviewPresent, sendToWebview } from 'sketch-module-web-view/remote'
+import pack from '../package.json'
 
 // documentation: https://developer.sketchapp.com/reference/api/
 
@@ -100,10 +101,10 @@ export default function() {
   if (document) {
     selection = document.selectedLayers
     if (selection.length > 0) {
-      UI.message('Find and replace in the selection')
+      UI.message('Find and replace in the selection (v' + pack.version + ')')
       state = Object.assign({}, state, { findMode: 1, selection: true })
     } else {
-      UI.message('Find and replace in the current page')
+      UI.message('Find and replace in the current page (v' + pack.version + ')')
       const page = document.selectedPage
       selection = page.layers
       state = Object.assign({}, state, { findMode: 2, selection: false })
@@ -138,7 +139,7 @@ export default function() {
   browserWindow.loadURL(require('../ressources/index.html'))
 
   let contents = browserWindow.webContents
-  
+
   const initRegExp = (newState) => {
     state = newState
     UI.message(`${state.findString} replace by ${state.replaceString}`)
@@ -167,7 +168,7 @@ export default function() {
       break
     case 3:
       selection = document.pages
-      //log(JSON.stringify(document.selectedPage,null,1))
+      // log(JSON.stringify(document.selectedPage,null,1))
       break
     default:
       selection = document.selectedPage.layers
@@ -179,6 +180,7 @@ export default function() {
     const count = layers.length + overrides.length
     state = Object.assign({}, state, { count })
     // send count
+    // log(JSON.stringify(state,null,2))
     updateSateWebview()
   }
 
@@ -280,14 +282,14 @@ export default function() {
       // log('--- override ---')
       switch(override.affectedLayer.type) {
       case 'Text':
-        //log('-Text')
+        // log('-Text')
         if (override.editable && override.property == 'stringValue'){
           replaceInOverride(override)
         }
         break
       
       case 'SymbolInstance':
-        //log('-SymbolInstance')
+        // log('-SymbolInstance')
         break
       
       case 'ShapePath':
@@ -330,7 +332,7 @@ export default function() {
   contents.on('setDarkMode', mode => {
     state = Object.assign({}, state, { darkMode: mode })
     saveSettings(state)
-    UI.message(`Set darkMode to ${mode}`)
+    UI.message(`Set darkMode ${mode ? 'on 🌙' : 'off 😎'}!`)
   })
 
   contents.on('find', debounce(json => {

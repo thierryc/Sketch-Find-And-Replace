@@ -12,6 +12,8 @@ import SelectionIcon from './svg-icons/SelectionIcon'
 import PageIcon from './svg-icons/PageIcon'
 import DocumentIcon from './svg-icons/DocumentIcon'
 
+import pack from '../../package.json'
+
 import Gtag from './Gtag'
 
 const HelpPage = styled.div`
@@ -70,9 +72,9 @@ const Help = (props) => {
     theme={theme}
     >
     <InputLabel theme={theme}>Help</InputLabel>
-    <h2>Sketch Find and Replace</h2>
+    <h2>Sketch Find and Replace <small>{pack.version}</small></h2>
     <p>By <a href={'mailto:hello@anotherplanet.io'}>Thierry Charbonnel</a> - UX / UI and Code Designer </p>
-    
+
     <p>New Shortcut : "cmd option shift f"</p>
     
     <h3>Options to find</h3>

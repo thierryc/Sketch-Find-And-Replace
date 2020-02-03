@@ -42,6 +42,7 @@ export default class App extends React.Component {
       selection: false,
       replaceStart: false,
       helpActive: false,
+      mounted: false,
     }
 
     this.changeMode = this.changeMode.bind(this)
@@ -66,8 +67,18 @@ export default class App extends React.Component {
   componentDidMount() {
     window.SetSettings = json => {
       this.setState(JSON.parse(json))
+      this.findIntput.focus()
+      this.setState({
+        mounted: true
+      })
     }
-    this.findIntput.focus()
+    
+    setTimeout(() => {
+      this.findIntput.focus()
+      this.setState({
+        mounted: true
+      })
+    }, 5000)
   }
 
   componentWillMount() {
@@ -194,6 +205,7 @@ export default class App extends React.Component {
       replaceStart,
       selection,
       helpActive,
+      mounted,
     } = this.state
 
     const theme = getTheme(darkMode)
@@ -203,18 +215,18 @@ export default class App extends React.Component {
         <ActionBar>
           <BtnGroup>
             <BtnText 
-            style={{
-              cursor: 'pointer'
-            }}
-            theme={theme} onClick={this.changeMode}>
+              style={{
+                cursor: 'pointer'
+              }}
+              theme={theme} onClick={this.changeMode}>
               {darkMode ? 'Light Mode' : 'Dark Mode'}
             </BtnText>
             <BtnText
-            theme={theme}
-            style={{
-               cursor: 'help'
-            }}
-            onClick={this.toogleHelp}>
+              theme={theme}
+              style={{
+                cursor: 'help'
+              }}
+              onClick={this.toogleHelp}>
               ?
             </BtnText>
           </BtnGroup>
@@ -337,7 +349,7 @@ export default class App extends React.Component {
           </RowGroup>
         </Page>
         <Help isActive={helpActive} theme={theme} close={this.toogleHelp}/>
-        <Loading isActive={replaceStart} theme={theme}/>
+        <Loading isActive={replaceStart || !mounted} theme={theme}/>
         <GlobalStyle theme={theme} />
       </Fragment>
     )
