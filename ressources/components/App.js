@@ -179,6 +179,10 @@ export default class App extends React.Component {
     window.postMessage('close')
   }
 
+  resetPref() {
+    window.postMessage('resetPref')
+  }
+
   toogleHelp() {
     const { helpActive } = this.state
     this.setState({
@@ -349,7 +353,7 @@ export default class App extends React.Component {
           </RowGroup>
         </Page>
         <Help isActive={helpActive} theme={theme} close={this.toogleHelp}/>
-        <Loading isActive={replaceStart || !mounted} theme={theme}/>
+        <Loading isActive={replaceStart || !mounted} theme={theme} resetPref={this.resetPref}/>
         <GlobalStyle theme={theme} />
       </Fragment>
     )

@@ -86,7 +86,9 @@ export default function() {
       && typeof JSON.parse(savedSettings) === 'object'
     ) {
       state = Object.assign({}, defaultSettings, JSON.parse(savedSettings))
-    } 
+    } else {
+      Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
+    }
   }
 
   Settings.setSettingForKey(SATEUNIQUKEY, 'Loaded')
@@ -327,6 +329,12 @@ export default function() {
 
   contents.on('message', s => {
     UI.message(s)
+  })
+
+  contents.on('resetPref', () => {
+    Settings.setSettingForKey(SATEUNIQUKEY, '')
+    Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
+    UI.message(`Reset saved preference ⚙️!`)
   })
 
   contents.on('setDarkMode', mode => {

@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Button from './Button'
 import LoadingIcon from './svg-icons/LoadingIcon'
 
 const LoadingPage = styled.div`
@@ -22,7 +23,7 @@ const LoadingPage = styled.div`
 `
 
 const LoadingContainer = styled.div`
-  height: 180px;
+  height: 100px;
   display: flex; /* or inline-flex */
   flex-direction: row;
   flex-wrap: nowrap;
@@ -35,10 +36,18 @@ const Msg = styled.div`
   font-size: 12px;
 `
 
-
+const BtnContainer = styled.div`
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-top: 2em;
+`
 
 const Loading = (props) => {
   const { 
+    resetPref,
     isActive,
     theme,
   } = props
@@ -49,6 +58,9 @@ const Loading = (props) => {
     <LoadingContainer>
       <LoadingIcon color={theme.activeIconColor}/>
     </LoadingContainer>
+    <BtnContainer><Button onClick={resetPref} theme={theme} theme={theme} isActive={true}>
+      Reset saved preference
+    </Button></BtnContainer>
     <Msg>Sketch Find and Replace</Msg>
   </LoadingPage>
 }
