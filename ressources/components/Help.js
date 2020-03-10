@@ -16,6 +16,17 @@ import pack from '../../package.json'
 
 import Gtag from './Gtag'
 
+const TopLabel = styled.label`
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #a8a8a8;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  line-height: 1.3rem;
+  padding-bottom: 3px;
+  -webkit-user-select: none;
+`
+
 const HelpPage = styled.div`
   position: absolute;
   top: ${props => props.isActive ? 0 : 240}px;
@@ -72,7 +83,7 @@ const Help = (props) => {
     isActive={isActive}
     theme={theme}
     >
-    <InputLabel theme={theme}>Help</InputLabel>
+    <TopLabel onClick={close} theme={theme}>× Help</TopLabel>
     <h2>Sketch Find and Replace <small>{pack.version}</small></h2>
     <p>By <a href={'mailto:hello@anotherplanet.io'}>Thierry Charbonnel</a> - UX / UI and Code Designer </p>
 
