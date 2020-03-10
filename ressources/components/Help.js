@@ -66,6 +66,7 @@ const Help = (props) => {
     isActive,
     theme,
     close,
+    resetPref,
   } = props
   return <HelpPage 
     isActive={isActive}
@@ -142,6 +143,14 @@ const Help = (props) => {
     <p>Replace with</p>
     <pre>(one space)</pre>
 
+    <h3>Preference Settings</h3>
+
+    <p>Your last search and mode (dark/light) are saved.</p>
+
+    <BtnHelpContainer><Button onClick={resetPref} theme={theme} isActive={true}>
+     Reset Preference Settings
+    </Button></BtnHelpContainer>
+
     <p>and more...</p>
 
     <h3>Say Hello</h3>
@@ -150,7 +159,7 @@ const Help = (props) => {
     <p><a href={'https://twitter.com/Autre_planete?ref=sketch'}>twitter: @Autre_planete</a></p>
     <p><a href={'https://github.com/thierryc?ref=sketch'}>Github: @thierryc</a></p>
     
-    <BtnHelpContainer><Button onClick={close} theme={theme} primary theme={theme} isActive={true}>
+    <BtnHelpContainer><Button onClick={close} theme={theme} primary isActive={true}>
       Close Help
     </Button></BtnHelpContainer>
 

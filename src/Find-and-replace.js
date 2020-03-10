@@ -334,7 +334,7 @@ export default function() {
   contents.on('resetPref', () => {
     Settings.setSettingForKey(SATEUNIQUKEY, '')
     Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
-    UI.message(`Reset saved preference ⚙️!`)
+    UI.message(`Reset Preference Settings 🖖! Done`)
   })
 
   contents.on('setDarkMode', mode => {

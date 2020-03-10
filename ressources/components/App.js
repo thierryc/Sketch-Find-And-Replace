@@ -181,6 +181,10 @@ export default class App extends React.Component {
 
   resetPref() {
     window.postMessage('resetPref')
+    this.findIntput.focus()
+    this.setState({
+      mounted: true
+    })
   }
 
   toogleHelp() {
@@ -343,7 +347,7 @@ export default class App extends React.Component {
 
           <RowGroup>
             <Row>
-              <Button onClick={this.closeWindow} theme={theme}>
+              <Button onClick={this.closeWindow} theme={theme} isActive={true}>
                 Cancel
               </Button>
               <Button onClick={this.replace} primary theme={theme} isActive={!replaceStart}>
@@ -352,7 +356,7 @@ export default class App extends React.Component {
             </Row>
           </RowGroup>
         </Page>
-        <Help isActive={helpActive} theme={theme} close={this.toogleHelp}/>
+        <Help isActive={helpActive} theme={theme} close={this.toogleHelp} resetPref={this.resetPref}/>
         <Loading isActive={replaceStart || !mounted} theme={theme} resetPref={this.resetPref}/>
         <GlobalStyle theme={theme} />
       </Fragment>

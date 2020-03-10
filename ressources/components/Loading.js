@@ -23,7 +23,7 @@ const LoadingPage = styled.div`
 `
 
 const LoadingContainer = styled.div`
-  height: 100px;
+  height: 140px;
   display: flex; /* or inline-flex */
   flex-direction: row;
   flex-wrap: nowrap;
@@ -42,7 +42,7 @@ const BtnContainer = styled.div`
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: stretch;
-  margin-top: 2em;
+  margin-top: 0;
 `
 
 const Loading = (props) => {
@@ -58,8 +58,8 @@ const Loading = (props) => {
     <LoadingContainer>
       <LoadingIcon color={theme.activeIconColor}/>
     </LoadingContainer>
-    <BtnContainer><Button onClick={resetPref} theme={theme} theme={theme} isActive={true}>
-      Reset saved preference
+    <BtnContainer><Button onClick={resetPref} theme={theme} isActive={true}>
+     Reset Preference Settings
     </Button></BtnContainer>
     <Msg>Sketch Find and Replace</Msg>
   </LoadingPage>
