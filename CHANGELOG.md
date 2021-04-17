@@ -1,5 +1,10 @@
 # Find and Replace for Sketch 3.3+
 
+## [2.12.1] - 2021-04-17
+
+### Added
+
+- Add Apache License
 
 ## [2.12.0] - 2021-04-17
 
