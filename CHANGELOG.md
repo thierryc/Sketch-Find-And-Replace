@@ -1,5 +1,12 @@
 # Find and Replace for Sketch 3.3+
 
+
+## [2.12.0] - 2021-04-17
+
+### Changed
+
+- update dependencies
+
 ## CHANGELOG
 
 #### 1.7 04/07/2017

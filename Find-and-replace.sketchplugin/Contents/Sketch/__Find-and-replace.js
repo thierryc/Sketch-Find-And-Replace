@@ -93,6 +93,38 @@ var exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+
 /***/ "./node_modules/@skpm/promise/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/@skpm/promise/index.js ***!
@@ -524,32 +556,32 @@ function parseHexColor(color) {
     return NSColor.whiteColor()
   }
 
-  var r = parseInt(hex.slice(0, 2), 16)
-  var g = parseInt(hex.slice(2, 4), 16)
-  var b = parseInt(hex.slice(4, 6), 16)
-  var a = parseInt(hex.slice(6, 8), 16)
+  var r = parseInt(hex.slice(0, 2), 16) / 255
+  var g = parseInt(hex.slice(2, 4), 16) / 255
+  var b = parseInt(hex.slice(4, 6), 16) / 255
+  var a = parseInt(hex.slice(6, 8), 16) / 255
 
   return NSColor.colorWithSRGBRed_green_blue_alpha(r, g, b, a)
 }
 
-module.exports = function(browserWindow, panel, webview) {
+module.exports = function (browserWindow, panel, webview) {
   // keep reference to the subviews
   browserWindow._panel = panel
   browserWindow._webview = webview
   browserWindow._destroyed = false
 
-  browserWindow.destroy = function() {
+  browserWindow.destroy = function () {
     return panel.close()
   }
 
-  browserWindow.close = function() {
+  browserWindow.close = function () {
     if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
       var shouldClose = true
       browserWindow.emit('close', {
         get defaultPrevented() {
           return !shouldClose
         },
-        preventDefault: function() {
+        preventDefault: function () {
           shouldClose = false
         },
       })
@@ -582,15 +614,15 @@ module.exports = function(browserWindow, panel, webview) {
   browserWindow.focus = focus.bind(this, true)
   browserWindow.blur = focus.bind(this, false)
 
-  browserWindow.isFocused = function() {
+  browserWindow.isFocused = function () {
     return panel.isKeyWindow()
   }
 
-  browserWindow.isDestroyed = function() {
+  browserWindow.isDestroyed = function () {
     return browserWindow._destroyed
   }
 
-  browserWindow.show = function() {
+  browserWindow.show = function () {
     // This method is supposed to put focus on window, however if the app does not
     // have focus then "makeKeyAndOrderFront" will only show the window.
     NSApp.activateIgnoringOtherApps(true)
@@ -598,7 +630,7 @@ module.exports = function(browserWindow, panel, webview) {
     if (panel.delegate().utils && panel.delegate().utils.parentWindow) {
       return panel.delegate().utils.parentWindow.beginSheet_completionHandler(
         panel,
-        __mocha__.createBlock_function('v16@?0q8', function() {
+        __mocha__.createBlock_function('v16@?0q8', function () {
           browserWindow.emit('closed')
         })
       )
@@ -607,34 +639,34 @@ module.exports = function(browserWindow, panel, webview) {
     return panel.makeKeyAndOrderFront(null)
   }
 
-  browserWindow.showInactive = function() {
+  browserWindow.showInactive = function () {
     return panel.orderFrontRegardless()
   }
 
-  browserWindow.hide = function() {
+  browserWindow.hide = function () {
     return panel.orderOut(null)
   }
 
-  browserWindow.isVisible = function() {
+  browserWindow.isVisible = function () {
     return panel.isVisible()
   }
 
-  browserWindow.isModal = function() {
+  browserWindow.isModal = function () {
     return false
   }
 
-  browserWindow.maximize = function() {
+  browserWindow.maximize = function () {
     if (!browserWindow.isMaximized()) {
       panel.zoom(null)
     }
   }
-  browserWindow.unmaximize = function() {
+  browserWindow.unmaximize = function () {
     if (browserWindow.isMaximized()) {
       panel.zoom(null)
     }
   }
 
-  browserWindow.isMaximized = function() {
+  browserWindow.isMaximized = function () {
     if ((panel.styleMask() & NSResizableWindowMask) !== 0) {
       return panel.isZoomed()
     }
@@ -648,29 +680,29 @@ module.exports = function(browserWindow, panel, webview) {
     )
   }
 
-  browserWindow.minimize = function() {
+  browserWindow.minimize = function () {
     return panel.miniaturize(null)
   }
 
-  browserWindow.restore = function() {
+  browserWindow.restore = function () {
     return panel.deminiaturize(null)
   }
 
-  browserWindow.isMinimized = function() {
+  browserWindow.isMinimized = function () {
     return panel.isMiniaturized()
   }
 
-  browserWindow.setFullScreen = function(fullscreen) {
+  browserWindow.setFullScreen = function (fullscreen) {
     if (fullscreen !== browserWindow.isFullscreen()) {
       panel.toggleFullScreen(null)
     }
   }
 
-  browserWindow.isFullscreen = function() {
+  browserWindow.isFullscreen = function () {
     return panel.styleMask() & NSFullScreenWindowMask
   }
 
-  browserWindow.setAspectRatio = function(aspectRatio /* , extraSize */) {
+  browserWindow.setAspectRatio = function (aspectRatio /* , extraSize */) {
     // Reset the behaviour to default if aspect_ratio is set to 0 or less.
     if (aspectRatio > 0.0) {
       panel.setAspectRatio(NSMakeSize(aspectRatio, 1.0))
@@ -679,7 +711,7 @@ module.exports = function(browserWindow, panel, webview) {
     }
   }
 
-  browserWindow.setBounds = function(bounds, animate) {
+  browserWindow.setBounds = function (bounds, animate) {
     if (!bounds) {
       return
     }
@@ -711,11 +743,9 @@ module.exports = function(browserWindow, panel, webview) {
     panel.setFrame_display_animate(cocoaBounds, true, animate)
   }
 
-  browserWindow.getBounds = function() {
+  browserWindow.getBounds = function () {
     const cocoaBounds = panel.frame()
-    var mainScreenRect = NSScreen.screens()
-      .firstObject()
-      .frame()
+    var mainScreenRect = NSScreen.screens().firstObject().frame()
     return {
       x: cocoaBounds.origin.x,
       y: Math.round(NSHeight(mainScreenRect) - cocoaBounds.origin.y),
@@ -724,27 +754,27 @@ module.exports = function(browserWindow, panel, webview) {
     }
   }
 
-  browserWindow.setContentBounds = function(bounds, animate) {
+  browserWindow.setContentBounds = function (bounds, animate) {
     // TODO:
     browserWindow.setBounds(bounds, animate)
   }
 
-  browserWindow.getContentBounds = function() {
+  browserWindow.getContentBounds = function () {
     // TODO:
     return browserWindow.getBounds()
   }
 
-  browserWindow.setSize = function(width, height, animate) {
+  browserWindow.setSize = function (width, height, animate) {
     // TODO: handle resizing around center
     return browserWindow.setBounds({ width: width, height: height }, animate)
   }
 
-  browserWindow.getSize = function() {
+  browserWindow.getSize = function () {
     var bounds = browserWindow.getBounds()
     return [bounds.width, bounds.height]
   }
 
-  browserWindow.setContentSize = function(width, height, animate) {
+  browserWindow.setContentSize = function (width, height, animate) {
     // TODO: handle resizing around center
     return browserWindow.setContentBounds(
       { width: width, height: height },
@@ -752,68 +782,68 @@ module.exports = function(browserWindow, panel, webview) {
     )
   }
 
-  browserWindow.getContentSize = function() {
+  browserWindow.getContentSize = function () {
     var bounds = browserWindow.getContentBounds()
     return [bounds.width, bounds.height]
   }
 
-  browserWindow.setMinimumSize = function(width, height) {
+  browserWindow.setMinimumSize = function (width, height) {
     const minSize = CGSizeMake(width, height)
     panel.setContentMinSize(minSize)
   }
 
-  browserWindow.getMinimumSize = function() {
+  browserWindow.getMinimumSize = function () {
     const size = panel.contentMinSize()
     return [size.width, size.height]
   }
 
-  browserWindow.setMaximumSize = function(width, height) {
+  browserWindow.setMaximumSize = function (width, height) {
     const maxSize = CGSizeMake(width, height)
     panel.setContentMaxSize(maxSize)
   }
 
-  browserWindow.getMaximumSize = function() {
+  browserWindow.getMaximumSize = function () {
     const size = panel.contentMaxSize()
     return [size.width, size.height]
   }
 
-  browserWindow.setResizable = function(resizable) {
+  browserWindow.setResizable = function (resizable) {
     return browserWindow._setStyleMask(resizable, NSResizableWindowMask)
   }
 
-  browserWindow.isResizable = function() {
+  browserWindow.isResizable = function () {
     return panel.styleMask() & NSResizableWindowMask
   }
 
-  browserWindow.setMovable = function(movable) {
+  browserWindow.setMovable = function (movable) {
     return panel.setMovable(movable)
   }
-  browserWindow.isMovable = function() {
+  browserWindow.isMovable = function () {
     return panel.isMovable()
   }
 
-  browserWindow.setMinimizable = function(minimizable) {
+  browserWindow.setMinimizable = function (minimizable) {
     return browserWindow._setStyleMask(minimizable, NSMiniaturizableWindowMask)
   }
 
-  browserWindow.isMinimizable = function() {
+  browserWindow.isMinimizable = function () {
     return panel.styleMask() & NSMiniaturizableWindowMask
   }
 
-  browserWindow.setMaximizable = function(maximizable) {
+  browserWindow.setMaximizable = function (maximizable) {
     if (panel.standardWindowButton(NSWindowZoomButton)) {
       panel.standardWindowButton(NSWindowZoomButton).setEnabled(maximizable)
     }
   }
 
-  browserWindow.isMaximizable = function() {
+  browserWindow.isMaximizable = function () {
     return (
       panel.standardWindowButton(NSWindowZoomButton) &&
       panel.standardWindowButton(NSWindowZoomButton).isEnabled()
     )
   }
 
-  browserWindow.setFullScreenable = function(fullscreenable) {
+  browserWindow.setFullScreenable = function (fullscreenable) {
     browserWindow._setCollectionBehavior(
       fullscreenable,
       NSWindowCollectionBehaviorFullScreenPrimary
@@ -825,20 +855,20 @@ module.exports = function(browserWindow, panel, webview) {
     )
   }
 
-  browserWindow.isFullScreenable = function() {
+  browserWindow.isFullScreenable = function () {
     var collectionBehavior = panel.collectionBehavior()
     return collectionBehavior & NSWindowCollectionBehaviorFullScreenPrimary
   }
 
-  browserWindow.setClosable = function(closable) {
+  browserWindow.setClosable = function (closable) {
     browserWindow._setStyleMask(closable, NSClosableWindowMask)
   }
 
-  browserWindow.isClosable = function() {
+  browserWindow.isClosable = function () {
     return panel.styleMask() & NSClosableWindowMask
   }
 
-  browserWindow.setAlwaysOnTop = function(top, level, relativeLevel) {
+  browserWindow.setAlwaysOnTop = function (top, level, relativeLevel) {
     var windowLevel = NSNormalWindowLevel
     var maxWindowLevel = CGWindowLevelForKey(kCGMaximumWindowLevelKey)
     var minWindowLevel = CGWindowLevelForKey(kCGMinimumWindowLevelKey)
@@ -879,37 +909,37 @@ module.exports = function(browserWindow, panel, webview) {
     }
   }
 
-  browserWindow.isAlwaysOnTop = function() {
+  browserWindow.isAlwaysOnTop = function () {
     return panel.level() !== NSNormalWindowLevel
   }
 
-  browserWindow.moveTop = function() {
+  browserWindow.moveTop = function () {
     return panel.orderFrontRegardless()
   }
 
-  browserWindow.center = function() {
+  browserWindow.center = function () {
     panel.center()
   }
 
-  browserWindow.setPosition = function(x, y, animate) {
+  browserWindow.setPosition = function (x, y, animate) {
     return browserWindow.setBounds({ x: x, y: y }, animate)
   }
 
-  browserWindow.getPosition = function() {
+  browserWindow.getPosition = function () {
     var bounds = browserWindow.getBounds()
     return [bounds.x, bounds.y]
   }
 
-  browserWindow.setTitle = function(title) {
+  browserWindow.setTitle = function (title) {
     panel.setTitle(title)
   }
 
-  browserWindow.getTitle = function() {
+  browserWindow.getTitle = function () {
     return String(panel.title())
   }
 
   var attentionRequestId = 0
-  browserWindow.flashFrame = function(flash) {
+  browserWindow.flashFrame = function (flash) {
     if (flash) {
       attentionRequestId = NSApp.requestUserAttention(NSInformationalRequest)
     } else {
@@ -918,24 +948,20 @@ module.exports = function(browserWindow, panel, webview) {
     }
   }
 
-  browserWindow.getNativeWindowHandle = function() {
+  browserWindow.getNativeWindowHandle = function () {
     return panel
   }
 
-  browserWindow.getNativeWebViewHandle = function() {
+  browserWindow.getNativeWebViewHandle = function () {
     return webview
   }
 
-  browserWindow.loadURL = function(url) {
+  browserWindow.loadURL = function (url) {
     // When frameLocation is a file, prefix it with the Sketch Resources path
     if (/^(?!https?|file).*\.html?$/.test(url)) {
       if (typeof __command !== 'undefined' && __command.pluginBundle()) {
         url =
-          'file://' +
-          __command
-            .pluginBundle()
-            .urlForResourceNamed(url)
-            .path()
+          'file://' + __command.pluginBundle().urlForResourceNamed(url).path()
       }
     }
 
@@ -958,51 +984,51 @@ module.exports = function(browserWindow, panel, webview) {
     webview.loadRequest(urlRequest)
   }
 
-  browserWindow.reload = function() {
+  browserWindow.reload = function () {
     webview.reload()
   }
 
-  browserWindow.setHasShadow = function(hasShadow) {
+  browserWindow.setHasShadow = function (hasShadow) {
     return panel.setHasShadow(hasShadow)
   }
 
-  browserWindow.hasShadow = function() {
+  browserWindow.hasShadow = function () {
     return panel.hasShadow()
   }
 
-  browserWindow.setOpacity = function(opacity) {
+  browserWindow.setOpacity = function (opacity) {
     return panel.setAlphaValue(opacity)
   }
 
-  browserWindow.getOpacity = function() {
+  browserWindow.getOpacity = function () {
     return panel.alphaValue()
   }
 
-  browserWindow.setVisibleOnAllWorkspaces = function(visible) {
+  browserWindow.setVisibleOnAllWorkspaces = function (visible) {
     return browserWindow._setCollectionBehavior(
       visible,
       NSWindowCollectionBehaviorCanJoinAllSpaces
     )
   }
 
-  browserWindow.isVisibleOnAllWorkspaces = function() {
+  browserWindow.isVisibleOnAllWorkspaces = function () {
     var collectionBehavior = panel.collectionBehavior()
     return collectionBehavior & NSWindowCollectionBehaviorCanJoinAllSpaces
   }
 
-  browserWindow.setIgnoreMouseEvents = function(ignore) {
+  browserWindow.setIgnoreMouseEvents = function (ignore) {
     return panel.setIgnoresMouseEvents(ignore)
   }
 
-  browserWindow.setContentProtection = function(enable) {
+  browserWindow.setContentProtection = function (enable) {
     panel.setSharingType(enable ? NSWindowSharingNone : NSWindowSharingReadOnly)
   }
 
-  browserWindow.setAutoHideCursor = function(autoHide) {
+  browserWindow.setAutoHideCursor = function (autoHide) {
     panel.setDisableAutoHideCursor(autoHide)
   }
 
-  browserWindow.setVibrancy = function(type) {
+  browserWindow.setVibrancy = function (type) {
     var effectView = browserWindow._vibrantView
 
     if (!type) {
@@ -1060,18 +1086,18 @@ module.exports = function(browserWindow, panel, webview) {
     effectView.setMaterial(vibrancyType)
   }
 
-  browserWindow._setBackgroundColor = function(colorName) {
+  browserWindow._setBackgroundColor = function (colorName) {
     var color = parseHexColor(colorName)
     webview.setValue_forKey(false, 'drawsBackground')
     panel.backgroundColor = color
   }
 
-  browserWindow._invalidate = function() {
+  browserWindow._invalidate = function () {
     panel.flushWindow()
     panel.contentView().setNeedsDisplay(true)
   }
 
-  browserWindow._setStyleMask = function(on, flag) {
+  browserWindow._setStyleMask = function (on, flag) {
     var wasMaximizable = browserWindow.isMaximizable()
     if (on) {
       panel.setStyleMask(panel.styleMask() | flag)
@@ -1083,7 +1109,7 @@ module.exports = function(browserWindow, panel, webview) {
     browserWindow.setMaximizable(wasMaximizable)
   }
 
-  browserWindow._setCollectionBehavior = function(on, flag) {
+  browserWindow._setCollectionBehavior = function (on, flag) {
     var wasMaximizable = browserWindow.isMaximizable()
     if (on) {
       panel.setCollectionBehavior(panel.collectionBehavior() | flag)
@@ -1095,7 +1121,7 @@ module.exports = function(browserWindow, panel, webview) {
     browserWindow.setMaximizable(wasMaximizable)
   }
 
-  browserWindow._showWindowButton = function(button) {
+  browserWindow._showWindowButton = function (button) {
     var view = panel.standardWindowButton(button)
     view.superview().addSubview_positioned_relative(view, NSWindowAbove, null)
   }
@@ -1134,7 +1160,7 @@ module.exports = {
 var tagsToFocus =
   '["text", "textarea", "date", "datetime-local", "email", "number", "month", "password", "search", "tel", "time", "url", "week" ]'
 
-module.exports = function(webView, event) {
+module.exports = function (webView, event) {
   var point = webView.convertPoint_fromView(event.locationInWindow(), null)
   return (
     'var el = document.elementFromPoint(' + // get the DOM element that match the event
@@ -1170,7 +1196,7 @@ module.exports = function(webView, event) {
 
 /* WEBPACK VAR INJECTION */(function(Promise) {var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
-module.exports = function(webview, browserWindow) {
+module.exports = function (webview, browserWindow) {
   function executeJavaScript(script, userGesture, callback) {
     if (typeof userGesture === 'function') {
       callback = userGesture
@@ -1183,8 +1209,8 @@ module.exports = function(webview, browserWindow) {
       webview.navigationDelegate().state &&
       webview.navigationDelegate().state.wasReady == 0
     ) {
-      return new Promise(function(resolve, reject) {
-        browserWindow.once('ready-to-show', function() {
+      return new Promise(function (resolve, reject) {
+        browserWindow.once('ready-to-show', function () {
           executeJavaScript(script, userGesture, callback)
             .then(resolve)
             .catch(reject)
@@ -1193,12 +1219,12 @@ module.exports = function(webview, browserWindow) {
       })
     }
 
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       var requestId = Math.random()
 
       browserWindow.webContents.on(
         CONSTANTS.EXECUTE_JAVASCRIPT_SUCCESS + requestId,
-        function(res) {
+        function (res) {
           try {
             if (callback) {
               callback(null, res)
@@ -1212,7 +1238,7 @@ module.exports = function(webview, browserWindow) {
       )
       browserWindow.webContents.on(
         CONSTANTS.EXECUTE_JAVASCRIPT_ERROR + requestId,
-        function(err) {
+        function (err) {
           try {
             if (callback) {
               callback(err)
@@ -1237,7 +1263,7 @@ module.exports = function(webview, browserWindow) {
   return executeJavaScript
 }
 
-module.exports.wrapScript = function(script, requestId) {
+module.exports.wrapScript = function (script, requestId) {
   return (
     'window.' +
     CONSTANTS.EXECUTE_JAVASCRIPT +
@@ -1249,7 +1275,7 @@ module.exports.wrapScript = function(script, requestId) {
   )
 }
 
-module.exports.injectScript = function(webView) {
+module.exports.injectScript = function (webView) {
   var source =
     'window.' +
     CONSTANTS.EXECUTE_JAVASCRIPT +
@@ -1283,10 +1309,7 @@ module.exports.injectScript = function(webView) {
     0,
     true
   )
-  webView
-    .configuration()
-    .userContentController()
-    .addUserScript(script)
+  webView.configuration().userContentController().addUserScript(script)
 }
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@skpm/promise/index.js */ "./node_modules/@skpm/promise/index.js")))
@@ -1348,7 +1371,7 @@ var setDelegates = __webpack_require__(/*! ./set-delegates */ "./node_modules/sk
 function BrowserWindow(options) {
   options = options || {}
 
-  var identifier = options.identifier || NSUUID.UUID().UUIDString()
+  var identifier = options.identifier || String(NSUUID.UUID().UUIDString())
   var threadDictionary = NSThread.mainThread().threadDictionary()
 
   var existingBrowserWindow = BrowserWindow.fromId(identifier)
@@ -1371,9 +1394,7 @@ function BrowserWindow(options) {
   // Window size
   var width = options.width || 800
   var height = options.height || 600
-  var mainScreenRect = NSScreen.screens()
-    .firstObject()
-    .frame()
+  var mainScreenRect = NSScreen.screens().firstObject().frame()
   var cocoaBounds = NSMakeRect(
     typeof options.x !== 'undefined'
       ? options.x
@@ -1415,6 +1436,9 @@ function BrowserWindow(options) {
     NSBackingStoreBuffered,
     true
   )
+
+  // this would be nice but it's crashing on macOS 11.0
+  // panel.releasedWhenClosed = true
 
   var wkwebviewConfig = WKWebViewConfiguration.alloc().init()
   var webView = WKWebView.alloc().initWithFrame_configuration(
@@ -1611,7 +1635,7 @@ function BrowserWindow(options) {
   }
 
   if (options.acceptsFirstMouse) {
-    browserWindow.on('focus', function(event) {
+    browserWindow.on('focus', function (event) {
       if (event.type() === NSEventTypeLeftMouseDown) {
         browserWindow.webContents
           .executeJavaScript(dispatchFirstClick(webView, event))
@@ -1628,7 +1652,7 @@ function BrowserWindow(options) {
     browserWindow.show()
   }
 
-  browserWindow.on('closed', function() {
+  browserWindow.on('closed', function () {
     browserWindow._destroyed = true
     threadDictionary.removeObjectForKey(identifier)
     var observer = threadDictionary[identifier + '.themeObserver']
@@ -1644,7 +1668,7 @@ function BrowserWindow(options) {
 
   threadDictionary[identifier] = panel
 
-  fiber.onCleanup(function() {
+  fiber.onCleanup(function () {
     if (!browserWindow._destroyed) {
       browserWindow.destroy()
     }
@@ -1653,7 +1677,7 @@ function BrowserWindow(options) {
   return browserWindow
 }
 
-BrowserWindow.fromId = function(identifier) {
+BrowserWindow.fromId = function (identifier) {
   var threadDictionary = NSThread.mainThread().threadDictionary()
 
   if (threadDictionary[identifier]) {
@@ -1663,7 +1687,7 @@ BrowserWindow.fromId = function(identifier) {
   return undefined
 }
 
-BrowserWindow.fromPanel = function(panel, identifier) {
+BrowserWindow.fromPanel = function (panel, identifier) {
   var browserWindow = new EventEmitter()
   browserWindow.id = identifier
 
@@ -1707,7 +1731,7 @@ module.exports = BrowserWindow
 
 var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
-module.exports = function(webView) {
+module.exports = function (webView) {
   var source =
     'window.originalPostMessage = window.postMessage;' +
     'window.postMessage = function(actionName) {' +
@@ -1734,10 +1758,7 @@ module.exports = function(webView) {
     0,
     true
   )
-  webView
-    .configuration()
-    .userContentController()
-    .addUserScript(script)
+  webView.configuration().userContentController().addUserScript(script)
 }
 
 
@@ -1752,7 +1773,7 @@ module.exports = function(webView) {
 
 var CONSTANTS = __webpack_require__(/*! ./constants */ "./node_modules/sketch-module-web-view/lib/constants.js")
 
-module.exports.injectScript = function(webView) {
+module.exports.injectScript = function (webView) {
   var source =
     '(function () {' +
     "document.addEventListener('mousedown', onMouseDown);" +
@@ -1775,13 +1796,10 @@ module.exports.injectScript = function(webView) {
     0,
     true
   )
-  webView
-    .configuration()
-    .userContentController()
-    .addUserScript(script)
+  webView.configuration().userContentController().addUserScript(script)
 }
 
-module.exports.setupHandler = function(browserWindow) {
+module.exports.setupHandler = function (browserWindow) {
   var initialMouseLocation = null
   var initialWindowPosition = null
   var interval = null
@@ -1803,7 +1821,7 @@ module.exports.setupHandler = function(browserWindow) {
     )
   }
 
-  browserWindow.webContents.on(CONSTANTS.START_MOVING_WINDOW, function() {
+  browserWindow.webContents.on(CONSTANTS.START_MOVING_WINDOW, function () {
     initialMouseLocation = NSEvent.mouseLocation()
     var position = browserWindow.getPosition()
     initialWindowPosition = {
@@ -1825,7 +1843,7 @@ module.exports.setupHandler = function(browserWindow) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = function(webArguments) {
+module.exports = function (webArguments) {
   var args = null
   try {
     args = JSON.parse(webArguments)
@@ -1887,21 +1905,30 @@ var ThemeObserverClass
 // - 'paint'
 // - 'console-message'
 
-module.exports = function(browserWindow, panel, webview, options) {
+module.exports = function (browserWindow, panel, webview, options) {
   if (!ThemeObserverClass) {
     ThemeObserverClass = new ObjCClass({
       utils: null,
 
-      'observeValueForKeyPath:ofObject:change:context:': function() {
+      'observeValueForKeyPath:ofObject:change:context:': function (
+        keyPath,
+        object,
+        change
+      ) {
+        const newAppearance = change[NSKeyValueChangeNewKey]
+        const isDark =
+          String(
+            newAppearance.bestMatchFromAppearancesWithNames([
+              'NSAppearanceNameAqua',
+              'NSAppearanceNameDarkAqua',
+            ])
+          ) === 'NSAppearanceNameDarkAqua'
+
         this.utils.executeJavaScript(
           "document.body.classList.remove('__skpm-" +
-            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
-              ? 'light'
-              : 'dark') +
+            (isDark ? 'light' : 'dark') +
             "'); document.body.classList.add('__skpm-" +
-            (typeof MSTheme !== 'undefined' && MSTheme.sharedTheme().isDark()
-              ? 'dark'
-              : 'light') +
+            (isDark ? 'dark' : 'light') +
             "')"
         )
       },
@@ -1913,53 +1940,53 @@ module.exports = function(browserWindow, panel, webview, options) {
       utils: null,
       panel: null,
 
-      'windowDidResize:': function() {
+      'windowDidResize:': function () {
         this.utils.emit('resize')
       },
 
-      'windowDidMiniaturize:': function() {
+      'windowDidMiniaturize:': function () {
         this.utils.emit('minimize')
       },
 
-      'windowDidDeminiaturize:': function() {
+      'windowDidDeminiaturize:': function () {
         this.utils.emit('restore')
       },
 
-      'windowDidEnterFullScreen:': function() {
+      'windowDidEnterFullScreen:': function () {
         this.utils.emit('enter-full-screen')
       },
 
-      'windowDidExitFullScreen:': function() {
+      'windowDidExitFullScreen:': function () {
         this.utils.emit('leave-full-screen')
       },
 
-      'windowDidMove:': function() {
+      'windowDidMove:': function () {
         this.utils.emit('move')
         this.utils.emit('moved')
       },
 
-      'windowShouldClose:': function() {
+      'windowShouldClose:': function () {
         var shouldClose = 1
         this.utils.emit('close', {
           get defaultPrevented() {
             return !shouldClose
           },
-          preventDefault: function() {
+          preventDefault: function () {
             shouldClose = 0
           },
         })
         return shouldClose
       },
 
-      'windowWillClose:': function() {
+      'windowWillClose:': function () {
         this.utils.emit('closed')
       },
 
-      'windowDidBecomeKey:': function() {
+      'windowDidBecomeKey:': function () {
         this.utils.emit('focus', this.panel.currentEvent())
       },
 
-      'windowDidResignKey:': function() {
+      'windowDidResignKey:': function () {
         this.utils.emit('blur')
       },
     })
@@ -1973,18 +2000,18 @@ module.exports = function(browserWindow, panel, webview, options) {
       utils: null,
 
       // // Called when the web view begins to receive web content.
-      'webView:didCommitNavigation:': function(webView) {
+      'webView:didCommitNavigation:': function (webView) {
         this.utils.emit('will-navigate', {}, String(String(webView.URL())))
       },
 
       // // Called when web content begins to load in a web view.
-      'webView:didStartProvisionalNavigation:': function() {
+      'webView:didStartProvisionalNavigation:': function () {
         this.utils.emit('did-start-navigation')
         this.utils.emit('did-start-loading')
       },
 
       // Called when a web view receives a server redirect.
-      'webView:didReceiveServerRedirectForProvisionalNavigation:': function() {
+      'webView:didReceiveServerRedirectForProvisionalNavigation:': function () {
         this.utils.emit('did-get-redirect-request')
       },
 
@@ -2032,7 +2059,7 @@ module.exports = function(browserWindow, panel, webview, options) {
       // ) {},
 
       // Called when an error occurs while the web view is loading content.
-      'webView:didFailProvisionalNavigation:withError:': function(
+      'webView:didFailProvisionalNavigation:withError:': function (
         webView,
         navigation,
         error
@@ -2041,7 +2068,7 @@ module.exports = function(browserWindow, panel, webview, options) {
       },
 
       // Called when the navigation is complete.
-      'webView:didFinishNavigation:': function() {
+      'webView:didFinishNavigation:': function () {
         if (this.state.wasReady == 0) {
           this.state.wasReady = 1
           this.utils.emitBrowserEvent('ready-to-show')
@@ -2054,7 +2081,7 @@ module.exports = function(browserWindow, panel, webview, options) {
       },
 
       // Called when the web view’s web content process is terminated.
-      'webViewWebContentProcessDidTerminate:': function() {
+      'webViewWebContentProcessDidTerminate:': function () {
         this.utils.emit('dom-ready')
       },
 
@@ -2069,7 +2096,7 @@ module.exports = function(browserWindow, panel, webview, options) {
   if (!WebScriptHandlerClass) {
     WebScriptHandlerClass = new ObjCClass({
       utils: null,
-      'userContentController:didReceiveScriptMessage:': function(_, message) {
+      'userContentController:didReceiveScriptMessage:': function (_, message) {
         var args = this.utils.parseWebArguments(String(message.body()))
         if (!args) {
           return
@@ -2101,15 +2128,12 @@ module.exports = function(browserWindow, panel, webview, options) {
     0,
     true
   )
-  webview
-    .configuration()
-    .userContentController()
-    .addUserScript(script)
+  webview.configuration().userContentController().addUserScript(script)
 
   NSApplication.sharedApplication().addObserver_forKeyPath_options_context(
     themeObserver,
     'effectiveAppearance',
-    NSKeyValueChangeNewKey,
+    NSKeyValueObservingOptionNew,
     null
   )
 
@@ -2179,13 +2203,13 @@ module.exports = function(browserWindow, panel, webview, options) {
         var listeners = browserWindow.webContents.listeners(type)
 
         Promise.all(
-          listeners.map(function(l) {
-            return Promise.resolve().then(function() {
+          listeners.map(function (l) {
+            return Promise.resolve().then(function () {
               return l.apply(l, args)
             })
           })
         )
-          .then(function(res) {
+          .then(function (res) {
             webview.evaluateJavaScript_completionHandler(
               CONSTANTS.JS_BRIDGE_RESULT_SUCCESS +
                 id +
@@ -2195,7 +2219,7 @@ module.exports = function(browserWindow, panel, webview, options) {
               null
             )
           })
-          .catch(function(err) {
+          .catch(function (err) {
             webview.evaluateJavaScript_completionHandler(
               CONSTANTS.JS_BRIDGE_RESULT_ERROR +
                 id +
@@ -2277,29 +2301,29 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
 
   webContents.loadURL = browserWindow.loadURL
 
-  webContents.loadFile = function(/* filePath */) {
+  webContents.loadFile = function (/* filePath */) {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
 
-  webContents.downloadURL = function(/* filePath */) {
+  webContents.downloadURL = function (/* filePath */) {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
 
-  webContents.getURL = function() {
-    return String(webview.url())
+  webContents.getURL = function () {
+    return String(webview.URL())
   }
 
-  webContents.getTitle = function() {
+  webContents.getTitle = function () {
     return String(webview.title())
   }
 
-  webContents.isDestroyed = function() {
+  webContents.isDestroyed = function () {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
@@ -2309,50 +2333,50 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
   webContents.focus = browserWindow.focus
   webContents.isFocused = browserWindow.isFocused
 
-  webContents.isLoading = function() {
+  webContents.isLoading = function () {
     return !!webview.loading()
   }
 
-  webContents.isLoadingMainFrame = function() {
+  webContents.isLoadingMainFrame = function () {
     // TODO:
     return !!webview.loading()
   }
 
-  webContents.isWaitingForResponse = function() {
+  webContents.isWaitingForResponse = function () {
     return !webview.loading()
   }
 
-  webContents.stop = function() {
+  webContents.stop = function () {
     webview.stopLoading()
   }
-  webContents.reload = function() {
+  webContents.reload = function () {
     webview.reload()
   }
-  webContents.reloadIgnoringCache = function() {
+  webContents.reloadIgnoringCache = function () {
     webview.reloadFromOrigin()
   }
-  webContents.canGoBack = function() {
+  webContents.canGoBack = function () {
     return !!webview.canGoBack()
   }
-  webContents.canGoForward = function() {
+  webContents.canGoForward = function () {
     return !!webview.canGoForward()
   }
-  webContents.canGoToOffset = function(offset) {
+  webContents.canGoToOffset = function (offset) {
     return !!webview.backForwardList().itemAtIndex(offset)
   }
-  webContents.clearHistory = function() {
+  webContents.clearHistory = function () {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.goBack = function() {
+  webContents.goBack = function () {
     webview.goBack()
   }
-  webContents.goForward = function() {
+  webContents.goForward = function () {
     webview.goForward()
   }
-  webContents.goToIndex = function(index) {
+  webContents.goToIndex = function (index) {
     var backForwardList = webview.backForwardList()
     var backList = backForwardList.backList()
     var backListLength = backList.count()
@@ -2369,7 +2393,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
     }
     throw new Error('Cannot go to index ' + index)
   }
-  webContents.goToOffset = function(offset) {
+  webContents.goToOffset = function (offset) {
     if (!webContents.canGoToOffset(offset)) {
       throw new Error('Cannot go to offset ' + offset)
     }
@@ -2377,23 +2401,23 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
       NSURLRequest.requestWithURL(webview.backForwardList().itemAtIndex(offset))
     )
   }
-  webContents.isCrashed = function() {
+  webContents.isCrashed = function () {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.setUserAgent = function(/* userAgent */) {
+  webContents.setUserAgent = function (/* userAgent */) {
     // TODO:
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.getUserAgent = function() {
+  webContents.getUserAgent = function () {
     const userAgent = webview.customUserAgent()
     return userAgent ? String(userAgent) : undefined
   }
-  webContents.insertCSS = function(css) {
+  webContents.insertCSS = function (css) {
     var source =
       "var style = document.createElement('style'); style.innerHTML = " +
       css.replace(/"/, '\\"') +
@@ -2403,62 +2427,56 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
       0,
       true
     )
-    webview
-      .configuration()
-      .userContentController()
-      .addUserScript(script)
+    webview.configuration().userContentController().addUserScript(script)
   }
-  webContents.insertJS = function(source) {
+  webContents.insertJS = function (source) {
     var script = WKUserScript.alloc().initWithSource_injectionTime_forMainFrameOnly(
       source,
       0,
       true
     )
-    webview
-      .configuration()
-      .userContentController()
-      .addUserScript(script)
+    webview.configuration().userContentController().addUserScript(script)
   }
   webContents.executeJavaScript = executeJavaScript(webview, browserWindow)
-  webContents.setIgnoreMenuShortcuts = function() {
+  webContents.setIgnoreMenuShortcuts = function () {
     // TODO:??
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.setAudioMuted = function(/* muted */) {
+  webContents.setAudioMuted = function (/* muted */) {
     // TODO:??
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.isAudioMuted = function() {
+  webContents.isAudioMuted = function () {
     // TODO:??
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.setZoomFactor = function(factor) {
+  webContents.setZoomFactor = function (factor) {
     webview.setMagnification_centeredAtPoint(factor, CGPointMake(0, 0))
   }
-  webContents.getZoomFactor = function(callback) {
+  webContents.getZoomFactor = function (callback) {
     callback(Number(webview.magnification()))
   }
-  webContents.setZoomLevel = function(level) {
+  webContents.setZoomLevel = function (level) {
     // eslint-disable-next-line no-restricted-properties
     webContents.setZoomFactor(Math.pow(1.2, level))
   }
-  webContents.getZoomLevel = function(callback) {
+  webContents.getZoomLevel = function (callback) {
     // eslint-disable-next-line no-restricted-properties
     callback(Math.log(Number(webview.magnification())) / Math.log(1.2))
   }
-  webContents.setVisualZoomLevelLimits = function(/* minimumLevel, maximumLevel */) {
+  webContents.setVisualZoomLevelLimits = function (/* minimumLevel, maximumLevel */) {
     // TODO:??
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
     )
   }
-  webContents.setLayoutZoomLevelLimits = function(/* minimumLevel, maximumLevel */) {
+  webContents.setLayoutZoomLevelLimits = function (/* minimumLevel, maximumLevel */) {
     // TODO:??
     console.warn(
       'Not implemented yet, please open a PR on https://github.com/skpm/sketch-module-web-view :)'
@@ -2479,7 +2497,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
   // webContents.delete = webview.delete
   // webContents.replace = webview.replaceSelectionWithText
 
-  webContents.send = function() {
+  webContents.send = function () {
     const script =
       'window.postMessage({' +
       'isSketchMessage: true,' +
@@ -2492,7 +2510,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
     webview.evaluateJavaScript_completionHandler(script, null)
   }
 
-  webContents.getNativeWebview = function() {
+  webContents.getNativeWebview = function () {
     return webview
   }
 
@@ -2512,7 +2530,7 @@ module.exports = function buildAPI(browserWindow, panel, webview) {
 /* globals NSThread */
 var threadDictionary = NSThread.mainThread().threadDictionary()
 
-module.exports.getWebview = function(identifier) {
+module.exports.getWebview = function (identifier) {
   return __webpack_require__(/*! ./lib */ "./node_modules/sketch-module-web-view/lib/index.js").fromId(identifier) // eslint-disable-line
 }
 
@@ -2555,7 +2573,7 @@ module.exports.sendToWebview = function sendToWebview(identifier, evalString) {
 /*! exports provided: name, description, version, engines, homepage, repository, bugs, skpm, resources, scripts, devDependencies, author, dependencies, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"sketch-find-and-replace\",\"description\":\"find-and-replace Plugin for sketch\",\"version\":\"2.11.0\",\"engines\":{\"sketch\":\">=3.0\"},\"homepage\":\"https://github.com/thierryc/Sketch-Find-And-Replace\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/thierryc/Sketch-Find-And-Replace.git\"},\"bugs\":{\"url\":\"https://github.com/thierryc/Sketch-Find-And-Replace/issues\"},\"skpm\":{\"name\":\"Find-And-Replace\",\"manifest\":\"src/manifest.json\",\"main\":\"Find-and-replace.sketchplugin\",\"assets\":[\"assets/**/*\"]},\"resources\":[\"./ressources/index.js\"],\"scripts\":{\"build\":\"skpm-build\",\"watch\":\"skpm-build --watch\",\"start\":\"skpm-build --watch --run\",\"publish\":\"skpm publish\",\"postinstall\":\"npm run build && skpm-link\"},\"devDependencies\":{\"@skpm/builder\":\"^0.7.5\",\"@skpm/extract-loader\":\"^2.0.2\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.20.0\",\"eslint-plugin-node\":\"^7.0.1\",\"eslint-plugin-promise\":\"^4.2.1\",\"eslint-plugin-react\":\"^7.18.0\",\"eslint-plugin-standard\":\"^4.0.1\",\"skpm\":\"^1.3.1\",\"html-loader\":\"^0.5.5\"},\"author\":\"Thierry Charbonnel <thierryc@users.noreply.github.com>\",\"dependencies\":{\"react\":\"^16.12.0\",\"react-dom\":\"^16.12.0\",\"sketch-module-web-view\":\"^3.4.1\",\"styled-components\":\"^4.4.1\"}}");
+module.exports = JSON.parse("{\"name\":\"sketch-find-and-replace\",\"description\":\"find-and-replace Plugin for sketch\",\"version\":\"2.11.1\",\"engines\":{\"sketch\":\">=3.0\"},\"homepage\":\"https://github.com/thierryc/Sketch-Find-And-Replace\",\"repository\":{\"type\":\"git\",\"url\":\"https://github.com/thierryc/Sketch-Find-And-Replace.git\"},\"bugs\":{\"url\":\"https://github.com/thierryc/Sketch-Find-And-Replace/issues\"},\"skpm\":{\"name\":\"Find-And-Replace\",\"manifest\":\"src/manifest.json\",\"main\":\"Find-and-replace.sketchplugin\",\"assets\":[\"assets/**/*\"]},\"resources\":[\"./ressources/index.js\"],\"scripts\":{\"build\":\"skpm-build\",\"watch\":\"skpm-build --watch\",\"start\":\"skpm-build --watch --run\",\"publish\":\"skpm publish\",\"postinstall\":\"npm run build && skpm-link\"},\"devDependencies\":{\"@skpm/builder\":\"^0.7.11\",\"@skpm/extract-loader\":\"^2.0.3\",\"eslint\":\"^5.16.0\",\"eslint-config-standard\":\"^12.0.0\",\"eslint-plugin-import\":\"^2.22.1\",\"eslint-plugin-node\":\"^7.0.1\",\"eslint-plugin-promise\":\"^4.3.1\",\"eslint-plugin-react\":\"^7.23.2\",\"eslint-plugin-standard\":\"^4.1.0\",\"html-loader\":\"^0.5.5\",\"skpm\":\"^1.3.2\"},\"author\":\"Thierry Charbonnel <thierryc@users.noreply.github.com>\",\"dependencies\":{\"react\":\"^16.14.0\",\"react-dom\":\"^16.14.0\",\"sketch-module-web-view\":\"^3.5.1\",\"styled-components\":\"^4.4.1\"}}");
 
 /***/ }),
 
@@ -2579,15 +2597,16 @@ module.exports = "file://" + String(context.scriptPath).split(".sketchplugin/Con
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sketch */ "sketch");
-/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/sketch-module-web-view/lib/index.js");
-/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
-/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../package.json */ "./package.json");
-var _package_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../package.json */ "./package.json", 1);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sketch */ "sketch");
+/* harmony import */ var sketch__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sketch__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sketch-module-web-view */ "./node_modules/sketch-module-web-view/lib/index.js");
+/* harmony import */ var sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sketch-module-web-view/remote */ "./node_modules/sketch-module-web-view/remote.js");
+/* harmony import */ var sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../package.json */ "./package.json");
+var _package_json__WEBPACK_IMPORTED_MODULE_4___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../package.json */ "./package.json", 1);
 
 
 
@@ -2599,9 +2618,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 // tail -F ~/Library/Logs/com.bohemiancoding.sketch3/Plugin\ Log.log
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 
-var UI = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.UI,
-    Settings = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Settings,
-    Document = sketch__WEBPACK_IMPORTED_MODULE_0___default.a.Document;
+var UI = sketch__WEBPACK_IMPORTED_MODULE_1___default.a.UI,
+    Settings = sketch__WEBPACK_IMPORTED_MODULE_1___default.a.Settings,
+    Document = sketch__WEBPACK_IMPORTED_MODULE_1___default.a.Document;
 var PREFUNIQUKEY = 'cx.ap.sketch-find-and-replace.pref';
 var SATEUNIQUKEY = 'cx.ap.sketch-find-and-replace.state'; // to delete saved settings uncoment the next line
 // Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}))
@@ -2666,7 +2685,7 @@ var debounce = function debounce(fn, time) {
 
     var savedSettings = Settings.settingForKey(PREFUNIQUKEY);
 
-    if (typeof savedSettings === 'string' && _typeof(JSON.parse(savedSettings)) === 'object') {
+    if (typeof savedSettings === 'string' && _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(JSON.parse(savedSettings)) === 'object') {
       state = Object.assign({}, defaultSettings, JSON.parse(savedSettings));
     } else {
       Settings.setSettingForKey(PREFUNIQUKEY, JSON.stringify({}));
@@ -2683,13 +2702,13 @@ var debounce = function debounce(fn, time) {
     selection = document.selectedLayers;
 
     if (selection.length > 0) {
-      UI.message('Find and replace in the selection (v' + _package_json__WEBPACK_IMPORTED_MODULE_3__.version + ')');
+      UI.message('Find and replace in the selection (v' + _package_json__WEBPACK_IMPORTED_MODULE_4__.version + ')');
       state = Object.assign({}, state, {
         findMode: 1,
         selection: true
       });
     } else {
-      UI.message('Find and replace in the current page (v' + _package_json__WEBPACK_IMPORTED_MODULE_3__.version + ')');
+      UI.message('Find and replace in the current page (v' + _package_json__WEBPACK_IMPORTED_MODULE_4__.version + ')');
       var page = document.selectedPage;
       selection = page.layers;
       state = Object.assign({}, state, {
@@ -2716,7 +2735,7 @@ var debounce = function debounce(fn, time) {
     minimizable: false,
     maximizable: false
   };
-  var browserWindow = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_1___default.a(windowOptions);
+  var browserWindow = new sketch_module_web_view__WEBPACK_IMPORTED_MODULE_2___default.a(windowOptions);
   browserWindow.on('closed', function () {
     browserWindow = null;
   });
@@ -2795,8 +2814,8 @@ var debounce = function debounce(fn, time) {
       });
     }
 
-    if (Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__["isWebviewPresent"])(windowOptions.identifier)) {
-      Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_2__["sendToWebview"])(windowOptions.identifier, "updateData('".concat(JSON.stringify(state), "')"));
+    if (Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__["isWebviewPresent"])(windowOptions.identifier)) {
+      Object(sketch_module_web_view_remote__WEBPACK_IMPORTED_MODULE_3__["sendToWebview"])(windowOptions.identifier, "updateData('".concat(JSON.stringify(state), "')"));
     }
 
     state = Object.assign({}, state, {
