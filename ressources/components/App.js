@@ -65,7 +65,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    window.SetSettings = json => {
+    window.SetSettings = base64json => {
+      const json = decodeURIComponent(window.atob(base64json))
       this.setState(JSON.parse(json))
       this.findIntput.focus()
       this.setState({

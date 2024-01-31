@@ -207,9 +207,10 @@ export default function() {
       state = Object.assign({}, state, { init })
     }
     if (isWebviewPresent(windowOptions.identifier)) {
+      let base64EncodedState = Buffer.from(encodeURIComponent(JSON.stringify(state))).toString("base64")
       sendToWebview(
         windowOptions.identifier,
-        `updateData('${JSON.stringify(state)}')`
+        `updateData('${base64EncodedState}')`
       )
     }
     state = Object.assign({}, state, { init: false })
