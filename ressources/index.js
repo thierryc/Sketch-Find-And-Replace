@@ -6,11 +6,11 @@ let dark = true
 
 window.settings = {}
 
-window.updateData = function(json) {
+window.updateData = function(base64json) {
   if (typeof window.SetSettings == 'function') {
-    window.SetSettings(json)
+    window.SetSettings(base64json)
   } else {
-    setTimeout(() => window.updateData(json), 100)
+    setTimeout(() => window.updateData(base64json), 100)
   }
 }
 
